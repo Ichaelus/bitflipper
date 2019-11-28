@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	This SVG was copied and modified. It was originally taken from
+	https://www.svgrepo.com/svg/277894/jack-connector-cable
+	
+	and is licensed under Creative Commons BY 4.0
+-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="1426.785px" height="16284.867px" viewBox="3456.313 -4002.901 1426.785 16284.867"
+	 enable-background="new 3456.313 -4002.901 1426.785 16284.867" xml:space="preserve">
+<g>
+	<polygon fill="#C6C9CB" points="4597.741,5576.05 3741.671,5576.05 3741.671,6432.12 4597.741,6432.12 	"/>
+	<polygon fill="#DFE3E6" points="4883.099,6432.12 3456.314,6432.12 3456.313,8429.6 4883.099,8429.601 	"/>
+	<polygon fill="#C6C9CB" points="4740.419,8429.601 3598.993,8429.601 3598.993,9000.313 4740.419,9000.313 	"/>
+	<polygon fill="#DBB780" points="4597.741,9000.313 3741.671,9000.313 3741.67,10997.811 4597.741,10997.811 	"/>
+	<g>
+		<path fill="#F4E197" d="M3741.671,10284.468h856.07c78.754,0,142.678,63.777,142.678,142.679
+			c0,78.902-63.924,142.679-142.678,142.679h-856.07c-78.754,0-142.678-63.776-142.678-142.679
+			C3598.993,10348.261,3662.917,10284.468,3741.671,10284.468"/>
+		<path fill="#F4E197" d="M3741.67,11853.931h856.07c-172.782-259.1-172.782-596.971,0.001-856.07H3741.67
+			C3914.453,11256.96,3914.453,11594.831,3741.67,11853.931"/>
+	</g>
+	<polygon fill="#DBB780" points="4312.384,12281.967 4027.027,12281.967 3741.67,11853.931 4597.74,11853.931 	"/>
+</g>
+<rect x="3885.827" y="-4002.901" fill="#DFE3E6" width="567.758" height="9578.949"/>
+</svg>

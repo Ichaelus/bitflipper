@@ -1,0 +1,419 @@
+/* Reset browser defaults */
+html, body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+*, *:after, *:before {
+  box-sizing: inherit;
+}
+
+input:focus {
+  outline: none;
+}
+
+@font-face {
+  font-family: 'power_symbols';
+  src: url('fonts/Unicode_IEC_symbol.woff2') format('woff2'), url('fonts/Unicode_IEC_symbol.woff') format('woff'), url('fonts/Unicode_IEC_symbol.ttf') format('truetype'), url('fonts/Unicode_IEC_symbol.odt') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+/* Custom Styles */
+html, body {
+  background: radial-gradient(farthest-side, #EDF2F7, #718096 130%);
+}
+
+body{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.machine-back {
+  --machine-width: 950px;
+  --content-width: 650px;
+  --color-text-muted: #888;
+  --color-text-active: #E4E8EA;
+
+  position: relative;
+  margin: auto;
+  max-width: var(--machine-width);
+  box-shadow: inset 0 0 30px #000000,
+  inset 0px -4px 0px #2b2b2b,
+  inset 1px -2px 0px 2px white,
+  0px 0px 1px 5px #000000;
+  background: repeating-linear-gradient(0deg, #2b2b2b , #202020 2px);
+  padding: 40px;
+  flex: 1 0 auto;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-left-radius: 1px;
+  border-bottom-right-radius: 1px;
+  user-select: none;
+}
+
+.machine-back::after, .machine-back::before {
+  content: '';
+  position: absolute;
+  width: calc(100% - 50px);
+  height: 10px;
+  background: #2b2b2b;
+  bottom: -14px;
+}
+
+.machine-back::after {
+  transform: skewX(50deg);
+  left: 2px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 5px;
+}
+
+.machine-back::before {
+  transform: skewX(-50deg);
+  left: auto;
+  right: 2px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 5px;
+}
+
+.-label{
+  color: var(--color-text-muted);
+  font-family: 'Inconsolata', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.upper-controls{
+  display: flex;
+  flex-direction: row;
+  padding: 11px 14px;
+}
+
+.power-switch, .input-visualizer{
+  flex: 0 1 auto;
+  background-color: grey;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  height: 35px;
+  width: 26px;
+}
+
+.power-switch {
+  font-family: 'power_symbols';
+  font-style: normal;
+  cursor: pointer;
+  background-color: black;
+  color: var(--color-text-active);
+}
+
+.machine-back.-active .power-switch{
+  background-color: white;
+  color: black;
+}
+
+.input-visualizer {
+  margin-left: auto;
+  cursor: default;
+}
+
+.input-visualizer:disabled {
+  background-color: grey;
+  box-shadow: inset 0 0 23px white;
+}
+
+.display {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    height:100px;
+    border:1px solid rgba(0,0,0,0.5);
+    border-radius:10px 10px 10px 10px;
+    -webkit-box-shadow:
+    0 2px 6px rgba(0,0,0,0.5),
+    inset 0 1px rgba(255,255,255,0.3),
+    inset 0 10px rgba(255,255,255,0.2),
+    inset 0 10px 20px rgba(255,255,255,0.25),
+    inset 0 -15px 30px rgba(0,0,0,0.3);
+    -moz-box-shadow:
+    0 2px 6px rgba(0,0,0,0.5),
+    inset 0 1px rgba(255,255,255,0.3),
+    inset 0 10px rgba(255,255,255,0.2),
+    inset 0 10px 20px rgba(255,255,255,0.25),
+    inset 0 -15px 30px rgba(0,0,0,0.3);
+    box-shadow:
+    0 2px 6px rgba(0,0,0,0.5),
+    inset 0 1px rgba(255,255,255,0.3),
+    inset 0 10px rgba(255,255,255,0.2),
+    inset 0 10px 20px rgba(255,255,255,0.25),
+    inset 0 -15px 30px rgba(0,0,0,0.3);
+    background:rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.display--text{
+  color: #fffffd;
+  font-size: 24px;
+  text-shadow: 0 0 5px #cbdbe1;
+  font-family: 'Press Start 2P', cursive; /* Alternative: Inconsolata 700 */
+
+  right: 0px;
+  position: absolute;
+  break-inside: avoid;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
+}
+
+/* Channel buttons */
+
+.channels-container {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+@media(max-width: 800px){
+  .channels-container {
+    justify-content: unset;
+  }
+}
+
+.channel--button{
+  color: var(--color-text-active);
+  padding: 38px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+  border-color: var(--color-text-mtued);
+  border-width: 1px;
+}
+
+.channel--button.-active {
+  background: radial-gradient(closest-side, #bafc57 , greenyellow 70%);
+  box-shadow: inset 0 0 3px #6bb105;
+}
+.channel--button.-active:hover {
+  background: radial-gradient(closest-side, #d6f8a3 , greenyellow 70%);
+}
+
+.channel--button.-inverted {
+  background: radial-gradient(closest-side, rgb(255, 32, 32) , red 70%);
+  box-shadow: inset 0 0 30px #ad0409;
+  border-color: #705c53;
+}
+
+.channel--button.-inverted:hover {
+  background: radial-gradient(closest-side, rgb(255, 53, 53) , red 70%);
+}
+
+.channel--button.-inactive {
+  background-color: #fffcfc;
+  box-shadow: inset 0 0 30px #a0a0a7;
+}
+
+.channel--button.-inactive:hover {
+  background: radial-gradient(closest-side, #ffffff , #fffcfc 70%);
+}
+
+.channels-container .channel--labels{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 10px double currentColor;
+}
+
+.machine-back.-active .channel--labels{
+  color: var(--color-text-active);
+}
+
+
+/* KNOB STYLES */
+.knobs{
+  max-width: var(--content-width);
+  margin: 20px auto;
+  text-align: center;
+}
+
+.knob{
+  position: relative;
+  border-radius: 3px;
+  transition: 0s;
+  font-size: 16px; 
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.knob + .knob{
+  margin-left: 40px;
+}
+
+.knob--active-light{
+  display: none; /* unused feature */
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  background-color: var(--color-text-muted);
+}
+
+.knob.-active .knob--active-light{
+  background-color: #21CD92;
+}
+    
+.knob--dial{
+  display: block;
+  position: relative;
+  height: 100px;
+  width: 100px;
+  text-align: left !important;
+  transition: 0s;
+  color: var(--color-text-muted);
+}
+
+.knob.-active .knob--dial{
+  color: #21CD92;
+}
+
+.knob--dial-grip{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+  transition: 0s;
+  height: 72px;
+  width: 72px;
+  border: 6px solid #181B1C;
+}
+
+.knob--dial-grip::after{
+  content: "";
+  width: 2px;
+  transform: translateX(-50%);
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  height: 10px;
+  background-color: var(--color-text-active);
+}
+
+.knob--dial-svg{
+  pointer-events: none;
+  position: absolute;
+  stroke: var(--color-text-muted);
+  stroke-width: 8;
+  stroke-dasharray: 184 184;
+  stroke-linecap: round !important;
+}
+
+.knob--dial-svg path{
+  transition: 0.3s cubic-bezier(0, 0, 0.24, 1);
+}
+
+.knob.-active .knob--dial-svg{
+  stroke: var(--color-text-active);
+}
+
+.knob--label{
+  display: block;
+  position: relative;
+}
+
+.knob.-active .knob--label{
+  color: var(--color-text-active);
+}
+
+/* Cable conntector */
+
+.cable-connector{
+  position: absolute;
+  left: 100px;
+  top: -15px;
+  --connector-width: 45px;
+  width: var(--connector-width);
+  z-index: 0;
+}
+
+.cable-connector.-oscillator{
+  margin-left: calc(1 * var(--connector-width) + 1 * 25px);
+}
+
+.cable-connector--part{
+  background: linear-gradient(90deg, #705c53, #fff8ed, #7d746b, #a28e75, #766450);
+  border-radius: 25% 25% 0 0;
+  margin: 0 auto;
+  border-bottom: 1px solid #705c5382;
+  box-shadow: 0px 1px 0px 0px #705c5382;
+}
+
+.cable-connector--part.-top{
+  width: 31px;
+  height: 3px;
+}
+
+.cable-connector--part.-center{
+  width: 33px;
+  height: 3px;
+}
+
+.cable-connector--part.-bottom{
+  width: 35px;
+  height: 2px;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+.cable-connector--label{
+  margin-top: 18px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.cable-connector.-active .cable-connector--label{
+  color: var(--color-text-active);
+}
+
+.cable-connector--jack{
+  background-image: url(assets/jack-connector-cable.svg);
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 275px;
+  background-size: 54% 100%;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: -50px;
+  transition: opacity ease-in-out 0.21s 1s,
+              background-position-y ease-in-out 0.5s 1.25s;
+  z-index: -1;
+  opacity: 0; /* only the active one is shown */
+}
+
+.cable-connector.-transitioning .cable-connector--jack,
+.cable-connector.-active .cable-connector--jack{
+  background-position-y: 50px;
+  opacity: 1;
+}
+
+.cable-connector.-active .cable-connector--jack{
+  transition: opacity ease-in-out 0.21s 1.75s,
+              background-position-y ease-in-out 0.5s 1.25s;
+}
