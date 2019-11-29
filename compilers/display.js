@@ -1,8 +1,8 @@
 up.compiler('.display', (element) => {
   textElement = element.querySelector('.display--text');
   const defaultText = textElement.dataset.defaultText;
-  const RESET_TIMEOUT = 2000; // Milliseconds
-  const ANIMATION_TIME = 500; // Milliseconds, max 999
+  const RESET_TIMEOUT = 1500; // Milliseconds
+  const ANIMATION_TIME = 400; // Milliseconds, max 999
   const DISPLAY_WIDTH = element.getBoundingClientRect().width;
 
   let textQueue = []; // First in, first out

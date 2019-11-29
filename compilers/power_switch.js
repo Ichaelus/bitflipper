@@ -13,15 +13,15 @@ up.compiler('.power-switch', (element) => {
 
       if (!machine.classList.contains('-active')) {
         if (isFirstClick) {
-          up.emit('power-on');
+          up.emit('power:on');
           isFirstClick = false;
         }else{
-          up.emit('resume');
+          up.emit('reset:on');
         }
         machine.classList.add('-active');
         up.emit('status-text-changed', {text: 'STARTING UP.'});
       } else {
-        up.emit('pause');
+        up.emit('reset:off');
         machine.classList.remove('-active');
         up.emit('status-text-changed', {text: 'POWERING OFF.'});
         up.emit('status-text-changed', {text: 'GOOD BYE.'});

@@ -1,14 +1,10 @@
+// This processor was derived from Google's bitcrusher example:
+// https://github.com/GoogleChromeLabs/web-audio-samples/blob/master/audio-worklet/basic/bit-crusher/bit-crusher-processor.js
+// This is the original copyright notice:
 // Copyright (c) 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// found in the LICENSE file:
 
-/**
- * A AudioWorklet-based BitCrusher demo from the spec example.
- *
- * @class BitCrusherProcessor
- * @extends AudioWorkletProcessor
- * @see https://webaudio.github.io/web-audio-api/#the-bitcrusher-node
- */
 class BitCrusherProcessor extends AudioWorkletProcessor {
   static get parameterDescriptors() {
     return [
