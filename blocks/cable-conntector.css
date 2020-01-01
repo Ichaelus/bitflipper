@@ -7,7 +7,7 @@
   z-index: 0;
 }
 
-.cable-connector.-oscillator{
+.cable-connector.-drumloop{
   margin-left: calc(1 * var(--connector-width) + 1 * 25px);
 }
 

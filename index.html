@@ -13,10 +13,12 @@
   <link rel="stylesheet" href="blocks/channel.css">
   <link rel="stylesheet" href="blocks/display.css">
   <link rel="stylesheet" href="blocks/knob.css">
+  <link rel="stylesheet" href="blocks/filter.css">
 
   <script src="https://unpkg.com/unpoly@0.61.0/dist/unpoly.min.js" integrity="sha384-gW6zzUz/Kx42R/cIyfZeFdlW18HuD/vtSCfsv6cdlfeg3CRqh89KzWER1dQ1i4BJ" crossorigin="anonymous"></script>
   <script src="compilers/cable-connector.js"></script>
   <script src="compilers/display.js"></script>
+  <script src="compilers/filter.js"></script>
   <script src="compilers/knob.js"></script>
   <script src="compilers/power_switch.js"></script>
   <title>8 BIT reducer & mangler</title>
@@ -26,8 +28,13 @@
 
   <!--
     Ideas:
-      * (optional) Controls for the bit depth
-      * Visualization of the noise level per channel
+      * Controls for the bit depth
+      * Toggle button to control the limiter
+      * Offline support
+      * Switching between Mic and DRM by clicking on them
+      * Cable jack to visualize sound output
+      * The channel buttons should be controllable in two directions
+      * Better on/off visualization and resilience
   -->
 
   <div class="wrapper">
@@ -40,17 +47,19 @@
         <div class="cable-connector--label -label">Mic</div>
       </div>
 
-      <div class="cable-connector -oscillator">
+      <div class="cable-connector -drumloop">
         <div class="cable-connector--jack"></div>
         <div class="cable-connector--part -top"></div>
         <div class="cable-connector--part -center"></div>
         <div class="cable-connector--part -bottom"></div>
-        <div class="cable-connector--label -label">Osz</div>
+        <div class="cable-connector--label -label">Drm</div>
       </div>
 
       <div class='upper-controls'>
         <input type="button" class="power-switch" value="⏻" title="Start/Stop">
-        <input type="button" class="input-visualizer" title='Current noise level'>
+        <div class="input-visualizer" title='Current noise level'> 
+          <div class="input-visualizer--glow" title='Current noise level'> </div>
+         </div>
       </div>
 
       <div class="display">
@@ -70,7 +79,7 @@
           <div class="knob--label -label" title="Volume (Gain)">Vol</div>
         </div>
     
-        <div class='knob -frequency-reduction' data-initial-value='0.5'>
+        <div class='knob -sample-reduction' data-initial-value='1.0'>
           <div class="knob--active-light"></div>
           <div class="knob--dial">
             <div class="knob--dial-grip"></div>
@@ -79,65 +88,108 @@
               <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
             </svg>
           </div>
-          <div class="knob--label -label" title="Frequency Reduction">Freq</div>
+          <div class="knob--label -label" title="Sample Reduction">Redux</div>
+        </div>
+        
+        <div class="filter -lowpass">
+          <div class="filter--icon"></div>
+          <div class="filter--label -label">Lowpass</div>
+        </div>
+
+        <div class='knob -filter-cutoff' data-initial-value='1.0'>
+          <div class="knob--active-light"></div>
+          <div class="knob--dial">
+            <div class="knob--dial-grip"></div>
+            <svg class="knob--dial-svg" viewBox="0 0 100 100">
+              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
+              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
+            </svg>
+          </div>
+          <div class="knob--label -label" title="Filter Cutoff">Cutoff</div>
+        </div>
+
+        <div class='knob -filter-resonance' data-initial-value='0.0'>
+          <div class="knob--active-light"></div>
+          <div class="knob--dial">
+            <div class="knob--dial-grip"></div>
+            <svg class="knob--dial-svg" viewBox="0 0 100 100">
+              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
+              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
+            </svg>
+          </div>
+          <div class="knob--label -label" title="Filter Resonance">Q</div>
         </div>
       </div>
 
+      <!--
+      <div class='knob -float-range' data-initial-value='0.25'>
+        <div class="knob--active-light"></div>
+        <div class="knob--dial">
+          <div class="knob--dial-grip"></div>
+          <svg class="knob--dial-svg" viewBox="0 0 100 100">
+            <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
+            <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
+          </svg>
+        </div>
+        <div class="knob--label -label" title="Float Range">FR</div>
+      </div>
+    </div>
+-->
       <div class="channels-container">
         <div class="channel">
             <input type="button" class="channel--button -active" id="0">
             <div class="channel--labels -label">
-                <label>1</label>
-                <label>TAP</label>
+              <label>#</label>  
+              <label>1</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="1">
             <div class="channel--labels -label">
-                <label>2</label>
-                <label>-/F1</label>
+              <label>#</label>  
+              <label>2</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="2">
             <div class="channel--labels -label">
-                <label>3</label>
-                <label>+/F2</label>
+              <label>#</label>  
+              <label>4</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="3">
             <div class="channel--labels -label">
-                <label>4</label>
-                <label>F3</label>
+              <label>#</label>  
+              <label>8</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="4">
             <div class="channel--labels -label">
-                <label>5</label>
-                <label>Wave</label>
+              <label>#</label>  
+              <label>16</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="5">
             <div class="channel--labels -label">
-                <label>6</label>
-                <label>Delay</label>
+              <label>#</label>  
+              <label>32</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="6">
             <div class="channel--labels -label">
-                <label>7</label>
-                <label>Pitch</label>
+              <label>#</label>  
+              <label>64</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="7">
             <div class="channel--labels -label">
-                <label>8</label>
-                <label>Step</label>
+              <label>#</label>  
+              <label>128</label>
             </div>
         </div>
       </div>
@@ -151,18 +203,23 @@
       // Initialize the audio context and its processor
       await audioContext.audioWorklet.addModule('bit-crusher-processor.js');
       const inputStreamSignal = await setupInputStream(audioContext);
-      const inputGain = setupGain(audioContext); // Formerly: microphoneGain, now indifferent about microphone and oscillator
-      
+      const inputGain = setupGain(audioContext); // Formerly: microphoneGain, now indifferent about microphone and drumloop
+
       const bitCrusher = new AudioWorkletNode(audioContext, 'bit-crusher-processor');
       const paramBitDepth = bitCrusher.parameters.get('bitDepth');
       const paramReduction = bitCrusher.parameters.get('frequencyReduction');
 
+      const filter = setupFilter(audioContext);
+      const volumeLimiter = setupVolumeLimiter(audioContext);
+
       const analyser = setupAnalyser(audioContext);
-      inputGain.connect(analyser);
+      volumeLimiter.connect(analyser);
       
       inputStreamSignal
         .connect(inputGain)
         .connect(bitCrusher)
+        .connect(filter)
+        .connect(volumeLimiter)
         .connect(audioContext.destination);
 
       function onVolumeChange(evt){
@@ -189,6 +246,31 @@
         paramReduction.setValueAtTime(newFrequencyReduction, audioContext.currentTime);
         up.emit('status-text-changed', {text: `Frequency Reduction: ${ parseInt(newFrequencyReduction * 100) }%`, instant: true});
       };
+          
+      function onCutOffChanged(evt){
+        const maxCutoff = 16000;
+        const newCutOff = evt.target.getValue() * maxCutoff;
+        filter.frequency.setValueAtTime(newCutOff, audioContext.currentTime);
+        up.emit('status-text-changed', {text: `Cutoff: ${ parseInt(newCutOff) } Hz`, instant: true});
+      }
+
+      function onResonanceChanged(evt){
+        const maxResonance = 30;
+        const newResonance = evt.target.getValue() * maxResonance;
+        filter.Q.setValueAtTime(newResonance, audioContext.currentTime);
+        up.emit('status-text-changed', {text: `Resonance: ${ parseInt(newResonance) }`, instant: true});
+      }
+    
+      function onFilterTypeChanged(evt){
+        filter.type = evt.value;
+      }
+
+      function onFloatRangeChanged(evt){
+        const maxFloatRange =   1024;
+        const newFloatRange = parseInt(evt.target.getValue() * maxFloatRange);
+        bitCrusher.port.postMessage(['float-range', newFloatRange]);
+        up.emit('status-text-changed', {text: `Float Range: ${ newFloatRange }`, instant: true});
+      }
 
       function changeChannelState(evt) {
         let element = evt.target;
@@ -198,19 +280,19 @@
           case element.classList.contains('-active'):
             element.classList.remove('-active');
             element.classList.add('-inverted');
-            bitCrusher.port.postMessage([channelNumber, -1]);
+            bitCrusher.port.postMessage(['channel-state', channelNumber, -1]);
             statusChangeName = 'inverted';
             break;
           case element.classList.contains('-inverted'):
             element.classList.remove('-inverted');
             element.classList.add('-inactive');
-            bitCrusher.port.postMessage([channelNumber, 0]);
+            bitCrusher.port.postMessage(['channel-state', channelNumber, 0]);
             statusChangeName = 'disabled';
             break;
           case element.classList.contains('-inactive'):
             element.classList.remove('-inactive');
             element.classList.add('-active');
-            bitCrusher.port.postMessage([channelNumber, 1]);
+            bitCrusher.port.postMessage(['channel-state', channelNumber, 1]);
             statusChangeName = 'enabled';
             break;
         };
@@ -225,8 +307,12 @@
         audioContext.resume();
         unmute();
       });
-      up.on('button-value-changed', '.knob.-volume', onVolumeChange)
-      up.on('button-value-changed', '.knob.-frequency-reduction', onFrequencyReductionChange)
+      up.on('button-value-changed', '.knob.-volume', onVolumeChange);
+      up.on('button-value-changed', '.knob.-sample-reduction', onFrequencyReductionChange);
+      up.on('button-value-changed', '.knob.-filter-cutoff', onCutOffChanged);
+      up.on('button-value-changed', '.knob.-filter-resonance', onResonanceChanged);
+      up.on('button-value-changed', '.knob.-float-range', onFloatRangeChanged);
+      up.on('filter-type-changed', onFilterTypeChanged)
       up.on('click', '.channel--button', changeChannelState);
       up.emit('reset:on');
     };
@@ -240,9 +326,13 @@
       
       // Visualize the current noise level (updated 5 times per second)
       setInterval(function () {
-        let dataArray = new Uint8Array(analyser.frequencyBinCount);
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(dataArray);
-        document.querySelector(".input-visualizer").style.backgroundColor = "hsla(50, 100%, " + dataArray[3] / 2 + 20 + "%, 1)";
+        analyser.smoothingTimeConstant = 0.3;
+        const sum = dataArray.reduce((a, b) => a + b, 0);
+        const avg = (sum / dataArray.length) || 0;
+        const hueValue = (1 - avg / 255) * 90; // Translate [0,255] -> [90, 0]
+        document.querySelector(".input-visualizer--glow").style.backgroundColor = "hsla(" + hueValue + ", 100%, 50%, 0.95)";
       }, 200);
       return analyser;
     }
@@ -260,7 +350,7 @@
       try {
         return await setupMicrophoneStream(audioContext);
       } catch  (err) {
-        return setupOscillatorStream(audioContext);
+        return setupDrumLoopStream(audioContext);
       }
     }
 
@@ -279,27 +369,51 @@
       return await navigator.mediaDevices.getUserMedia({ audio: true });
     }
 
-    function setupOscillatorStream(audioContext){
-      const oscillator = new OscillatorNode(audioContext);
-      oscillator.type = 'sine';
-      let baseFrequency = 440; // hertz
-      oscillator.frequency.setValueAtTime(baseFrequency, audioContext.currentTime);
-      oscillator.start();
-
-      setInterval(function(){
-        let offset = Math.random() * 400 - 200;
-        oscillator.frequency.exponentialRampToValueAtTime(baseFrequency + offset, audioContext.currentTime + 0.75);
-        baseFrequency += 200;
-        if(baseFrequency > 800){
-          baseFrequency = 420;
-        }
-      }, 2000)
+    function setupDrumLoopStream(audioContext){
+      let drumLoop = audioContext.createBufferSource();
+      let request = new XMLHttpRequest();
+      let musicfile = 'assets/drumloop';
+      let url = musicfile + ".wav"
+      const playbackRate = 1.0;
+      request.open('GET', url, true);
+      request.responseType = 'arraybuffer';
+      request.onload = function () {
+        var audioData = request.response;
+        audioContext.decodeAudioData(audioData, function (buffer) {
+          let myBuffer = buffer;
+          let songLength = buffer.duration;
+          drumLoop.buffer = myBuffer;
+          drumLoop.playbackRate.value = playbackRate;
+          drumLoop.loop = true;
+          drumLoop.start(0);
+        });
+      };
+      request.send();
+//        oscillator.frequency.exponentialRampToValueAtTime(baseFrequency + offset, audioContext.currentTime + 0.75);
       
       up.on('reset:on', function(){
-        up.emit('plug-in', { target: document.querySelector('.cable-connector.-oscillator') });
+        up.emit('plug-in', { target: document.querySelector('.cable-connector.-drumloop') });
       });
     
-      return oscillator;
+      return drumLoop;
+    }
+
+    function setupFilter(audioContext){
+      let filter = audioContext.createBiquadFilter();
+      filter.type ="lowpass";
+      filter.frequency.value = 10000;
+      filter.Q.value = 0;
+      return filter;
+    }
+
+    function setupVolumeLimiter(audioContext){
+      let limiter = audioContext.createDynamicsCompressor();
+      limiter.threshold.setValueAtTime(-30.0, audioContext.currentTime); // this is the pitfall, leave some headroom
+      limiter.knee.setValueAtTime(6.0, audioContext.currentTime); // brute force
+      limiter.ratio.setValueAtTime(20.0, audioContext.currentTime); // max compression
+      limiter.attack.setValueAtTime(0.002, audioContext.currentTime); // 5ms attack
+      limiter.release.setValueAtTime(0.100, audioContext.currentTime); // 50ms release
+      return limiter;
     }
 
   </script>

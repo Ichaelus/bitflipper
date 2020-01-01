@@ -10,12 +10,16 @@ up.compiler('.display', (element) => {
   let lastUpdate = Date.now();
   element.active = false;
 
+  function init(){
+    setNewText(defaultText);
+  }
+
   function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
   }
 
   async function resetTextIfIdle(){
-    let isNonDefaultText = textElement.innerText !== defaultText;
+    let isNonDefaultText = textElement.textContent !== defaultText;
     let nothingQueued = textQueue.length === 0;
 
     if(nothingQueued && isNonDefaultText && readyForNextText()){
@@ -82,4 +86,5 @@ up.compiler('.display', (element) => {
     resetInterval = setInterval(resetTextIfIdle, 100);
   });
 
+  init();
 });

@@ -15,7 +15,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         maxValue: 16,
       }, {
         name: 'frequencyReduction',
-        defaultValue: 0.5,
+        defaultValue: 1,
         minValue: 0,
         maxValue: 1,
       },
@@ -26,6 +26,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
     super();
     this.phase_ = 0;
     this.lastSampleValue_ = 0;
+    this.floatRange = 256;
     this.channelModifiers = [
       1, // 1st bit
       1, // 2nd bit
@@ -39,9 +40,14 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
     
     // listen for modifier changers
     this.port.onmessage = (event) => {
-      let channel = event.data[0];
-      let modifier = event.data[1];
-      this.channelModifiers[channel] = modifier;
+      const eventType = event.data[0];
+      if(eventType == 'channel-state'){
+        let channel = event.data[1];
+        let modifier = event.data[2];
+        this.channelModifiers[channel] = modifier;
+      }else if(eventType == 'float-range'){
+        this.floatRange = event.data[1];
+      }
     };
   }
 
@@ -75,16 +81,44 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         }
         if (this.phase_ >= 1.0) {
           this.phase_ -= 1.0;
-          this.lastSampleValue_ = step * Math.floor(inputChannel[i] / step + 0.5);
+          //TODO: bitDepth reduction did not seem to have any effect. trying to improve this - then remove bitdepth code
+          // this.lastSampleValue_ = step * Math.floor(inputChannel[i] / step + 0.5);
+ 
+          this.lastSampleValue_ = this.applyChannelFilters(inputChannel[i]);
         }
-        
-        let reducedBitIndex = Math.floor(i / 16); // 128 / 8 == 16 channels per bit
-        outputChannel[i] = this.channelModifiers[reducedBitIndex] * this.lastSampleValue_;
+
+        outputChannel[i] = this.lastSampleValue_;
       }
     }
 
     // keep running
     return true;
+  }
+
+  convertToNBitFloat(float32){
+    return this.convertToNBitInt(float32) * 1.0 / this.floatRange;
+  }
+
+  convertToNBitInt(float32){
+    return Math.round(float32 * this.floatRange);
+  }
+
+  applyChannelFilters(sampleValue){
+    // TODO: Remove old tryhard code 
+    // let reducedBitIndex = Math.floor(i / 16); // 128 / 8 == 16 channels per bit
+    // outputChannel[i] = this.channelModifiers[reducedBitIndex] * this.lastSampleValue_;
+    const sign = Math.sign(sampleValue);
+    let modifiedIntValue = Math.abs(this.convertToNBitInt(sampleValue));
+    this.channelModifiers.forEach(function(modifier, index){
+      let bitmask = 1 << index;
+      if(modifier == -1){
+        modifiedIntValue ^= bitmask; // invert the bit
+      }else if(modifier == 0){
+        modifiedIntValue &= ~bitmask; // set the bit to zero
+      }
+    });
+
+    return (modifiedIntValue * 1.0 / this.floatRange) * sign;
   }
 }
 

@@ -1,0 +1,35 @@
+.filter{
+    display: inline-flex;
+    margin: 0 40px;
+    flex-direction: column;
+}
+
+.filter--icon{
+    height: 72px;
+    width: 72px;
+    background-size: 100% 100%;
+    cursor: pointer;
+    filter: brightness(0.6);
+    transition: filter ease-in-out 0.08s;
+}
+
+.filter:hover .filter--icon{
+    filter: unset;
+}
+
+.filter.-lowpass .filter--icon{
+    background-image: url(../assets/filter_lowpass.svg);
+}
+.filter.-highpass .filter--icon{
+    background-image: url(../assets/filter_highpass.svg);
+}
+.filter.-bandpass .filter--icon{
+    background-image: url(../assets/filter_bandpass.svg);
+}
+.filter:hover .filter--label{
+    color: var(--color-text-active);
+}
+.filter--label{
+    transition: color ease-in-out 0.08s;
+    min-width: 77px; /*"highpass*/
+}
