@@ -23,6 +23,7 @@ up.compiler('.drumloop', function(drumLoop){
       request.send();
     }
     drumLoopStream.connect(inputGain);
+    up.emit('input-changed', { newInput: drumLoop });
   }
 
   function connectAudioContext(evt){
@@ -36,7 +37,7 @@ up.compiler('.drumloop', function(drumLoop){
   }
 
   function disconnectDrumLoop(){
-    drumLoopStream.disconnect(inputGain);
+    drumLoopStream.disconnect();
   }
 
   up.on('audioContext:connected', connectAudioContext);
