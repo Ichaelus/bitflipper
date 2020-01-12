@@ -16,18 +16,17 @@ const processAudio = async () => {
   const analyser = setupAnalyser(audioContext);
   volumeLimiter.connect(analyser);
 
-  const myOscilloscope = new WavyJones(audioContext, document.querySelector('.oscilloscope'));
+  const oscilloscope = audioContext.createAnalyser();
   
   inputStreamSignal
     .connect(inputGain)
     .connect(bitCrusher)
     .connect(filter)
     .connect(volumeLimiter)
+    .connect(oscilloscope)
     .connect(audioContext.destination);
 
-  //Connect Oscilloscope
-  volumeLimiter.connect(myOscilloscope);
-
+  up.emit('oscilloscope:connected', { oscilloscope: oscilloscope });
 
   function onVolumeChange(evt){
     const newVolume = evt.target.getValue();
