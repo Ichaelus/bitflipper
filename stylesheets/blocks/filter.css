@@ -18,13 +18,13 @@
 }
 
 .filter.-lowpass .filter--icon{
-    background-image: url(../assets/filter_lowpass.svg);
+    background-image: url(../../assets/filter_lowpass.svg);
 }
 .filter.-highpass .filter--icon{
-    background-image: url(../assets/filter_highpass.svg);
+    background-image: url(../../assets/filter_highpass.svg);
 }
 .filter.-bandpass .filter--icon{
-    background-image: url(../assets/filter_bandpass.svg);
+    background-image: url(../../assets/filter_bandpass.svg);
 }
 .filter:hover .filter--label{
     color: var(--color-text-active);

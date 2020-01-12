@@ -16,7 +16,7 @@ input:focus {
 
 @font-face {
   font-family: 'power_symbols';
-  src: url('fonts/Unicode_IEC_symbol.woff2') format('woff2'), url('fonts/Unicode_IEC_symbol.woff') format('woff'), url('fonts/Unicode_IEC_symbol.ttf') format('truetype'), url('fonts/Unicode_IEC_symbol.odt') format('opentype');
+  src: url('../fonts/Unicode_IEC_symbol.woff2') format('woff2'), url('../fonts/Unicode_IEC_symbol.woff') format('woff'), url('../fonts/Unicode_IEC_symbol.ttf') format('truetype'), url('../fonts/Unicode_IEC_symbol.odt') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -110,7 +110,9 @@ body{
 .upper-controls{
   display: flex;
   flex-direction: row;
-  padding: 11px 31px;
+  padding: 20px 14px;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .power-switch, .input-visualizer{
@@ -137,7 +139,6 @@ body{
 }
 
 .input-visualizer {
-  margin-left: auto;
   cursor: default;
   width: 20px;
   height: 20px;
@@ -157,4 +158,10 @@ body{
   background-color:#ffffff56;
   transition: background-color linear .2s;
   filter: blur(4px);
+}
+
+#bitflipper-logo{
+  height: 40px;
+  width: 180px;
+  flex: 0 1 auto;
 }

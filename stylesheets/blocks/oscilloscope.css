@@ -1,0 +1,6 @@
+.oscilloscope{
+  width: 200px;
+  height: 50px;
+  flex: 0 1 auto;
+  position: relative;
+}

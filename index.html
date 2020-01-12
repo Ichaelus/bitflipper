@@ -7,20 +7,22 @@
   <meta name="mobile-web-app-capable" content="yes">
   
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Inconsolata:700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/unpoly@0.61.0/dist/unpoly.min.css" integrity="sha384-Au6LjS9fxDpwn3+26YmukmOumZUmryd8ONenkVIoH4eEPH1tACqLsVfqz9tBrvQy" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="blocks/cable-conntector.css">
-  <link rel="stylesheet" href="blocks/channel.css">
-  <link rel="stylesheet" href="blocks/display.css">
-  <link rel="stylesheet" href="blocks/knob.css">
-  <link rel="stylesheet" href="blocks/filter.css">
+  <link rel="stylesheet" href="stylesheets/unpoly-0.61.min.css">
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="stylesheets/blocks/cable-conntector.css">
+  <link rel="stylesheet" href="stylesheets/blocks/channel.css">
+  <link rel="stylesheet" href="stylesheets/blocks/display.css">
+  <link rel="stylesheet" href="stylesheets/blocks/oscilloscope.css">
+  <link rel="stylesheet" href="stylesheets/blocks/knob.css">
+  <link rel="stylesheet" href="stylesheets/blocks/filter.css">
 
-  <script src="https://unpkg.com/unpoly@0.61.0/dist/unpoly.min.js" integrity="sha384-gW6zzUz/Kx42R/cIyfZeFdlW18HuD/vtSCfsv6cdlfeg3CRqh89KzWER1dQ1i4BJ" crossorigin="anonymous"></script>
-  <script src="compilers/cable-connector.js"></script>
-  <script src="compilers/display.js"></script>
-  <script src="compilers/filter.js"></script>
-  <script src="compilers/knob.js"></script>
-  <script src="compilers/power_switch.js"></script>
+  <script src="javascripts/unpoly-0.61.min.js"></script>
+  <script src="javascripts/wavy-jones.js"></script>
+  <script src="javascripts/compilers/cable-connector.js"></script>
+  <script src="javascripts/compilers/display.js"></script>
+  <script src="javascripts/compilers/filter.js"></script>
+  <script src="javascripts/compilers/knob.js"></script>
+  <script src="javascripts/compilers/power_switch.js"></script>
   <title>8 BIT reducer & mangler</title>
 </head>
 
@@ -28,7 +30,8 @@
 
   <!--
     Ideas:
-      * Controls for the bit depth
+      * (optional) Controls for the bit depth
+      * Visualization of the noise level per channel
       * Toggle button to control the limiter
       * Offline support
       * Switching between Mic and DRM by clicking on them
@@ -57,6 +60,8 @@
 
       <div class='upper-controls'>
         <input type="button" class="power-switch" value="⏻" title="Start/Stop">
+        <div class="oscilloscope"></div>
+        <img id="bitflipper-logo" src="assets/bitflipperlogo.svg" >
         <div class="input-visualizer" title='Current noise level'> 
           <div class="input-visualizer--glow" title='Current noise level'> </div>
          </div>
@@ -139,57 +144,57 @@
         <div class="channel">
             <input type="button" class="channel--button -active" id="0">
             <div class="channel--labels -label">
-              <label>#</label>  
+              <label>#</label>
               <label>1</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="1">
             <div class="channel--labels -label">
-              <label>#</label>  
+              <label>#</label>
               <label>2</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="2">
             <div class="channel--labels -label">
-              <label>#</label>  
-              <label>4</label>
+              <label>#</label>
+              <label>3</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="3">
             <div class="channel--labels -label">
-              <label>#</label>  
-              <label>8</label>
+              <label>#</label>
+              <label>4</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="4">
             <div class="channel--labels -label">
-              <label>#</label>  
-              <label>16</label>
+              <label>#</label>
+              <label>5</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="5">
             <div class="channel--labels -label">
-              <label>#</label>  
-              <label>32</label>
+              <label>#</label>
+              <label>6</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="6">
             <div class="channel--labels -label">
-              <label>#</label>  
-              <label>64</label>
+              <label>#</label>
+              <label>7</label>
             </div>
         </div>
         <div class="channel">
           <input type="button" class="channel--button -active" id="7">
             <div class="channel--labels -label">
-              <label>#</label>  
-              <label>128</label>
+              <label>#</label>
+              <label>8</label>
             </div>
         </div>
       </div>
@@ -201,7 +206,7 @@
     const processAudio = async () => {
       const audioContext = new AudioContext();
       // Initialize the audio context and its processor
-      await audioContext.audioWorklet.addModule('bit-crusher-processor.js');
+      await audioContext.audioWorklet.addModule('javascripts/bit-crusher-processor.js');
       const inputStreamSignal = await setupInputStream(audioContext);
       const inputGain = setupGain(audioContext); // Formerly: microphoneGain, now indifferent about microphone and drumloop
 
@@ -214,6 +219,8 @@
 
       const analyser = setupAnalyser(audioContext);
       volumeLimiter.connect(analyser);
+
+      const myOscilloscope = new WavyJones(audioContext, document.querySelector('.oscilloscope'));
       
       inputStreamSignal
         .connect(inputGain)
@@ -221,6 +228,10 @@
         .connect(filter)
         .connect(volumeLimiter)
         .connect(audioContext.destination);
+
+      //Connect Oscilloscope
+      volumeLimiter.connect(myOscilloscope);
+
 
       function onVolumeChange(evt){
         const newVolume = evt.target.getValue();
