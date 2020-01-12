@@ -1,0 +1,49 @@
+html, body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+*, *:after, *:before {
+  box-sizing: inherit;
+}
+
+input:focus {
+  outline: none;
+}
+
+@font-face {
+  font-family: 'power_symbols';
+  src: url('../fonts/Unicode_IEC_symbol.woff2') format('woff2'), url('../fonts/Unicode_IEC_symbol.woff') format('woff'), url('../fonts/Unicode_IEC_symbol.ttf') format('truetype'), url('../fonts/Unicode_IEC_symbol.odt') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body {
+  background: radial-gradient(farthest-side, #EDF2F7, #718096 130%);
+}
+
+body{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@media(max-width: 1030px){
+  body{
+    align-items: unset;
+  }
+}
+
+.wrapper{
+  flex: 1 auto;
+}
+
+.-label{
+  color: var(--color-text-muted);
+  font-family: 'Inconsolata', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

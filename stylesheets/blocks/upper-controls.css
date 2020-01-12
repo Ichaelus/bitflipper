@@ -1,0 +1,13 @@
+.upper-controls{
+  display: flex;
+  flex-direction: row;
+  padding: 20px 14px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.upper-controls--logo{
+  height: 40px;
+  width: 180px;
+  flex: 0 1 auto;
+}

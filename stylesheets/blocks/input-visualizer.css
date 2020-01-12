@@ -1,0 +1,24 @@
+.input-visualizer {flex: 0 1 auto;
+  flex: 0 1 auto;
+  background-color: grey;
+  border: none;
+  cursor: default;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: inset 0px 0px 0px 2px #000000;
+}
+
+.input-visualizer--glow {
+  width: 24px;
+  height: 24px;
+  display: block;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  border-radius: 50%;
+  background-color:#ffffff56;
+  transition: background-color linear .2s;
+  filter: blur(4px);
+}

@@ -1,0 +1,22 @@
+.power-switch{
+  flex: 0 1 auto;
+  background-color: grey;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  height: 35px;
+  width: 26px;
+}
+
+.power-switch {
+  font-family: 'power_symbols';
+  font-style: normal;
+  cursor: pointer;
+  background-color: black;
+  color: var(--color-text-active);
+}
+
+.machine-back.-active .power-switch{
+  background-color: white;
+  color: black;
+}
