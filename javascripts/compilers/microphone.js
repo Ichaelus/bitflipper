@@ -1,14 +1,12 @@
 up.compiler('.microphone', function(microphone){
-  let audioContext, inputGain;
-  let alreadyConnected = false;
+  let audioContext, inputGain, microphoneInAudioContext;
 
   async function setupMicrophoneStream(){
-    if(!alreadyConnected){
+    if(!microphoneInAudioContext){
       let microphoneAudioInput = await getMicrophoneAudioInput();
-      let microphoneInAudioContext = audioContext.createMediaStreamSource(microphoneAudioInput);
-      microphoneInAudioContext.connect(inputGain);
-      alreadyConnected = true;
+      microphoneInAudioContext = audioContext.createMediaStreamSource(microphoneAudioInput);
     }
+    microphoneInAudioContext.connect(inputGain);
   }
 
   // Ask for user permission to the microphone audio stream
@@ -34,7 +32,12 @@ up.compiler('.microphone', function(microphone){
     }
   }
 
+  function disconnectMicrophone(){
+    microphoneInAudioContext.disconnect(inputGain);
+  }
+
   up.on('audioContext:connected', connectAudioContext);
   up.on('inputgain:connected', connectInputGain);
   up.on(microphone, 'plug-in', activateMicrophone);
+  up.on(microphone, 'plug-out', disconnectMicrophone);
 });

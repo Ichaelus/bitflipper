@@ -16,7 +16,7 @@ up.compiler('.cable-connector', function(element){
 
   function plugOutOtherCables(evt){
     if(evt.newInput !== element){
-      plugOutCable();
+      up.emit(element, 'plug-out');
     }
   }
 
