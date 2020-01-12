@@ -14,6 +14,18 @@ up.compiler('.cable-connector', function(element){
     }
   }
 
+  function plugOutOtherCables(evt){
+    if(evt.newInput !== element){
+      plugOutCable();
+    }
+  }
+
+  function switchToCable(evt){
+    up.emit(element, 'plug-in');
+  }
+
+  up.on(element, 'click', switchToCable);
   up.on(element, 'plug-in', plugInCable);
-  up.on('reset:off', plugOutCable);
+  up.on(element, 'plug-out', plugOutCable);
+  up.on('input-changed', plugOutOtherCables);
 });

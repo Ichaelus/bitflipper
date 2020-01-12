@@ -5,9 +5,10 @@
   --connector-width: 45px;
   width: var(--connector-width);
   z-index: 0;
+  cursor: pointer;
 }
 
-.cable-connector.-drumloop{
+.cable-connector.drumloop{
   margin-left: calc(1 * var(--connector-width) + 1 * 25px);
 }
 
@@ -43,6 +44,7 @@
   text-align: center;
 }
 
+.cable-connector:hover .cable-connector--label,
 .cable-connector.-active .cable-connector--label{
   color: var(--color-text-active);
 }

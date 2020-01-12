@@ -3,7 +3,6 @@ const processAudio = async () => {
   const audioContext = new AudioContext();
   // Initialize the audio context and its processor
   await audioContext.audioWorklet.addModule('javascripts/bit-crusher-processor.js');
-  const inputStreamSignal = await setupInputStream(audioContext);
   const inputGain = setupGain(audioContext); // Formerly: microphoneGain, now indifferent about microphone and drumloop
 
   const bitCrusher = new AudioWorkletNode(audioContext, 'bit-crusher-processor');
@@ -18,8 +17,7 @@ const processAudio = async () => {
 
   const oscilloscope = audioContext.createAnalyser();
   
-  inputStreamSignal
-    .connect(inputGain)
+  inputGain
     .connect(bitCrusher)
     .connect(filter)
     .connect(volumeLimiter)
@@ -27,6 +25,7 @@ const processAudio = async () => {
     .connect(audioContext.destination);
 
   up.emit('audioContext:connected', { audioContext: audioContext });
+  up.emit('inputgain:connected', { inputGain: inputGain });
   up.emit('oscilloscope:connected', { oscilloscope: oscilloscope });
   up.emit('bitcrusher:connected', { bitCrusher: bitCrusher });
   up.emit('filter:connected', { filter: filter });
@@ -104,58 +103,6 @@ function setupGain(audioContext){
     inputGain.gain.setValueAtTime(1, audioContext.currentTime);
   })
   return inputGain;
-}
-
-async function setupInputStream(audioContext){
-  try {
-    return await setupMicrophoneStream(audioContext);
-  } catch  (err) {
-    return setupDrumLoopStream(audioContext);
-  }
-}
-
-async function setupMicrophoneStream(audioContext){
-  let microphoneAudioInput = await getMicrophoneAudioInput();
-  let microphoneInAudioContext = audioContext.createMediaStreamSource(microphoneAudioInput);
-
-  up.on('reset:on', function(){
-    up.emit('plug-in', { target: document.querySelector('.cable-connector.-microphone') });
-  });
-  return microphoneInAudioContext;
-}
-
-// Ask for user permission to the microphone audio stream
-async function getMicrophoneAudioInput() {
-  return await navigator.mediaDevices.getUserMedia({ audio: true });
-}
-
-function setupDrumLoopStream(audioContext){
-  let drumLoop = audioContext.createBufferSource();
-  let request = new XMLHttpRequest();
-  let musicfile = 'assets/drumloop';
-  let url = musicfile + ".wav"
-  const playbackRate = 1.0;
-  request.open('GET', url, true);
-  request.responseType = 'arraybuffer';
-  request.onload = function () {
-    var audioData = request.response;
-    audioContext.decodeAudioData(audioData, function (buffer) {
-      let myBuffer = buffer;
-      let songLength = buffer.duration;
-      drumLoop.buffer = myBuffer;
-      drumLoop.playbackRate.value = playbackRate;
-      drumLoop.loop = true;
-      drumLoop.start(0);
-    });
-  };
-  request.send();
-//        oscillator.frequency.exponentialRampToValueAtTime(baseFrequency + offset, audioContext.currentTime + 0.75);
-  
-  up.on('reset:on', function(){
-    up.emit('plug-in', { target: document.querySelector('.cable-connector.-drumloop') });
-  });
-
-  return drumLoop;
 }
 
 function setupVolumeLimiter(audioContext){
