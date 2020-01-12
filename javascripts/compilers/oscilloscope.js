@@ -68,8 +68,8 @@ up.compiler('.oscilloscope', function (element) {
     freqData = new Uint8Array(oscilloscope.frequencyBinCount);
   }
 
-  up.on('reset:on', drawLines)
-  up.on('reset:off', stopDrawingLines)
-  up.on('oscilloscope:connected', connectOscilloscope)
+  up.on('reset:on', drawLines);
+  up.on('reset:off', stopDrawingLines);
+  up.on('oscilloscope:connected', connectOscilloscope);
   init();
 });

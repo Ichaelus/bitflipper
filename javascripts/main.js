@@ -1,4 +1,4 @@
-const buttonStates = ["0", "-1", "1"]
+
 const processAudio = async () => {
   const audioContext = new AudioContext();
   // Initialize the audio context and its processor
@@ -10,7 +10,7 @@ const processAudio = async () => {
   const paramBitDepth = bitCrusher.parameters.get('bitDepth');
   const paramReduction = bitCrusher.parameters.get('frequencyReduction');
 
-  const filter = setupFilter(audioContext);
+  const filter = audioContext.createBiquadFilter();
   const volumeLimiter = setupVolumeLimiter(audioContext);
 
   const analyser = setupAnalyser(audioContext);
@@ -26,7 +26,10 @@ const processAudio = async () => {
     .connect(oscilloscope)
     .connect(audioContext.destination);
 
+  up.emit('audioContext:connected', { audioContext: audioContext });
   up.emit('oscilloscope:connected', { oscilloscope: oscilloscope });
+  up.emit('bitcrusher:connected', { bitCrusher: bitCrusher });
+  up.emit('filter:connected', { filter: filter });
 
   function onVolumeChange(evt){
     const newVolume = evt.target.getValue();
@@ -52,24 +55,6 @@ const processAudio = async () => {
     paramReduction.setValueAtTime(newFrequencyReduction, audioContext.currentTime);
     up.emit('status-text-changed', {text: `Frequency Reduction: ${ parseInt(newFrequencyReduction * 100) }%`, instant: true});
   };
-      
-  function onCutOffChanged(evt){
-    const maxCutoff = 16000;
-    const newCutOff = evt.target.getValue() * maxCutoff;
-    filter.frequency.setValueAtTime(newCutOff, audioContext.currentTime);
-    up.emit('status-text-changed', {text: `Cutoff: ${ parseInt(newCutOff) } Hz`, instant: true});
-  }
-
-  function onResonanceChanged(evt){
-    const maxResonance = 30;
-    const newResonance = evt.target.getValue() * maxResonance;
-    filter.Q.setValueAtTime(newResonance, audioContext.currentTime);
-    up.emit('status-text-changed', {text: `Resonance: ${ parseInt(newResonance) }`, instant: true});
-  }
-
-  function onFilterTypeChanged(evt){
-    filter.type = evt.value;
-  }
 
   function onFloatRangeChanged(evt){
     const maxFloatRange =   1024;
@@ -77,33 +62,6 @@ const processAudio = async () => {
     bitCrusher.port.postMessage(['float-range', newFloatRange]);
     up.emit('status-text-changed', {text: `Float Range: ${ newFloatRange }`, instant: true});
   }
-
-  function changeChannelState(evt) {
-    let element = evt.target;
-    let channelNumber = parseInt(element.id);
-    let statusChangeName;
-    switch (true) {
-      case element.classList.contains('-active'):
-        element.classList.remove('-active');
-        element.classList.add('-inverted');
-        bitCrusher.port.postMessage(['channel-state', channelNumber, -1]);
-        statusChangeName = 'inverted';
-        break;
-      case element.classList.contains('-inverted'):
-        element.classList.remove('-inverted');
-        element.classList.add('-inactive');
-        bitCrusher.port.postMessage(['channel-state', channelNumber, 0]);
-        statusChangeName = 'disabled';
-        break;
-      case element.classList.contains('-inactive'):
-        element.classList.remove('-inactive');
-        element.classList.add('-active');
-        bitCrusher.port.postMessage(['channel-state', channelNumber, 1]);
-        statusChangeName = 'enabled';
-        break;
-    };
-    up.emit('status-text-changed', {text: `Channel ${ channelNumber + 1 } ${statusChangeName}`, instant: true});
-  };
 
   up.on('reset:off', function(){
     audioContext.suspend();
@@ -115,11 +73,7 @@ const processAudio = async () => {
   });
   up.on('button-value-changed', '.knob.-volume', onVolumeChange);
   up.on('button-value-changed', '.knob.-sample-reduction', onFrequencyReductionChange);
-  up.on('button-value-changed', '.knob.-filter-cutoff', onCutOffChanged);
-  up.on('button-value-changed', '.knob.-filter-resonance', onResonanceChanged);
   up.on('button-value-changed', '.knob.-float-range', onFloatRangeChanged);
-  up.on('filter-type-changed', onFilterTypeChanged)
-  up.on('click', '.channel--button', changeChannelState);
   up.emit('reset:on');
 };
 
@@ -202,14 +156,6 @@ function setupDrumLoopStream(audioContext){
   });
 
   return drumLoop;
-}
-
-function setupFilter(audioContext){
-  let filter = audioContext.createBiquadFilter();
-  filter.type ="lowpass";
-  filter.frequency.value = 10000;
-  filter.Q.value = 0;
-  return filter;
 }
 
 function setupVolumeLimiter(audioContext){
