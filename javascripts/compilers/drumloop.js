@@ -37,7 +37,9 @@ up.compiler('.drumloop', function(drumLoop){
   }
 
   function disconnectDrumLoop(){
-    drumLoopStream.disconnect();
+    if(drumLoopStream){
+      drumLoopStream.disconnect();
+    }
   }
 
   up.on('audioContext:connected', connectAudioContext);

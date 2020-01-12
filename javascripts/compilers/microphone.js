@@ -33,7 +33,9 @@ up.compiler('.microphone', function(microphone){
   }
 
   function disconnectMicrophone(){
-    microphoneInAudioContext.disconnect();
+    if(microphoneInAudioContext){
+      microphoneInAudioContext.disconnect();
+    }
   }
 
   up.on('audioContext:connected', connectAudioContext);
