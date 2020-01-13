@@ -2,6 +2,10 @@
 
 ![OTTO](assets/otto.png)
 
+Check it out live: https://otto.leimstaedtner.it
+
+You can even plug-in your MIDI-controller and use it on stage - all assets are chached offline!
+
 
 ### Development
 
