@@ -1,0 +1,47 @@
+CACHE MANIFEST
+# Include all required assets below to support 
+# the app to run offline
+
+assets/bitflipperlogo.svg
+assets/drumloop.wav
+assets/filter_bandpass.svg
+assets/filter_highpass.svg
+assets/filter_hipass.svg
+assets/filter_lowpass.svg
+assets/jack-connector-cable.svg
+assets/otto.png
+
+fonts/Unicode_IEC_symbol.ttf
+fonts/Unicode_IEC_symbol.woff
+fonts/Unicode_IEC_symbol.woff2
+fonts/Unicode_IEC_symbol_font.otf
+
+javascripts/bit-crusher-processor.js
+javascripts/main.js
+javascripts/unpoly-0.61.min.js
+
+javascripts/compilers/cable-connector.js
+javascripts/compilers/channel.js
+javascripts/compilers/display.js
+javascripts/compilers/drumloop.js
+javascripts/compilers/filter.js
+javascripts/compilers/knob.js
+javascripts/compilers/microphone.js
+javascripts/compilers/oscilloscope.js
+javascripts/compilers/power_switch.js
+javascripts/compilers/volume.js
+
+stylesheets/reset.css
+stylesheets/unpoly-0.61.min.css
+
+stylesheets/blocks/cable-conntector.css
+stylesheets/blocks/channel.css
+stylesheets/blocks/display.css
+stylesheets/blocks/filter.css
+stylesheets/blocks/filter-type.css
+stylesheets/blocks/input-visualizer.css
+stylesheets/blocks/knob.css
+stylesheets/blocks/machine-back.css
+stylesheets/blocks/oscilloscope.css
+stylesheets/blocks/power-switch.css
+stylesheets/blocks/upper-controls.css
