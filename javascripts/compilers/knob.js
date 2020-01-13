@@ -43,7 +43,7 @@ up.compiler('.knob', (element) => {
           element.rotation = element.MINIMUM;
         }
         moveKnobPosition();
-        up.emit('button-value-changed', { target: element });
+        up.emit(element, 'button-value-changed');
       }
     }
 

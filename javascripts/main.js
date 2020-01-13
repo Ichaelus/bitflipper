@@ -1,10 +1,8 @@
-
 const processAudio = async () => {
   const audioContext = new AudioContext();
   // Initialize the audio context and its processor
   await audioContext.audioWorklet.addModule('javascripts/bit-crusher-processor.js');
-  const inputGain = setupGain(audioContext); // Formerly: microphoneGain, now indifferent about microphone and drumloop
-
+  const inputGain = audioContext.createGain();
   const bitCrusher = new AudioWorkletNode(audioContext, 'bit-crusher-processor');
   const paramBitDepth = bitCrusher.parameters.get('bitDepth');
   const paramReduction = bitCrusher.parameters.get('frequencyReduction');
@@ -30,20 +28,6 @@ const processAudio = async () => {
   up.emit('bitcrusher:connected', { bitCrusher: bitCrusher });
   up.emit('filter:connected', { filter: filter });
 
-  function onVolumeChange(evt){
-    const newVolume = evt.target.getValue();
-    inputGain.gain.setValueAtTime(newVolume, audioContext.currentTime);
-    up.emit('status-text-changed', {text: `Volume: ${ parseInt(newVolume * 100) }%`, instant: true});
-  };
-  
-  function mute(){
-    inputGain.gain.setValueAtTime(0, audioContext.currentTime);
-  }
-
-  function unmute(){
-    inputGain.gain.setValueAtTime(1, audioContext.currentTime);
-  }
-
   function onFrequencyReductionChange(evt){
     // |frequencyReduction| parameters will be automated and changing over
     // time. Thus its parameter array will have 128 values.
@@ -62,15 +46,9 @@ const processAudio = async () => {
     up.emit('status-text-changed', {text: `Float Range: ${ newFloatRange }`, instant: true});
   }
 
-  up.on('reset:off', function(){
-    audioContext.suspend();
-    mute();
-  });
-  up.on('reset:on', function(){
-    audioContext.resume();
-    unmute();
-  });
-  up.on('button-value-changed', '.knob.-volume', onVolumeChange);
+  up.on('reset:off', () => audioContext.suspend() );
+  up.on('reset:on', () => audioContext.resume() );
+  
   up.on('button-value-changed', '.knob.-sample-reduction', onFrequencyReductionChange);
   up.on('button-value-changed', '.knob.-float-range', onFloatRangeChanged);
   up.emit('reset:on');
@@ -94,15 +72,6 @@ function setupAnalyser(audioContext){
     document.querySelector(".input-visualizer--glow").style.backgroundColor = "hsla(" + hueValue + ", 100%, 50%, 0.95)";
   }, 200);
   return analyser;
-}
-
-function setupGain(audioContext){
-  let inputGain = audioContext.createGain();
-  up.on('reset:on', function(){
-    // Initial volume: 100%
-    inputGain.gain.setValueAtTime(1, audioContext.currentTime);
-  })
-  return inputGain;
 }
 
 function setupVolumeLimiter(audioContext){
