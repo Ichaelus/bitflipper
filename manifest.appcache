@@ -4,7 +4,7 @@ CACHE MANIFEST
 
 # Include all required assets below to support 
 # the app to run offline
-
+index.html
 assets/bitflipperlogo.svg
 assets/drumloop.wav
 assets/filter_bandpass.svg
