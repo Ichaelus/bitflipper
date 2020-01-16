@@ -1,10 +1,14 @@
-## OTTO
+## BITFLIPPER
 
-![OTTO](assets/otto.png)
+![Bitflipper Example](assets/bitflipper.png)
 
-Check it out live: https://otto.leimstaedtner.it
+Bitflipper is a little "synthesizer" build using modern web techniques like AudioWorklet. It's main functionallity is the bit-wise control over the sound input using the colored buttons - hence the name. 
+
+Check it out live: https://bitflipper.leimstaedtner.it
 
 You can even plug-in your MIDI-controller and use it on stage - all assets are chached offline!
+
+Currently, [only a few Browsers](https://caniuse.com/#search=AudioWorklet) support AudioWorklets. I recommend using Chrome for now.
 
 
 ### Development
@@ -14,5 +18,5 @@ You can even plug-in your MIDI-controller and use it on stage - all assets are c
   ```ruby
   ruby -r webrick/https -e 'WEBrick::HTTPServer.new(Port: 8000, DocumentRoot: ".", SSLEnable: true, SSLCertName: [%w[CN localhost]]).start'
   ```
-* Open https://localhost:8000/ or https://otto.lvh.me:8000/
-* When done, commit your changes and sync to the SFTP server.
+* Open https://localhost:8000/ or https://bitflipper.lvh.me:8000/
+* When done, commit your changes. They will be synced once merged into `master`.

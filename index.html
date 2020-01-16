@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="stylesheets/unpoly-0.61.min.css">
   <link rel="stylesheet" href="stylesheets/reset.css">
   <link rel="stylesheet" href="stylesheets/blocks/cable-conntector.css">
-  <link rel="stylesheet" href="stylesheets/blocks/channel.css">
+  <link rel="stylesheet" href="stylesheets/blocks/bit-control.css">
   <link rel="stylesheet" href="stylesheets/blocks/display.css">
   <link rel="stylesheet" href="stylesheets/blocks/filter.css">
   <link rel="stylesheet" href="stylesheets/blocks/input-visualizer.css">
@@ -22,7 +22,7 @@
 
   <script src="javascripts/unpoly-0.61.min.js"></script>
   <script src="javascripts/compilers/cable-connector.js"></script>
-  <script src="javascripts/compilers/channel.js"></script>
+  <script src="javascripts/compilers/bit-control.js"></script>
   <script src="javascripts/compilers/display.js"></script>
   <script src="javascripts/compilers/drumloop.js"></script>
   <script src="javascripts/compilers/filter.js"></script>
@@ -39,11 +39,10 @@
   <!--
     Ideas:
       * (optional) Controls for the bit depth
-      * Visualization of the noise level per channel
+      * Visualization of the noise level per bit-control
       * Toggle button to control the limiter
-      * Switching between Mic and DRM by clicking on them
       * Cable jack to visualize sound output
-      * The channel buttons should be controllable in two directions
+      * The bit-control buttons should be controllable in two directions
       * Better on/off visualization and resilience
   -->
 
@@ -147,59 +146,59 @@
       </div>
     </div>
 -->
-      <div class="channels-container">
-        <div class="channel">
-            <input type="button" class="channel--button -active" id="0">
-            <div class="channel--labels -label">
+      <div class="bit-controls-container">
+        <div class="bit-control">
+            <input type="button" class="bit-control--button -active" id="0">
+            <div class="bit-control--labels -label">
               <label>#</label>
               <label>1</label>
             </div>
         </div>
-        <div class="channel">
-          <input type="button" class="channel--button -active" id="1">
-            <div class="channel--labels -label">
+        <div class="bit-control">
+          <input type="button" class="bit-control--button -active" id="1">
+            <div class="bit-control--labels -label">
               <label>#</label>
               <label>2</label>
             </div>
         </div>
-        <div class="channel">
-          <input type="button" class="channel--button -active" id="2">
-            <div class="channel--labels -label">
+        <div class="bit-control">
+          <input type="button" class="bit-control--button -active" id="2">
+            <div class="bit-control--labels -label">
               <label>#</label>
               <label>3</label>
             </div>
         </div>
-        <div class="channel">
-          <input type="button" class="channel--button -active" id="3">
-            <div class="channel--labels -label">
+        <div class="bit-control">
+          <input type="button" class="bit-control--button -active" id="3">
+            <div class="bit-control--labels -label">
               <label>#</label>
               <label>4</label>
             </div>
         </div>
-        <div class="channel">
-          <input type="button" class="channel--button -active" id="4">
-            <div class="channel--labels -label">
+        <div class="bit-control">
+          <input type="button" class="bit-control--button -active" id="4">
+            <div class="bit-control--labels -label">
               <label>#</label>
               <label>5</label>
             </div>
         </div>
-        <div class="channel">
-          <input type="button" class="channel--button -active" id="5">
-            <div class="channel--labels -label">
+        <div class="bit-control">
+          <input type="button" class="bit-control--button -active" id="5">
+            <div class="bit-control--labels -label">
               <label>#</label>
               <label>6</label>
             </div>
         </div>
-        <div class="channel">
-          <input type="button" class="channel--button -active" id="6">
-            <div class="channel--labels -label">
+        <div class="bit-control">
+          <input type="button" class="bit-control--button -active" id="6">
+            <div class="bit-control--labels -label">
               <label>#</label>
               <label>7</label>
             </div>
         </div>
-        <div class="channel">
-          <input type="button" class="channel--button -active" id="7">
-            <div class="channel--labels -label">
+        <div class="bit-control">
+          <input type="button" class="bit-control--button -active" id="7">
+            <div class="bit-control--labels -label">
               <label>#</label>
               <label>8</label>
             </div>
