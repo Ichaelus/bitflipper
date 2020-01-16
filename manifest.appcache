@@ -1,4 +1,7 @@
 CACHE MANIFEST
+# Version 1.0
+# ^ Increase on each deploy to update the Cache
+
 # Include all required assets below to support 
 # the app to run offline
 

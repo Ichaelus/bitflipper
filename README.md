@@ -19,4 +19,5 @@ Currently, [only a few Browsers](https://caniuse.com/#search=AudioWorklet) suppo
   ruby -r webrick/https -e 'WEBrick::HTTPServer.new(Port: 8000, DocumentRoot: ".", SSLEnable: true, SSLCertName: [%w[CN localhost]]).start'
   ```
 * Open https://localhost:8000/ or https://bitflipper.lvh.me:8000/
-* When done, commit your changes. They will be synced once merged into `master`.
+* When done, increase the version number in the manifest.appdata file and commit your changes. 
+* Your code will be synced to production once merged into `master`.
