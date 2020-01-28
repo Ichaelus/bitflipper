@@ -2,7 +2,7 @@
 
 ![Bitflipper Example](assets/bitflipper.png)
 
-Bitflipper is a little "synthesizer" build using modern web techniques like AudioWorklet. It's main functionallity is the bit-wise control over the sound input using the colored buttons - hence the name. 
+Bitflipper is a little effects-box build using modern web techniques like WebAudio's AudioWorklet. It's main functionallity is the bit-wise control over the sound input using the colored buttons - hence the name. 
 
 Check it out live: https://bitflipper.leimstaedtner.it
 
