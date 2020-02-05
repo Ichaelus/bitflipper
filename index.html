@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" manifest="manifest.appcache">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="mobile-web-app-capable" content="yes">
+  <meta name="description" content="A little effects-box build using modern web techniques">
+  <meta name="theme-color" content="#202020" />
+  <link rel="manifest" href="/manifest.json">
   
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Inconsolata:700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="stylesheets/unpoly-0.61.min.css">
@@ -26,12 +29,13 @@
   <script src="javascripts/compilers/display.js"></script>
   <script src="javascripts/compilers/drumloop.js"></script>
   <script src="javascripts/compilers/filter.js"></script>
+  <script src="javascripts/compilers/install.js"></script>
   <script src="javascripts/compilers/knob.js"></script>
   <script src="javascripts/compilers/microphone.js"></script>
   <script src="javascripts/compilers/oscilloscope.js"></script>
   <script src="javascripts/compilers/power_switch.js"></script>
   <script src="javascripts/compilers/volume.js"></script>
-  <title>8 BIT reducer & mangler</title>
+  <title>Bitflipper - 8 BIT reducer & mangler</title>
 </head>
 
 <body>
@@ -62,6 +66,10 @@
         <div class="cable-connector--part -center"></div>
         <div class="cable-connector--part -bottom"></div>
         <div class="cable-connector--label -label">Drm</div>
+      </div>
+
+      <div class="cable-connector-stub install">
+        <div class="cable-connector--label -label">Install</div>
       </div>
 
       <div class='upper-controls'>
