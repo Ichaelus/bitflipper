@@ -3,6 +3,9 @@ up.compiler('.bit-control', (bitControl) => {
   const button = bitControl.querySelector('.bit-control--button');
 
   function changeBitControlState(evt) {
+    if(!bitCrusher){
+      return; // The machine has not been initialized yet
+    }
     let bitControlNumber = parseInt(button.id);
     let statusChangeName;
     switch (true) {

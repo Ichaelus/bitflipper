@@ -6,6 +6,12 @@
   justify-content: space-around;
 }
 
+@media(max-width: 525px){
+  .upper-controls{
+    flex-direction: column;
+  }
+}
+
 .upper-controls--logo{
   height: 40px;
   width: 180px;

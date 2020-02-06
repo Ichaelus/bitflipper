@@ -1,4 +1,4 @@
-.input-visualizer {flex: 0 1 auto;
+.input-visualizer {
   flex: 0 1 auto;
   background-color: grey;
   border: none;
@@ -8,6 +8,12 @@
   border-radius: 50%;
   position: relative;
   box-shadow: inset 0px 0px 0px 2px #000000;
+}
+
+@media(max-width: 600px){
+  .input-visualizer{
+    display: none;
+  }
 }
 
 .input-visualizer--glow {

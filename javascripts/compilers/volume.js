@@ -10,6 +10,9 @@ up.compiler('.volume', function (volumeKnob) {
   }
 
   function onVolumeChange(evt){
+    if(!inputGain){
+      return; // The machine has not been initialized yet
+    }
     const newVolume = volumeKnob.getValue();
     inputGain.gain.setValueAtTime(newVolume, audioContext.currentTime);
     up.emit('status-text-changed', {text: `Volume: ${ parseInt(newVolume * 100) }%`, instant: true});

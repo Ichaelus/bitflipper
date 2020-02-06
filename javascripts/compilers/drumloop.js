@@ -4,6 +4,9 @@ up.compiler('.drumloop', function(drumLoop){
   const musicFileUrl = 'assets/drumloop.wav';
 
   function activateDrumLoop(){
+    if(!audioContext){
+      return; // The machine has not been initialized yet
+    }
     if(!drumLoopStream){
       drumLoopStream = audioContext.createBufferSource();
       let request = new XMLHttpRequest();

@@ -1,4 +1,4 @@
-const CACHE_NAME = '1.56'; // Change to invalidate the cache
+const CACHE_NAME = '1.6'; // Change to invalidate the cache
 const FILES_TO_CACHE = [
   '/',
   '/index.html',

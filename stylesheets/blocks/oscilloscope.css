@@ -4,3 +4,9 @@
   flex: 0 1 auto;
   position: relative;
 }
+
+@media(max-width: 525px){
+  .oscilloscope{
+    width: 90%;
+  }
+}

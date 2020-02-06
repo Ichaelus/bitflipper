@@ -18,6 +18,28 @@
   }
 }
 
+@media(max-width: 755px){
+  .bit-controls-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto;
+    justify-content: center;
+  }
+  .bit-control{
+    padding: 15px 15px;
+  }
+}
+
+@media(max-width: 375px){
+  .bit-controls-container {
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+  }
+  .bit-control{
+    padding: 15px 15px;
+  }
+}
+
 .bit-control--button {
   color: var(--color-text-active);
   padding: 38px 32px;

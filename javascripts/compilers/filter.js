@@ -16,6 +16,9 @@ up.compiler('.filter', function(element){
   }
 
   function rotateFilterType(){
+    if(!filter){
+      return; // The machine has not been initialized yet
+    }
     currentFilterIndex++;
     if(currentFilterIndex >= FILTER_TYPES.length){
       currentFilterIndex = 0;
@@ -24,6 +27,9 @@ up.compiler('.filter', function(element){
   }
 
   function onCutOffChanged(evt){
+    if(!filter){
+      return; // The machine has not been initialized yet
+    }
     const maxCutoff = 16000;
     const newCutOff = evt.target.getValue() * maxCutoff;
     filter.frequency.setValueAtTime(newCutOff, audioContext.currentTime);
@@ -31,6 +37,9 @@ up.compiler('.filter', function(element){
   }
 
   function onResonanceChanged(evt){
+    if(!filter){
+      return; // The machine has not been initialized yet
+    }
     const maxResonance = 30;
     const newResonance = evt.target.getValue() * maxResonance;
     filter.Q.setValueAtTime(newResonance, audioContext.currentTime);
