@@ -23,7 +23,7 @@
   margin-left: calc(1 * var(--connector-width) + 3.5 * 25px);
 }
 .cable-connector-stub.install .cable-connector--label{
-  padding-top: 9px;
+  padding-top: 10px;
 }
 
 .cable-connector--part{
