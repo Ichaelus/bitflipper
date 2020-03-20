@@ -67,7 +67,6 @@ self.addEventListener('install', function (evt) {
       return Promise.all(keyList.map((key) => {
         if (key !== CACHE_NAME) {
           console.log('[ServiceWorker] Removing old cache', key);
-          alert("nay");
           return caches.delete(key);
         }
       }));

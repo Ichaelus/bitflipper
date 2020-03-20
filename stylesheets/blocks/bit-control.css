@@ -1,92 +1,101 @@
-.bit-controls-container {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
+.bit-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-column-gap: 5px;
+  grid-row-gap: 20px;
   max-width: var(--content-width);
   margin: 0 auto;
-  flex-wrap: wrap;
 }
 
-@media(max-width: 1030px){
-  .bit-controls-container {
-    padding: 0;
-  }
-  
-  .bit-control {
-    padding: 5px;
-    padding-top: 20px;
-  }
-}
-
-@media(max-width: 755px){
-  .bit-controls-container {
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-template-rows: auto auto;
-    justify-content: center;
-  }
-  .bit-control{
-    padding: 15px 15px;
-  }
-}
-
-@media(max-width: 375px){
-  .bit-controls-container {
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto;
-  }
-  .bit-control{
-    padding: 15px 15px;
-  }
+.bit-control--buttons {
+  display: flex;
+  flex-direction: column;
 }
 
 .bit-control--button {
-  color: var(--color-text-active);
-  padding: 38px 32px;
+  color: black;
+  padding: 10px 15px;
+  margin: 4px 0;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   cursor: pointer;
   border-radius: 4px;
-  border-color: var(--color-text-mtued);
+  border-color: var(--color-text-muted);
   border-width: 1px;
+  text-transform: uppercase;
+  filter: brightness(0.75) saturate(0.75);
+  font-family: 'Inconsolata', monospace;
+  letter-spacing: 0.1em;
 }
 
-.bit-control--button.-active {
+.bit-control--button.-active,
+.bit-control--button:active,
+.bit-control--button:hover {
+  filter: brightness(1) saturate(1);
+}
+
+.bit-control--button.-reset {
   background: radial-gradient(closest-side, #bafc57, greenyellow 70%);
   box-shadow: inset 0 0 3px #6bb105;
 }
 
-.bit-control--button.-active:hover {
+.bit-control--button.-reset:hover {
   background: radial-gradient(closest-side, #d6f8a3, greenyellow 70%);
 }
 
-.bit-control--button.-inverted {
+.bit-control--button.-invert {
   background: radial-gradient(closest-side, rgb(255, 32, 32), red 70%);
   box-shadow: inset 0 0 30px #ad0409;
   border-color: #705c53;
 }
 
-.bit-control--button.-inverted:hover {
+.bit-control--button.-invert:hover {
   background: radial-gradient(closest-side, rgb(255, 53, 53), red 70%);
 }
 
-.bit-control--button.-inactive {
+.bit-control--button.-mute {
   background-color: #fffcfc;
   box-shadow: inset 0 0 30px #a0a0a7;
 }
 
-.bit-control--button.-inactive:hover {
+.bit-control--button.-mute:hover {
   background: radial-gradient(closest-side, #ffffff, #fffcfc 70%);
 }
 
-.bit-controls-container .bit-control--labels {
-  display: flex;
-  justify-content: space-between;
+.bit-controls .bit-control--labels {
   padding: 5px 0;
   border-bottom: 10px double currentColor;
+  text-align: center;
 }
 
 .machine-back.-active .bit-control--labels {
   color: var(--color-text-active);
+}
+
+@media(max-width: 880px){
+  .bit-controls {
+    grid-column-gap: 15px;
+  }
+  
+  .bit-control--button{
+    padding: 10px 5px;
+  }
+}
+
+@media(max-width: 740px){
+  .bit-controls {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+}
+
+@media(max-width: 370px){
+  .bit-controls {
+    grid-column-gap: 5px;
+  }
+
+  .bit-control--button{
+    padding: 5px 0px;
+  }
 }

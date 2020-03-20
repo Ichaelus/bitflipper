@@ -54,11 +54,11 @@
       * Visualization of the noise level per bit-control
       * Toggle button to control the limiter
       * Cable jack to visualize sound output
-      * The bit-control buttons should be controllable in two directions
       * Better on/off visualization and resilience
+      * Condense HTML in favor of custom elements. Drop Unpoly dependency
   -->
 
-  <div class="wrapper">
+  <div class="main-container">
     <div class="machine-back">
       <div class="cable-connector microphone">
         <div class="cable-connector--jack"></div>
@@ -161,63 +161,88 @@
         <div class="knob--label -label" title="Float Range">FR</div>
       </div>
     </div>
--->
-      <div class="bit-controls-container">
+      -->
+
+      <div class="bit-controls">
         <div class="bit-control">
-            <input type="button" class="bit-control--button -active" id="0">
-            <div class="bit-control--labels -label">
-              <label>#</label>
-              <label>1</label>
-            </div>
+          <div class="bit-control--buttons">
+            <input type="button" class="bit-control--button -reset -active" value="reset">
+            <input type="button" class="bit-control--button -invert" value="invert">
+            <input type="button" class="bit-control--button -mute" value="mute">
+          </div>
+          <div class="bit-control--labels -label">
+            <label>1</label>
+          </div>
         </div>
         <div class="bit-control">
-          <input type="button" class="bit-control--button -active" id="1">
-            <div class="bit-control--labels -label">
-              <label>#</label>
-              <label>2</label>
-            </div>
+          <div class="bit-control--buttons">
+            <input type="button" class="bit-control--button -reset -active" value="reset">
+            <input type="button" class="bit-control--button -invert" value="invert">
+            <input type="button" class="bit-control--button -mute" value="mute">
+          </div>
+          <div class="bit-control--labels -label">
+            <label>2</label>
+          </div>
         </div>
         <div class="bit-control">
-          <input type="button" class="bit-control--button -active" id="2">
-            <div class="bit-control--labels -label">
-              <label>#</label>
-              <label>3</label>
-            </div>
+          <div class="bit-control--buttons">
+            <input type="button" class="bit-control--button -reset -active" value="reset">
+            <input type="button" class="bit-control--button -invert" value="invert">
+            <input type="button" class="bit-control--button -mute" value="mute">
+          </div>
+          <div class="bit-control--labels -label">
+            <label>3</label>
+          </div>
         </div>
         <div class="bit-control">
-          <input type="button" class="bit-control--button -active" id="3">
-            <div class="bit-control--labels -label">
-              <label>#</label>
-              <label>4</label>
-            </div>
+          <div class="bit-control--buttons">
+            <input type="button" class="bit-control--button -reset -active" value="reset">
+            <input type="button" class="bit-control--button -invert" value="invert">
+            <input type="button" class="bit-control--button -mute" value="mute">
+          </div>
+          <div class="bit-control--labels -label">
+            <label>4</label>
+          </div>
         </div>
         <div class="bit-control">
-          <input type="button" class="bit-control--button -active" id="4">
-            <div class="bit-control--labels -label">
-              <label>#</label>
-              <label>5</label>
-            </div>
+          <div class="bit-control--buttons">
+            <input type="button" class="bit-control--button -reset -active" value="reset">
+            <input type="button" class="bit-control--button -invert" value="invert">
+            <input type="button" class="bit-control--button -mute" value="mute">
+          </div>
+          <div class="bit-control--labels -label">
+            <label>5</label>
+          </div>
         </div>
         <div class="bit-control">
-          <input type="button" class="bit-control--button -active" id="5">
-            <div class="bit-control--labels -label">
-              <label>#</label>
-              <label>6</label>
-            </div>
+          <div class="bit-control--buttons">
+            <input type="button" class="bit-control--button -reset -active" value="reset">
+            <input type="button" class="bit-control--button -invert" value="invert">
+            <input type="button" class="bit-control--button -mute" value="mute">
+          </div>
+          <div class="bit-control--labels -label">
+            <label>6</label>
+          </div>
         </div>
         <div class="bit-control">
-          <input type="button" class="bit-control--button -active" id="6">
-            <div class="bit-control--labels -label">
-              <label>#</label>
-              <label>7</label>
-            </div>
+          <div class="bit-control--buttons">
+            <input type="button" class="bit-control--button -reset -active" value="reset">
+            <input type="button" class="bit-control--button -invert" value="invert">
+            <input type="button" class="bit-control--button -mute" value="mute">
+          </div>
+          <div class="bit-control--labels -label">
+            <label>7</label>
+          </div>
         </div>
         <div class="bit-control">
-          <input type="button" class="bit-control--button -active" id="7">
-            <div class="bit-control--labels -label">
-              <label>#</label>
-              <label>8</label>
-            </div>
+          <div class="bit-control--buttons">
+            <input type="button" class="bit-control--button -reset -active" value="reset">
+            <input type="button" class="bit-control--button -invert" value="invert">
+            <input type="button" class="bit-control--button -mute" value="mute">
+          </div>
+          <div class="bit-control--labels -label">
+            <label>8</label>
+          </div>
         </div>
       </div>
     </div>
