@@ -1,5 +1,8 @@
 name: Sync changes to the FTP server
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action

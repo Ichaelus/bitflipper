@@ -63,7 +63,7 @@
   background: radial-gradient(closest-side, #ffffff, #fffcfc 70%);
 }
 
-.bit-controls .bit-control--labels {
+.bit-control--labels {
   padding: 5px 0;
   border-bottom: 10px double currentColor;
   text-align: center;

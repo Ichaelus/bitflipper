@@ -15,7 +15,7 @@
   display: block;
 }
 
-.cable-connector.drumloop{
+.drumloop .cable-connector{
   margin-left: calc(1 * var(--connector-width) + 1 * 25px);
 }
 
@@ -60,7 +60,7 @@
 
 .cable-connector:hover .cable-connector--label,
 .cable-connector-stub:hover .cable-connector--label,
-.cable-connector.-active .cable-connector--label{
+cable-connector.-active .cable-connector--label{
   color: var(--color-text-active);
 }
 
@@ -80,12 +80,12 @@
   opacity: 0; /* only the active one is shown */
 }
 
-.cable-connector.-active .cable-connector--jack{
+cable-connector.-active .cable-connector--jack{
   background-position-y: 50px;
   opacity: 1;
 }
 
-.cable-connector.-plugging-out .cable-connector--jack{
+cable-connector.-plugging-out .cable-connector--jack{
   transition: opacity ease-in-out 0.21s 1.75s,
               background-position-y ease-in-out 0.5s 1.25s;
 }

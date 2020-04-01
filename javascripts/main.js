@@ -49,19 +49,19 @@ const processAudio = async () => {
   up.on('reset:off', () => audioContext.suspend() );
   up.on('reset:on', () => audioContext.resume() );
   
-  up.on('button-value-changed', '.knob.-sample-reduction', onFrequencyReductionChange);
-  up.on('button-value-changed', '.knob.-float-range', onFloatRangeChanged);
+  up.on('button-value-changed', 'knob.-sample-reduction', onFrequencyReductionChange);
+  up.on('button-value-changed', 'knob.-float-range', onFloatRangeChanged);
   up.emit('reset:on');
 };
 
 up.on('power:on', processAudio);
 
+// Visualize the current noise level (updated 5 times per second)
 function setupAnalyser(audioContext){
   let analyser = audioContext.createAnalyser();
   analyser.fftSize = 32;
   analyser.minDecibels = -90;
   
-  // Visualize the current noise level (updated 5 times per second)
   setInterval(function () {
     const dataArray = new Uint8Array(analyser.frequencyBinCount);
     analyser.getByteFrequencyData(dataArray);
@@ -74,6 +74,7 @@ function setupAnalyser(audioContext){
   return analyser;
 }
 
+// Keep the volume in an acceptable range
 function setupVolumeLimiter(audioContext){
   let limiter = audioContext.createDynamicsCompressor();
   limiter.threshold.setValueAtTime(-30.0, audioContext.currentTime); // this is the pitfall, leave some headroom

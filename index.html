@@ -47,34 +47,20 @@
 </head>
 
 <body>
-
-  <!--
-    Ideas:
-      * (optional) Controls for the bit depth
-      * Visualization of the noise level per bit-control
-      * Toggle button to control the limiter
-      * Cable jack to visualize sound output
-      * Better on/off visualization and resilience
-      * Condense HTML in favor of custom elements. Drop Unpoly dependency
-  -->
-
   <div class="main-container">
     <div class="machine-back">
-      <div class="cable-connector microphone">
-        <div class="cable-connector--jack"></div>
-        <div class="cable-connector--part -top"></div>
-        <div class="cable-connector--part -center"></div>
-        <div class="cable-connector--part -bottom"></div>
-        <div class="cable-connector--label -label">Mic</div>
-      </div>
+      <template id="cable-connector">
+        <div class="cable-connector">
+          <div class="cable-connector--jack"></div>
+          <div class="cable-connector--part -top"></div>
+          <div class="cable-connector--part -center"></div>
+          <div class="cable-connector--part -bottom"></div>
+          <div class="cable-connector--label -label"></div>
+        </div>
+      </template>
 
-      <div class="cable-connector drumloop">
-        <div class="cable-connector--jack"></div>
-        <div class="cable-connector--part -top"></div>
-        <div class="cable-connector--part -center"></div>
-        <div class="cable-connector--part -bottom"></div>
-        <div class="cable-connector--label -label">Drm</div>
-      </div>
+      <cable-connector up-data='{ "modifier": "microphone", "label": "Mic"}'></cable-connector>
+      <cable-connector up-data='{ "modifier": "drumloop", "label": "Drm"}'></cable-connector>
 
       <div class="cable-connector-stub install">
         <div class="cable-connector--label -label">Install</div>
@@ -94,156 +80,57 @@
       </div>
       
       <div class='knobs'>
-        <div class='knob volume' data-initial-value='1'>
-          <div class="knob--active-light"></div>
-          <div class="knob--dial">
-            <div class="knob--dial-grip"></div>
-            <svg class="knob--dial-svg" viewBox="0 0 100 100">
-              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
-              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
-            </svg>
+        <template id="knob">
+          <div class='knob'>
+            <div class="knob--active-light"></div>
+            <div class="knob--dial">
+              <div class="knob--dial-grip"></div>
+              <svg class="knob--dial-svg" viewBox="0 0 100 100">
+                <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
+                <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
+              </svg>
+            </div>
+            <div class="knob--label -label"></div>
           </div>
-          <div class="knob--label -label" title="Volume (Gain)">Vol</div>
-        </div>
-    
-        <div class='knob -sample-reduction' data-initial-value='1.0'>
-          <div class="knob--active-light"></div>
-          <div class="knob--dial">
-            <div class="knob--dial-grip"></div>
-            <svg class="knob--dial-svg" viewBox="0 0 100 100">
-              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
-              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
-            </svg>
-          </div>
-          <div class="knob--label -label" title="Sample Reduction">Redux</div>
-        </div>
+        </template>
+
+        <knob up-data='{ "modifier": "volume", "initialValue": 1, "title": "Volume (Gain)", "label": "Vol"}'></knob>
+        <knob up-data='{ "modifier": "-sample-reduction", "initialValue": 1.0, "title": "Sample Reduction", "label": "Redux"}'></knob>
         
         <div class="filter -lowpass">
           <div class="filter--icon"></div>
           <div class="filter--label -label">Lowpass</div>
         </div>
 
-        <div class='knob -filter-cutoff' data-initial-value='1.0'>
-          <div class="knob--active-light"></div>
-          <div class="knob--dial">
-            <div class="knob--dial-grip"></div>
-            <svg class="knob--dial-svg" viewBox="0 0 100 100">
-              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
-              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
-            </svg>
-          </div>
-          <div class="knob--label -label" title="Filter Cutoff">Cutoff</div>
-        </div>
-
-        <div class='knob -filter-resonance' data-initial-value='0.0'>
-          <div class="knob--active-light"></div>
-          <div class="knob--dial">
-            <div class="knob--dial-grip"></div>
-            <svg class="knob--dial-svg" viewBox="0 0 100 100">
-              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
-              <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
-            </svg>
-          </div>
-          <div class="knob--label -label" title="Filter Resonance">Q</div>
-        </div>
+        <knob up-data='{ "modifier": "-filter-cutoff", "initialValue": 1.0, "title": "Filter Cutoff", "label": "Cutoff"}'></knob>
+        <knob up-data='{ "modifier": "-filter-resonance", "initialValue": 0.0, "title": "Filter Resonance", "label": "Q"}'></knob>
+        <!--
+          <knob up-data='{ "modifier": "-float-range", "initialValue": 0.25, "title": "Float Range", "label": "FR"}'></knob>
+        -->
       </div>
-
-      <!--
-      <div class='knob -float-range' data-initial-value='0.25'>
-        <div class="knob--active-light"></div>
-        <div class="knob--dial">
-          <div class="knob--dial-grip"></div>
-          <svg class="knob--dial-svg" viewBox="0 0 100 100">
-            <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
-            <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
-          </svg>
-        </div>
-        <div class="knob--label -label" title="Float Range">FR</div>
-      </div>
-    </div>
-      -->
 
       <div class="bit-controls">
-        <div class="bit-control">
-          <div class="bit-control--buttons">
-            <input type="button" class="bit-control--button -reset -active" value="reset">
-            <input type="button" class="bit-control--button -invert" value="invert">
-            <input type="button" class="bit-control--button -mute" value="mute">
+        <template id="bit-control">
+          <div class="bit-control">
+            <div class="bit-control--buttons">
+              <input type="button" class="bit-control--button -reset -active" value="reset">
+              <input type="button" class="bit-control--button -invert" value="invert">
+              <input type="button" class="bit-control--button -mute" value="mute">
+            </div>
+            <div class="bit-control--labels -label">
+              <label class="bit-control--index"></label>
+            </div>
           </div>
-          <div class="bit-control--labels -label">
-            <label>1</label>
-          </div>
-        </div>
-        <div class="bit-control">
-          <div class="bit-control--buttons">
-            <input type="button" class="bit-control--button -reset -active" value="reset">
-            <input type="button" class="bit-control--button -invert" value="invert">
-            <input type="button" class="bit-control--button -mute" value="mute">
-          </div>
-          <div class="bit-control--labels -label">
-            <label>2</label>
-          </div>
-        </div>
-        <div class="bit-control">
-          <div class="bit-control--buttons">
-            <input type="button" class="bit-control--button -reset -active" value="reset">
-            <input type="button" class="bit-control--button -invert" value="invert">
-            <input type="button" class="bit-control--button -mute" value="mute">
-          </div>
-          <div class="bit-control--labels -label">
-            <label>3</label>
-          </div>
-        </div>
-        <div class="bit-control">
-          <div class="bit-control--buttons">
-            <input type="button" class="bit-control--button -reset -active" value="reset">
-            <input type="button" class="bit-control--button -invert" value="invert">
-            <input type="button" class="bit-control--button -mute" value="mute">
-          </div>
-          <div class="bit-control--labels -label">
-            <label>4</label>
-          </div>
-        </div>
-        <div class="bit-control">
-          <div class="bit-control--buttons">
-            <input type="button" class="bit-control--button -reset -active" value="reset">
-            <input type="button" class="bit-control--button -invert" value="invert">
-            <input type="button" class="bit-control--button -mute" value="mute">
-          </div>
-          <div class="bit-control--labels -label">
-            <label>5</label>
-          </div>
-        </div>
-        <div class="bit-control">
-          <div class="bit-control--buttons">
-            <input type="button" class="bit-control--button -reset -active" value="reset">
-            <input type="button" class="bit-control--button -invert" value="invert">
-            <input type="button" class="bit-control--button -mute" value="mute">
-          </div>
-          <div class="bit-control--labels -label">
-            <label>6</label>
-          </div>
-        </div>
-        <div class="bit-control">
-          <div class="bit-control--buttons">
-            <input type="button" class="bit-control--button -reset -active" value="reset">
-            <input type="button" class="bit-control--button -invert" value="invert">
-            <input type="button" class="bit-control--button -mute" value="mute">
-          </div>
-          <div class="bit-control--labels -label">
-            <label>7</label>
-          </div>
-        </div>
-        <div class="bit-control">
-          <div class="bit-control--buttons">
-            <input type="button" class="bit-control--button -reset -active" value="reset">
-            <input type="button" class="bit-control--button -invert" value="invert">
-            <input type="button" class="bit-control--button -mute" value="mute">
-          </div>
-          <div class="bit-control--labels -label">
-            <label>8</label>
-          </div>
-        </div>
+        </template>
+
+        <bit-control up-data='{ "bitIndex": 1 }'></bit-control>
+        <bit-control up-data='{ "bitIndex": 2 }'></bit-control>
+        <bit-control up-data='{ "bitIndex": 3 }'></bit-control>
+        <bit-control up-data='{ "bitIndex": 4 }'></bit-control>
+        <bit-control up-data='{ "bitIndex": 5 }'></bit-control>
+        <bit-control up-data='{ "bitIndex": 6 }'></bit-control>
+        <bit-control up-data='{ "bitIndex": 7 }'></bit-control>
+        <bit-control up-data='{ "bitIndex": 8 }'></bit-control>
       </div>
     </div>
   </div>

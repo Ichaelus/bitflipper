@@ -28,7 +28,7 @@ up.compiler('.volume', function (volumeKnob) {
   
   up.on('audioContext:connected', connectAudioContext);
   up.on('inputgain:connected', connectInputGain);
-  up.on('button-value-changed', '.knob.volume', onVolumeChange);
+  up.on('button-value-changed', 'knob.volume', onVolumeChange);
   up.on('reset:off', mute);
   up.on('reset:on', unmute);
 });

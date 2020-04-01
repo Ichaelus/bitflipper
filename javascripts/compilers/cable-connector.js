@@ -1,5 +1,14 @@
-up.compiler('.cable-connector', function(element){
-  
+up.compiler('cable-connector', function(element, data){
+  // Load template
+  const template = document.getElementById('cable-connector');
+  const templateContent = template.content;
+  element.appendChild(templateContent.cloneNode(true));
+  element.classList.add(data.modifier);
+  element.querySelector('.cable-connector--label').innerText = data.label;
+
+  // Initialize
+  let enabled = false;
+
   function plugInCable(){
     element.classList.add('-active');
   }
@@ -21,11 +30,23 @@ up.compiler('.cable-connector', function(element){
   }
 
   function switchToCable(evt){
-    up.emit(element, 'plug-in');
+    if(enabled){
+      up.emit(element, 'plug-in');
+    }
+  }
+
+  function disableCable(){
+    enabled = false;
+  }
+
+  function enableCable(){
+    enabled = true;
   }
 
   up.on(element, 'click', switchToCable);
   up.on(element, 'plug-in', plugInCable);
   up.on(element, 'plug-out', plugOutCable);
   up.on('input-changed', plugOutOtherCables);
+  up.on('reset:off', disableCable);
+  up.on('reset:on', enableCable);
 });
