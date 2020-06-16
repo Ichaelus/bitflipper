@@ -74,6 +74,8 @@ cable-connector.-active .cable-connector--label{
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: -50px;
+  -webkit-mask-image: linear-gradient(to top, black 30%, transparent 80%);
+  mask-image: linear-gradient(to top, black 30%, transparent 80%);
   transition: opacity ease-in-out 0.21s 1s,
               background-position-y ease-in-out 0.5s 1.25s;
   z-index: -1;
