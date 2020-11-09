@@ -1,0 +1,38 @@
+.input-selection--switch{
+  position: absolute;
+  height: 15px;
+  width: 100px;
+  left: 107px;
+  top: 40px;
+  padding: 1px 0px 2px;
+  display: flex;
+  background-color: black;
+  border-radius: 1px;
+  border-top: 2px solid #ffffff42;
+  border-left: 1px solid #ffffff38;
+  border-right: 1px solid #ffffff38;
+}
+
+.input-selection--switch-knob{
+  --color-hill: #1b1a1a;
+  --color-valley-left: #9c9b9b;
+  --color-valley-right: #757575;
+  position: relative;
+  width: 25%;
+  margin: 1px;
+  left: 0;
+  border: 1px solid #46464626;
+  border-radius: 1px;
+  background: linear-gradient(90deg,
+    var(--color-hill) 15%, var(--color-valley-left) 22%, var(--color-valley-right) 24%, var(--color-hill) 25%,
+    var(--color-hill) 35%, var(--color-valley-left) 42%, var(--color-valley-right) 44%, var(--color-hill) 45%,
+    var(--color-hill) 55%, var(--color-valley-left) 62%, var(--color-valley-right) 64%, var(--color-hill) 65%,
+    var(--color-hill) 75%, var(--color-valley-left) 82%, var(--color-valley-right) 84%, var(--color-hill) 85%);
+  transition: left .21s .05s ease-in-out;
+  box-shadow: 0px 2px black;
+  cursor: pointer;
+}
+
+.input-selection.-right .input-selection--switch-knob{
+  left: 75%;
+}

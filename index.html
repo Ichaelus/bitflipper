@@ -18,12 +18,16 @@
   <meta name="msapplication-config" content="browserconfig.xml">
 
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Inconsolata:700&display=swap" rel="stylesheet">
+
+  <!-- Update service_worker.js whenever adding new assets. -->
+
   <link rel="stylesheet" href="stylesheets/unpoly-0.61.min.css">
   <link rel="stylesheet" href="stylesheets/reset.css">
   <link rel="stylesheet" href="stylesheets/blocks/cable-conntector.css">
   <link rel="stylesheet" href="stylesheets/blocks/bit-control.css">
   <link rel="stylesheet" href="stylesheets/blocks/display.css">
   <link rel="stylesheet" href="stylesheets/blocks/filter.css">
+  <link rel="stylesheet" href="stylesheets/blocks/input-selection.css">
   <link rel="stylesheet" href="stylesheets/blocks/input-visualizer.css">
   <link rel="stylesheet" href="stylesheets/blocks/oscilloscope.css">
   <link rel="stylesheet" href="stylesheets/blocks/power-switch.css">
@@ -32,12 +36,14 @@
   <link rel="stylesheet" href="stylesheets/blocks/upper-controls.css">
 
   <script src="javascripts/unpoly-0.61.min.js"></script>
+  <script src="javascripts/window/input-controller.js"></script>
   <script src="javascripts/compilers/cable-connector.js"></script>
   <script src="javascripts/compilers/bit-control.js"></script>
   <script src="javascripts/compilers/display.js"></script>
   <script src="javascripts/compilers/drumloop.js"></script>
   <script src="javascripts/compilers/filter.js"></script>
   <script src="javascripts/compilers/install.js"></script>
+  <script src="javascripts/compilers/input-selection.js"></script>
   <script src="javascripts/compilers/knob.js"></script>
   <script src="javascripts/compilers/microphone.js"></script>
   <script src="javascripts/compilers/oscilloscope.js"></script>
@@ -59,11 +65,15 @@
         </div>
       </template>
 
-      <cable-connector up-data='{ "modifier": "microphone", "label": "Mic"}'></cable-connector>
-      <cable-connector up-data='{ "modifier": "drumloop", "label": "Drm"}'></cable-connector>
-
-      <div class="cable-connector-stub install">
-        <div class="cable-connector--label -label">Install</div>
+      <div class='input-selection'>
+        <cable-connector up-data='{ "modifier": "drumloop", "label": "Drm"}'></cable-connector>
+        <cable-connector up-data='{ "modifier": "microphone", "label": "Mic"}'></cable-connector>
+        <div class="cable-connector-stub install">
+          <div class="cable-connector--label -label">Install</div>
+        </div>
+        <div class='input-selection--switch'>
+          <div class='input-selection--switch-knob'></div>
+        </div>
       </div>
 
       <div class='upper-controls'>

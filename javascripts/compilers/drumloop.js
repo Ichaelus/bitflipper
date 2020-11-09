@@ -1,10 +1,26 @@
+// The drumloop is also a .cable-connector!
 up.compiler('.drumloop', function(drumLoop){
   let audioContext, inputGain, drumLoopStream;
   const playbackRate = 1.0;
   const musicFileUrl = 'assets/drumloop.wav';
 
+  function init(){
+    InputController.registerInput(drumLoop);
+  }
+
+  function connectAudioContext(evt){
+    audioContext = evt.audioContext;
+  }
+
+  function connectInputGain(evt){
+    inputGain = evt.inputGain;
+    // The drumloop should be connected on startup. "power:on" would be too soon.
+    InputController.setActive(drumLoop);
+  }
+
   function activateDrumLoop(){
     if(!audioContext){
+      up.emit('plug-in-failed');
       return; // The machine has not been initialized yet
     }
     if(!drumLoopStream){
@@ -26,17 +42,7 @@ up.compiler('.drumloop', function(drumLoop){
       request.send();
     }
     drumLoopStream.connect(inputGain);
-    up.emit('input-changed', { newInput: drumLoop });
-  }
-
-  function connectAudioContext(evt){
-    audioContext = evt.audioContext;
-  }
-
-  function connectInputGain(evt){
-    inputGain = evt.inputGain;
-    // The drumloop should be connected on startup. "power:on" would be too soon.
-    up.emit('plug-in', { target: drumLoop });
+    up.emit('plug-in-success');
   }
 
   function disconnectDrumLoop(){
@@ -49,4 +55,6 @@ up.compiler('.drumloop', function(drumLoop){
   up.on('inputgain:connected', connectInputGain);
   up.on(drumLoop, 'plug-in', activateDrumLoop);
   up.on(drumLoop, 'plug-out', disconnectDrumLoop);
+
+  init();
 });

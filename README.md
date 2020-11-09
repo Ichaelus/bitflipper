@@ -8,7 +8,7 @@ Check it out live: https://bitflipper.leimstaedtner.it
 
 You can even plug-in your MIDI-controller and use it on stage - all assets are chached offline!
 
-Currently, [only a few Browsers](https://caniuse.com/#search=AudioWorklet) support AudioWorklets. I recommend using Chrome for now.
+Currently, [only a few Browsers](https://caniuse.com/#search=AudioWorklet) support AudioWorklets. I recommend using the latest Firefox or Chromium versions for now.
 
 
 ### Development
@@ -20,9 +20,3 @@ Currently, [only a few Browsers](https://caniuse.com/#search=AudioWorklet) suppo
   ```
 * Open https://localhost:8000/ or https://bitflipper.lvh.me:8000/
 * Your code will be synced to production once merged into `master`.
-
-### Further ideas
-  * Controls for the bit depth. It is currently static at 8, allowed values are [1..16]
-  * The overall volume is limited through a `DynamicsCompressor` to avoid an overly loud output. A toggle button could be introduced to disable this limiter.
-  * Currently, the default input and output device are automatically selected. We could give the user more control on the audio input/output.
-  * We could design another cable that resembles the audio output
