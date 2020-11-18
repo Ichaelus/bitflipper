@@ -10,6 +10,7 @@ up.compiler('cable-connector', function(element, data){
   let enabled = false;
 
   function plugInCable(){
+    element.classList.remove('-plugging-out');
     element.classList.add('-active');
   }
 
@@ -23,15 +24,15 @@ up.compiler('cable-connector', function(element, data){
     }
   }
 
-  function plugOutOtherCables(evt){
-    if(evt.newInput !== element){
+  function plugOutOtherCables(){
+    if(InputController.currentInput() !== element){
       up.emit(element, 'plug-out');
     }
   }
 
-  function switchToCable(evt){
+  function switchToCable(_evt){
     if(enabled){
-      up.emit(element, 'plug-in');
+      InputController.setActive(element);
     }
   }
 
@@ -46,7 +47,7 @@ up.compiler('cable-connector', function(element, data){
   up.on(element, 'click', switchToCable);
   up.on(element, 'plug-in', plugInCable);
   up.on(element, 'plug-out', plugOutCable);
-  up.on('input-changed', plugOutOtherCables);
+  up.on('plug-in-success', plugOutOtherCables);
   up.on('reset:off', disableCable);
   up.on('reset:on', enableCable);
 });

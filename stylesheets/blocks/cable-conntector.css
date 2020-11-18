@@ -15,7 +15,7 @@
   display: block;
 }
 
-.drumloop .cable-connector{
+.microphone .cable-connector{
   margin-left: calc(1 * var(--connector-width) + 1 * 25px);
 }
 
@@ -76,8 +76,8 @@ cable-connector.-active .cable-connector--label{
   background-position-y: -50px;
   -webkit-mask-image: linear-gradient(to top, black 30%, transparent 80%);
   mask-image: linear-gradient(to top, black 30%, transparent 80%);
-  transition: opacity ease-in-out 0.21s 1s,
-              background-position-y ease-in-out 0.5s 1.25s;
+  transition: opacity 0.21s ease-in-out .25s,
+              background-position-y 0.5s ease-in-out 0.46s;
   z-index: -1;
   opacity: 0; /* only the active one is shown */
 }
@@ -88,6 +88,6 @@ cable-connector.-active .cable-connector--jack{
 }
 
 cable-connector.-plugging-out .cable-connector--jack{
-  transition: opacity ease-in-out 0.21s 1.75s,
-              background-position-y ease-in-out 0.5s 1.25s;
+  transition: opacity 0.21s ease-in-out 1s,
+              background-position-y 0.5s ease-in-out 0.5s;
 }
