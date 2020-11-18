@@ -11,6 +11,17 @@
   border-top: 2px solid #ffffff42;
   border-left: 1px solid #ffffff38;
   border-right: 1px solid #ffffff38;
+  cursor: pointer;
+}
+
+.input-selection--switch:after {
+    content: '';
+    position: absolute;
+    left: 13px;
+    width: calc(100% - 26px);
+    height: 1px;
+    background-color: #4949497d;
+    top: 8px;
 }
 
 .input-selection--switch-knob{
@@ -30,7 +41,7 @@
     var(--color-hill) 75%, var(--color-valley-left) 82%, var(--color-valley-right) 84%, var(--color-hill) 85%);
   transition: left .21s .05s ease-in-out;
   box-shadow: 0px 2px black;
-  cursor: pointer;
+  z-index: 1;
 }
 
 .input-selection.-right .input-selection--switch-knob{
