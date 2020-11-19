@@ -16,3 +16,4 @@ jobs:
       if: github.event.action == 'opened'
       with:
         project: 'https://github.com/Ichaelus/bitflipper/projects/1'
+        column_name: 'Inbox'
