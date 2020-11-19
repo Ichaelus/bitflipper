@@ -29,6 +29,10 @@
   line-height: 28px;
 }
 
+.machine-back.-active .bit-control--caption {
+  color: var(--color-text-active);
+}
+
 .bit-control--buttons {
   display: flex;
   flex-direction: column;
@@ -48,9 +52,9 @@
   filter: brightness(0.59) saturate(0.75);
 }
 
-.bit-control--button.-active,
-.bit-control--button:active,
-.bit-control--button:hover {
+.machine-back.-active .bit-control--button.-active,
+.machine-back.-active .bit-control--button:active,
+.machine-back.-active .bit-control--button:hover {
   filter: brightness(1.2) saturate(1);
 }
 

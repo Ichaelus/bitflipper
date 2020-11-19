@@ -58,8 +58,8 @@
   text-align: center;
 }
 
-.cable-connector:hover .cable-connector--label,
-.cable-connector-stub:hover .cable-connector--label,
+.machine-back.-active .cable-connector:hover .cable-connector--label,
+.machine-back.-active .cable-connector-stub:hover .cable-connector--label,
 cable-connector.-active .cable-connector--label{
   color: var(--color-text-active);
 }

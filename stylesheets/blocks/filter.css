@@ -21,7 +21,7 @@
   transition: filter ease-in-out 0.08s;
 }
 
-.filter:hover .filter--icon {
+.machine-back.-active .filter:hover .filter--icon {
   filter: unset;
 }
 
@@ -37,7 +37,7 @@
   background-image: url(../../assets/filter_bandpass.svg);
 }
 
-.filter:hover .filter--label {
+.machine-back.-active .filter:hover .filter--label {
   color: var(--color-text-active);
 }
 
