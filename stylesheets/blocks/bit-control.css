@@ -38,6 +38,12 @@
   flex-direction: column;
 }
 
+@media(min-width: 741px){
+  .bit-control--buttons {
+    align-items: center;
+  }
+}
+
 .bit-control--button {
   width: 50px;
   height: 30px;
