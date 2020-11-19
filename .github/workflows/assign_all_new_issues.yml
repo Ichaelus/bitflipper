@@ -1,0 +1,18 @@
+name: Auto assign new issues to the kanban board
+
+on:
+  issues:
+    types: [opened, labeled]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign issue to kanban board
+    steps:
+    - name: Assign NEW issues project 1
+      uses: srggrs/assign-one-project-github-action@1.2.0
+      if: github.event.action == 'opened'
+      with:
+        project: 'https://github.com/Ichaelus/bitflipper/projects/1'
