@@ -1,12 +1,21 @@
 up.compiler('.volume', function (volumeKnob) {
-  let audioContext, inputGain;
+  let audioContext, inputGain, oldValue;
   
+  function connectAudioContext(evt){
+    audioContext = evt.audioContext;
+  }
+
+  function connectInputGain(evt){
+    inputGain = evt.inputGain;
+  }
+
   function mute(){
+    oldValue = inputGain.gain.value;
     inputGain.gain.setValueAtTime(0, audioContext.currentTime);
   }
 
   function unmute(){
-    inputGain.gain.setValueAtTime(1, audioContext.currentTime);
+    inputGain.gain.setValueAtTime(oldValue, audioContext.currentTime);
   }
 
   function onVolumeChange(evt){
@@ -17,15 +26,7 @@ up.compiler('.volume', function (volumeKnob) {
     inputGain.gain.setValueAtTime(newVolume, audioContext.currentTime);
     up.emit('status-text-changed', {text: `Volume: ${ parseInt(newVolume * 100) }%`, instant: true});
   };
-  
-  function connectAudioContext(evt){
-    audioContext = evt.audioContext;
-  }
 
-  function connectInputGain(evt){
-    inputGain = evt.inputGain;
-  }
-  
   up.on('audioContext:connected', connectAudioContext);
   up.on('inputgain:connected', connectInputGain);
   up.on('button-value-changed', 'knob.volume', onVolumeChange);
