@@ -21,7 +21,7 @@ input:focus {
 }
 
 html, body {
-  background: radial-gradient(farthest-side, #EDF2F7, #718096 130%);
+  background: radial-gradient(farthest-side, #d8dee4, #afc0d8 130%);
 }
 
 body{
