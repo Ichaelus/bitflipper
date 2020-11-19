@@ -11,7 +11,7 @@ up.compiler('.input-selection', function(element, data){
     
     up.on('plug-in', function(_evt, target){
       if(enabled){
-        element.classList.toggle('-right', target.classList.contains('microphone'))
+        element.classList.toggle('-right', target.classList.contains('-microphone'))
       }
     });
   });

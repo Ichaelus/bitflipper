@@ -1,4 +1,10 @@
-.cable-connector, .cable-connector-stub{
+/**
+* Apart from their function and position, cable-connectors and output-cables
+* are basically the same. Because of this, output cables are just a wrapper around
+* cable-connectors!
+* See: output-cable.css, cable-connector-stub.css
+**/
+.cable-connector{
   position: absolute;
   left: 100px;
   top: -15px;
@@ -8,22 +14,8 @@
   cursor: pointer;
 }
 
-.cable-connector-stub{
-  display: none;
-}
-.cable-connector-stub.-available{
-  display: block;
-}
-
-.microphone .cable-connector{
+.-microphone .cable-connector{
   margin-left: calc(1 * var(--connector-width) + 1 * 25px);
-}
-
-.cable-connector-stub.install{
-  margin-left: calc(1 * var(--connector-width) + 3.5 * 25px);
-}
-.cable-connector-stub.install .cable-connector--label{
-  padding-top: 10px;
 }
 
 .cable-connector--part{
@@ -59,7 +51,6 @@
 }
 
 .machine-back.-active .cable-connector:hover .cable-connector--label,
-.machine-back.-active .cable-connector-stub:hover .cable-connector--label,
 cable-connector.-active .cable-connector--label{
   color: var(--color-text-active);
 }

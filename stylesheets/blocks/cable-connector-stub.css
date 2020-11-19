@@ -1,0 +1,31 @@
+/**
+* Cable connectors without an actual (audio) function
+* such as the install action.
+**/
+.cable-connector-stub{
+  position: absolute;
+  left: 100px;
+  top: -15px;
+  --connector-width: 45px;
+  width: var(--connector-width);
+  z-index: 0;
+  cursor: pointer;
+}
+
+.cable-connector-stub{
+  display: none;
+}
+.cable-connector-stub.-available{
+  display: block;
+}
+
+.cable-connector-stub.install{
+  margin-left: calc(1 * var(--connector-width) + 3.5 * 25px);
+}
+.cable-connector-stub.install .cable-connector--label{
+  padding-top: 10px;
+}
+
+.machine-back.-active .cable-connector-stub:hover .cable-connector--label{
+  color: var(--color-text-active);
+}

@@ -1,19 +1,11 @@
 // The microphone is also a .cable-connector!
-up.compiler('.microphone', function(microphone){
+up.compiler('.-microphone', function(microphone){
   let audioContext, inputGain, microphoneInAudioContext;
 
   function init(){
     InputController.registerInput(microphone);
   }
   
-  function connectAudioContext(evt){
-    audioContext = evt.audioContext;
-  }
-
-  function connectInputGain(evt){
-    inputGain = evt.inputGain;
-  }
-
   async function setupMicrophoneStream(){
     if(!microphoneInAudioContext){
       let microphoneAudioInput = await getMicrophoneAudioInput();
@@ -43,8 +35,8 @@ up.compiler('.microphone', function(microphone){
     }
   }
 
-  up.on('audioContext:connected', connectAudioContext);
-  up.on('inputgain:connected', connectInputGain);
+  up.on('audioContext:connected', (evt) => audioContext = evt.audioContext);
+  up.on('inputgain:connected', (evt) => inputGain = evt.inputGain);
   up.on(microphone, 'plug-in', activateMicrophone);
   up.on(microphone, 'plug-out', disconnectMicrophone);
 

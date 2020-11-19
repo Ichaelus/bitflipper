@@ -23,13 +23,15 @@
 
   <link rel="stylesheet" href="stylesheets/unpoly-0.61.min.css">
   <link rel="stylesheet" href="stylesheets/reset.css">
-  <link rel="stylesheet" href="stylesheets/blocks/cable-conntector.css">
+  <link rel="stylesheet" href="stylesheets/blocks/cable-connector.css">
+  <link rel="stylesheet" href="stylesheets/blocks/cable-connector-stub.css">
   <link rel="stylesheet" href="stylesheets/blocks/bit-control.css">
   <link rel="stylesheet" href="stylesheets/blocks/display.css">
   <link rel="stylesheet" href="stylesheets/blocks/filter.css">
   <link rel="stylesheet" href="stylesheets/blocks/input-selection.css">
   <link rel="stylesheet" href="stylesheets/blocks/input-visualizer.css">
   <link rel="stylesheet" href="stylesheets/blocks/oscilloscope.css">
+  <link rel="stylesheet" href="stylesheets/blocks/output-cable.css">
   <link rel="stylesheet" href="stylesheets/blocks/power-switch.css">
   <link rel="stylesheet" href="stylesheets/blocks/knob.css">
   <link rel="stylesheet" href="stylesheets/blocks/machine-back.css">
@@ -47,6 +49,7 @@
   <script src="javascripts/compilers/knob.js"></script>
   <script src="javascripts/compilers/microphone.js"></script>
   <script src="javascripts/compilers/oscilloscope.js"></script>
+  <script src="javascripts/compilers/output-cable.js"></script>
   <script src="javascripts/compilers/power_switch.js"></script>
   <script src="javascripts/compilers/volume.js"></script>
   <title>Bitflipper - 8 BIT reducer & mangler</title>
@@ -66,14 +69,16 @@
       </template>
 
       <div class='input-selection'>
-        <cable-connector up-data='{ "modifier": "drumloop", "label": "Drm"}'></cable-connector>
-        <cable-connector up-data='{ "modifier": "microphone", "label": "Mic"}'></cable-connector>
+        <cable-connector up-data='{ "modifier": "-drumloop", "label": "Drm"}'></cable-connector>
+        <cable-connector up-data='{ "modifier": "-microphone", "label": "Mic"}'></cable-connector>
         <div class="cable-connector-stub install">
           <div class="cable-connector--label -label">Install</div>
         </div>
         <div class='input-selection--switch'>
           <div class='input-selection--switch-knob'></div>
         </div>
+        <output-cable up-data='{ "label": "Stereo"}'></output-cable>
+        <output-cable up-data='{ "label": "Out"}'></output-cable>
       </div>
 
       <div class='upper-controls'>

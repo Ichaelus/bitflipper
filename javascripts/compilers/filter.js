@@ -46,10 +46,6 @@ up.compiler('.filter', function(element){
     up.emit('status-text-changed', {text: `Resonance: ${ parseInt(newResonance) }`, instant: true});
   }
 
-  function connectAudioContext(evt){
-    audioContext = evt.audioContext;
-  }
-
   function connectFilter(evt){
     filter = evt.filter;
     filter.type ="lowpass";
@@ -57,7 +53,7 @@ up.compiler('.filter', function(element){
     filter.Q.value = 0;
   }
 
-  up.on('audioContext:connected', connectAudioContext);
+  up.on('audioContext:connected', (evt) => audioContext = evt.audioContext);
   up.on('filter:connected', connectFilter);
   up.on(icon, 'click', rotateFilterType);
   up.on('button-value-changed', 'knob.-filter-cutoff', onCutOffChanged);

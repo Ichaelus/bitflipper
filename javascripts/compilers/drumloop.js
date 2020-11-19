@@ -1,15 +1,11 @@
 // The drumloop is also a .cable-connector!
-up.compiler('.drumloop', function(drumLoop){
+up.compiler('.-drumloop', function(drumLoop){
   let audioContext, inputGain, drumLoopStream;
   const playbackRate = 1.0;
   const musicFileUrl = 'assets/drumloop.wav';
 
   function init(){
     InputController.registerInput(drumLoop);
-  }
-
-  function connectAudioContext(evt){
-    audioContext = evt.audioContext;
   }
 
   function connectInputGain(evt){
@@ -51,7 +47,7 @@ up.compiler('.drumloop', function(drumLoop){
     }
   }
 
-  up.on('audioContext:connected', connectAudioContext);
+  up.on('audioContext:connected', (evt) => audioContext = evt.audioContext);
   up.on('inputgain:connected', connectInputGain);
   up.on(drumLoop, 'plug-in', activateDrumLoop);
   up.on(drumLoop, 'plug-out', disconnectDrumLoop);
