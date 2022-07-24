@@ -76,7 +76,9 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         if (this.phase_ >= 1.0) {
           this.phase_ -= 1.0;
 
-          this.lastSampleValue_ = this.applyBitFilters(inputChannel[i]);
+          this.lastSampleValue_ = this.applyFloatRange(
+            this.applyBitFilters(inputChannel[i])
+          )
         }
 
         outputChannel[i] = this.lastSampleValue_;
@@ -89,7 +91,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
 
   applyBitFilters(sampleValue){
     const sign = Math.sign(sampleValue);
-    let modifiedIntValue = Math.abs(this.convertToNBitInt(sampleValue));
+    let modifiedIntValue = Math.abs(this.convertToInt(sampleValue));
     this.bitModifiers.forEach(function(modifier, index){
       let bitmask = 1 << index;
       if(modifier === -1){
@@ -98,12 +100,21 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         modifiedIntValue &= ~bitmask; // set the bit to zero
       } // Else: Don't alter the bit
     });
-    const modifiedFloat = (modifiedIntValue * 1.0 * this.floatRange) / this.maxFloatRange * sign
+    const modifiedFloat = this.convertBackToFloat(modifiedIntValue * sign)
     return modifiedFloat;
   }
 
-  convertToNBitInt(float32){
-    return Math.round(float32 * this.maxFloatRange);
+  convertToInt(float32){
+    return Math.round(float32 * 2**this.bits);
+  }
+  convertBackToFloat(int32){
+    return int32 / 2**this.bits;
+  }
+  applyFloatRange(sampleValue){
+    const currentFloatRange = this.floatRange * this.maxFloatRange
+    let modifiedIntValue =  Math.round(sampleValue * currentFloatRange) // Rounding => distorted sound effect
+    const modifiedFloat = modifiedIntValue  / currentFloatRange
+    return modifiedFloat;
   }
 }
 
