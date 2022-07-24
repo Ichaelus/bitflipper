@@ -5,7 +5,7 @@ up.compiler('.midi', async element => {
   let midiLearn = false
 
   async function init() {
-    if (localStorage.getItem(`autoload-midi`) === 'yes') {
+    if (localStorage.getItem(MidiMap.STORAGE_AUTOLOAD_KEY) === 'yes') {
       // Already used midi before
       await requestAccess()
       MidiMap.processLiveSignals(midiAccess)

@@ -56,7 +56,7 @@ up.compiler('knob', (element, data) => {
     if (element.classList.contains('-active') && enabled) {
       // Knob Rotation
       let newY = evt.pageY
-      if (typeof newY == 'undefined') {
+      if (typeof newY === 'undefined') {
         // Mobile uses touches, not scrolls
         newY = evt.changedTouches[0].pageY
       }

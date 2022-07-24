@@ -5,13 +5,13 @@ up.compiler('.-drumloop', function (drumLoop) {
   const musicFileUrl = 'assets/sine.wav'
 
   function init() {
-    InputController.registerInput(drumLoop)
+    SourceController.registerSource(drumLoop)
   }
 
   function connectInputGain(evt) {
     inputGain = evt.inputGain
     // The drumloop should be connected on startup. "power:on" would be too soon.
-    InputController.setActive(drumLoop)
+    SourceController.setActive(drumLoop)
   }
 
   function activateDrumLoop() {

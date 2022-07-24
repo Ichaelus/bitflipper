@@ -15,7 +15,7 @@ up.compiler('cable-connector', function (element, data) {
 
   function switchToCable(_evt) {
     if (enabled) {
-      InputController.setActive(element)
+      SourceController.setActive(element)
     }
   }
 
@@ -35,7 +35,7 @@ up.compiler('cable-connector', function (element, data) {
   }
 
   function plugOutOtherCables() {
-    if (InputController.currentInput() !== element) {
+    if (SourceController.currentSource() !== element) {
       up.emit(element, 'plug-out')
     }
   }

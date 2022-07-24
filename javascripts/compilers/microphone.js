@@ -3,7 +3,7 @@ up.compiler('.-microphone', function (microphone) {
   let audioContext, inputGain, microphoneInAudioContext
 
   function init() {
-    InputController.registerInput(microphone)
+    SourceController.registerSource(microphone)
   }
 
   async function setupMicrophoneStream() {
