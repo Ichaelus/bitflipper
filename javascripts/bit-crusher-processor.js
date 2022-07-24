@@ -98,7 +98,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         modifiedIntValue &= ~bitmask; // set the bit to zero
       } // Else: Don't alter the bit
     });
-    return (modifiedIntValue * 1.0 * this.floatRange ) * sign;
+    return (modifiedIntValue * 1.0 * this.floatRange) / this.maxFloatRange * sign;
   }
 
   convertToNBitInt(float32){
