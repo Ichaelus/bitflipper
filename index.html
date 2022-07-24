@@ -8,7 +8,7 @@
   <meta name="description" content="A little effects-box build using modern web techniques">
   <meta name="theme-color" content="#202020" />
   <link rel="manifest" href="/manifest.json">
-  
+
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
@@ -85,7 +85,7 @@
         <input type="button" class="power-switch" value="⏻" title="Start/Stop">
         <div class="oscilloscope"></div>
         <img class="upper-controls--logo" src="assets/bitflipperlogo.svg" >
-        <div class="input-visualizer" title='Current noise level'> 
+        <div class="input-visualizer" title='Current noise level'>
           <div class="input-visualizer--glow" title='Current noise level'> </div>
          </div>
       </div>
@@ -93,7 +93,7 @@
       <div class="display">
         <span class="display--text" data-default-text="Bitflipper"></span>
       </div>
-      
+
       <div class='knobs'>
         <template id="knob">
           <div class='knob'>
@@ -111,7 +111,8 @@
 
         <knob up-data='{ "modifier": "volume", "initialValue": 1, "title": "Volume (Gain)", "label": "Vol"}'></knob>
         <knob up-data='{ "modifier": "-sample-reduction", "initialValue": 1.0, "title": "Sample Reduction", "label": "Redux"}'></knob>
-        
+        <knob up-data='{ "modifier": "-float-range", "initialValue": 0.25, "title": "Float Range", "label": "FR"}'></knob>
+
         <div class="filter -lowpass">
           <div class="filter--icon"></div>
           <div class="filter--label -label">Lowpass</div>
@@ -119,9 +120,6 @@
 
         <knob up-data='{ "modifier": "-filter-cutoff", "initialValue": 1.0, "title": "Filter Cutoff", "label": "Cutoff"}'></knob>
         <knob up-data='{ "modifier": "-filter-resonance", "initialValue": 0.0, "title": "Filter Resonance", "label": "Q"}'></knob>
-        <!--
-          <knob up-data='{ "modifier": "-float-range", "initialValue": 0.25, "title": "Float Range", "label": "FR"}'></knob>
-        -->
       </div>
 
       <div class="bit-controls">

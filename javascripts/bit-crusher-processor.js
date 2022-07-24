@@ -33,11 +33,11 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
 
   onMessageFromAudioWorklet(event){
     const eventType = event.data[0];
-    if(eventType == 'bit-state'){
+    if(eventType === 'bit-state'){
       const bit = event.data[1];
       const modifier = event.data[2];
       this.bitModifiers[bit] = modifier;
-    }else if(eventType == 'float-range'){
+    }else if(eventType === 'float-range'){
       this.floatRange = event.data[1];
     }
   };
@@ -63,7 +63,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         if (!isBitDepthConstant) {
           step = Math.pow(0.5, bitDepth[i]); // square root - simulate 8 bit channels
         }
-        if(frequencyReduction.length == 1){
+        if(frequencyReduction.length === 1){
           // using the initial value
           this.phase_ += frequencyReduction[0];
         }else{
@@ -74,7 +74,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
           this.phase_ -= 1.0;
           //TODO: bitDepth reduction did not seem to have any effect. trying to improve this - then remove bitdepth code
           // this.lastSampleValue_ = step * Math.floor(inputChannel[i] / step + 0.5);
- 
+
           this.lastSampleValue_ = this.applyBitFilters(inputChannel[i]);
         }
 
@@ -91,9 +91,9 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
     let modifiedIntValue = Math.abs(this.convertToNBitInt(sampleValue));
     this.bitModifiers.forEach(function(modifier, index){
       let bitmask = 1 << index;
-      if(modifier == -1){
+      if(modifier === -1){
         modifiedIntValue ^= bitmask; // invert the bit
-      }else if(modifier == 0){
+      }else if(modifier === 0){
         modifiedIntValue &= ~bitmask; // set the bit to zero
       } // Else: Don't alter the bit
     });
