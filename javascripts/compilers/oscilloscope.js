@@ -1,21 +1,24 @@
 // Inspired by Wavy Jones
 
-up.compiler('.oscilloscope', function (element) {
+  up.compiler('.oscilloscope', function (element) {
   let interval, oscilloscopeLine, oscilloscope, freqData;
   const noDataPoints = 10;
-  const lineColor = 'white';
+  const lineColor = 'aliceblue';
   const lineThickness = 1;
+  const intervalMilliseconds = 100;
 
   function init() {
     setUpSVG();
     drawLine('zero');
   }
 
+
+
   function setUpSVG() {
     const svgNamespace = "http://www.w3.org/2000/svg";
     const paper = document.createElementNS(svgNamespace, "svg");
-    paper.setAttribute('width', element.offsetWidth);
-    paper.setAttribute('height', element.offsetHeight);
+    paper.setAttribute('width', element.clientWidth);
+    paper.setAttribute('height', element.clientHeight);
     paper.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
     element.appendChild(paper);
 
@@ -23,7 +26,35 @@ up.compiler('.oscilloscope', function (element) {
     oscilloscopeLine.setAttribute("stroke", lineColor);
     oscilloscopeLine.setAttribute("stroke-width", lineThickness);
     oscilloscopeLine.setAttribute("fill", "none");
+    oscilloscopeLine.setAttribute("style", "fill-opacity: 0; filter: url(#glow);");
+    oscilloscopeLine.setAttribute("fill-opacity", "0");
+
     paper.appendChild(oscilloscopeLine);
+    oscilloscopeLine.insertAdjacentHTML('beforebegin', `
+      <defs>
+        <filter id="glow">
+          <fegaussianblur className="blur" result="coloredBlur" stddeviation="4"></fegaussianblur>
+          <femerge>
+            <femergenode in="coloredBlur"></femergenode>
+            <femergenode in="coloredBlur"></femergenode>
+            <femergenode in="coloredBlur"></femergenode>
+            <femergenode in="SourceGraphic"></femergenode>
+          </femerge>
+        </filter>
+
+        <!-- source: https://stackoverflow.com/a/14209704 -->
+        <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
+          <path d="M 8 0 L 0 0 0 8" fill="none" stroke="gray" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+    `);
+
+    const grid = document.createElementNS(svgNamespace, "rect");
+    grid.setAttribute("width", '100%');
+    grid.setAttribute("height", '100%');
+    grid.setAttribute("fill", 'url(#smallGrid)');
+    grid.classList.add('oscilloscope--grid')
+    paper.appendChild(grid);
   }
 
   function drawLine(type) {
@@ -55,7 +86,7 @@ up.compiler('.oscilloscope', function (element) {
 
   function drawLines() {
     drawLine();
-    interval = setInterval(drawLine, 100);
+    interval = setInterval(drawLine, intervalMilliseconds);
   }
 
   function stopDrawingLines() {
