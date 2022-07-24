@@ -1,9 +1,4 @@
 .machine-back {
-  --machine-width: 950px;
-  --content-width: 690px;
-  --color-text-muted: #888;
-  --color-text-active: #E4E8EA;
-
   position: relative;
   margin: auto;
   max-width: var(--machine-width);
@@ -19,6 +14,7 @@
   border-bottom-left-radius: 1px;
   border-bottom-right-radius: 1px;
   user-select: none;
+  transition: transform 0.25s ease-in-out;
 }
 
 @media(max-width: 1030px){

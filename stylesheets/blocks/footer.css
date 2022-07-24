@@ -1,0 +1,15 @@
+.footer {
+  display: flex;
+  max-width: var(--machine-width);
+  position: relative;
+  margin: 40px auto 0;
+  align-content: center;
+  justify-content: center;
+}
+
+.footer--link {
+  cursor: pointer;
+  font-family: 'Inconsolata', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

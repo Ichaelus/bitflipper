@@ -29,6 +29,10 @@ body{
   display: flex;
   flex-direction: row;
   align-items: center;
+  --machine-width: 950px;
+  --content-width: 690px;
+  --color-text-muted: #888;
+  --color-text-active: #E4E8EA;
 }
 
 @media(max-width: 1030px){

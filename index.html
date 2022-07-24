@@ -28,12 +28,14 @@
   <link rel="stylesheet" href="stylesheets/blocks/bit-control.css">
   <link rel="stylesheet" href="stylesheets/blocks/display.css">
   <link rel="stylesheet" href="stylesheets/blocks/filter.css">
+  <link rel="stylesheet" href="stylesheets/blocks/footer.css">
   <link rel="stylesheet" href="stylesheets/blocks/input-selection.css">
   <link rel="stylesheet" href="stylesheets/blocks/input-visualizer.css">
   <link rel="stylesheet" href="stylesheets/blocks/oscilloscope.css">
   <link rel="stylesheet" href="stylesheets/blocks/output-cable.css">
   <link rel="stylesheet" href="stylesheets/blocks/power-switch.css">
   <link rel="stylesheet" href="stylesheets/blocks/knob.css">
+  <link rel="stylesheet" href="stylesheets/blocks/machine.css">
   <link rel="stylesheet" href="stylesheets/blocks/machine-back.css">
   <link rel="stylesheet" href="stylesheets/blocks/upper-controls.css">
 
@@ -47,6 +49,7 @@
   <script src="javascripts/compilers/install.js"></script>
   <script src="javascripts/compilers/input-selection.js"></script>
   <script src="javascripts/compilers/knob.js"></script>
+  <script src="javascripts/compilers/manual.js"></script>
   <script src="javascripts/compilers/microphone.js"></script>
   <script src="javascripts/compilers/oscilloscope.js"></script>
   <script src="javascripts/compilers/output-cable.js"></script>
@@ -57,101 +60,112 @@
 
 <body>
   <div class="main-container">
-    <div class="machine-back">
-      <template id="cable-connector">
-        <div class="cable-connector">
-          <div class="cable-connector--jack"></div>
-          <div class="cable-connector--part -top"></div>
-          <div class="cable-connector--part -center"></div>
-          <div class="cable-connector--part -bottom"></div>
-          <div class="cable-connector--label -label"></div>
-        </div>
-      </template>
-
-      <div class='input-selection'>
-        <cable-connector up-data='{ "modifier": "-drumloop", "label": "Drm"}'></cable-connector>
-        <cable-connector up-data='{ "modifier": "-microphone", "label": "Mic"}'></cable-connector>
-        <div class="cable-connector-stub install">
-          <div class="cable-connector--label -label">Install</div>
-        </div>
-        <div class='input-selection--switch'>
-          <div class='input-selection--switch-knob'></div>
-        </div>
-        <output-cable up-data='{ "label": "Stereo"}'></output-cable>
-        <output-cable up-data='{ "label": "Out"}'></output-cable>
-      </div>
-
-      <div class='upper-controls'>
-        <input type="button" class="power-switch" value="⏻" title="Start/Stop">
-        <div class="oscilloscope"></div>
-        <img class="upper-controls--logo" src="assets/bitflipperlogo.svg" >
-        <div class="input-visualizer" title='Current noise level'>
-          <div class="input-visualizer--glow" title='Current noise level'> </div>
-         </div>
-      </div>
-
-      <div class="display">
-        <span class="display--text" data-default-text="Bitflipper"></span>
-      </div>
-
-      <div class='knobs'>
-        <template id="knob">
-          <div class='knob'>
-            <div class="knob--active-light"></div>
-            <div class="knob--dial">
-              <div class="knob--dial-grip"></div>
-              <svg class="knob--dial-svg" viewBox="0 0 100 100">
-                <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
-                <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
-              </svg>
-            </div>
-            <div class="knob--label -label"></div>
+    <div class="machine">
+      <div class="machine-back">
+        <template id="cable-connector">
+          <div class="cable-connector">
+            <div class="cable-connector--jack"></div>
+            <div class="cable-connector--part -top"></div>
+            <div class="cable-connector--part -center"></div>
+            <div class="cable-connector--part -bottom"></div>
+            <div class="cable-connector--label -label"></div>
           </div>
         </template>
 
-        <knob up-data='{ "modifier": "volume", "initialValue": 1, "title": "Volume (Gain)", "label": "Vol"}'></knob>
-        <knob up-data='{ "modifier": "-sample-reduction", "initialValue": 1.0, "title": "Sample Reduction", "label": "Redux"}'></knob>
-        <knob up-data='{ "modifier": "-float-range", "initialValue": 0.25, "title": "Float Range", "label": "FR"}'></knob>
-
-        <div class="filter -lowpass">
-          <div class="filter--icon"></div>
-          <div class="filter--label -label">Lowpass</div>
-        </div>
-
-        <knob up-data='{ "modifier": "-filter-cutoff", "initialValue": 1.0, "title": "Filter Cutoff", "label": "Cutoff"}'></knob>
-        <knob up-data='{ "modifier": "-filter-resonance", "initialValue": 0.0, "title": "Filter Resonance", "label": "Q"}'></knob>
-      </div>
-
-      <div class="bit-controls">
-        <template id="bit-control">
-          <div class="bit-control">
-            <div class="bit-control--buttons">
-              <input type="button" class="bit-control--button -reset -active" value="reset">
-              <input type="button" class="bit-control--button -invert" value="invert">
-              <input type="button" class="bit-control--button -mute" value="mute">
-            </div>
-            <div class="bit-control--labels -label">
-              <label class="bit-control--index"></label>
-            </div>
+        <div class='input-selection'>
+          <cable-connector up-data='{ "modifier": "-drumloop", "label": "Drm"}'></cable-connector>
+          <cable-connector up-data='{ "modifier": "-microphone", "label": "Mic"}'></cable-connector>
+          <div class="cable-connector-stub install">
+            <div class="cable-connector--label -label">Install</div>
           </div>
-        </template>
-
-        <div class="bit-control--captions">
-          <div class="bit-control--caption">reset</div>
-          <div class="bit-control--caption">invert</div>
-          <div class="bit-control--caption">mute</div>
-          <div class="bit-control--caption">bit #</div>
+          <div class='input-selection--switch'>
+            <div class='input-selection--switch-knob'></div>
+          </div>
+          <output-cable up-data='{ "label": "Stereo"}' class="-phono-red"></output-cable>
+          <output-cable up-data='{ "label": "Out"}'></output-cable>
         </div>
 
-        <bit-control up-data='{ "bitIndex": 1 }'></bit-control>
-        <bit-control up-data='{ "bitIndex": 2 }'></bit-control>
-        <bit-control up-data='{ "bitIndex": 3 }'></bit-control>
-        <bit-control up-data='{ "bitIndex": 4 }'></bit-control>
-        <bit-control up-data='{ "bitIndex": 5 }'></bit-control>
-        <bit-control up-data='{ "bitIndex": 6 }'></bit-control>
-        <bit-control up-data='{ "bitIndex": 7 }'></bit-control>
-        <bit-control up-data='{ "bitIndex": 8 }'></bit-control>
+        <div class='upper-controls'>
+          <input type="button" class="power-switch" value="⏻" title="Start/Stop">
+          <div class="oscilloscope"></div>
+          <img class="upper-controls--logo" src="assets/bitflipperlogo.svg" >
+          <div class="input-visualizer" title='Current noise level'>
+            <div class="input-visualizer--glow" title='Current noise level'> </div>
+           </div>
+        </div>
+
+        <div class="display">
+          <span class="display--text" data-default-text="Bitflipper"></span>
+        </div>
+
+        <div class='knobs'>
+          <template id="knob">
+            <div class='knob'>
+              <div class="knob--active-light"></div>
+              <div class="knob--dial">
+                <div class="knob--dial-grip"></div>
+                <svg class="knob--dial-svg" viewBox="0 0 100 100">
+                  <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" stroke="#55595C" />
+                  <path d="M20,76 A 40 40 0 1 1 80 76" fill="none" />
+                </svg>
+              </div>
+              <div class="knob--label -label"></div>
+            </div>
+          </template>
+
+          <knob up-data='{ "modifier": "volume", "initialValue": 1, "title": "Volume (Gain)", "label": "Vol"}'></knob>
+          <knob up-data='{ "modifier": "-sample-reduction", "initialValue": 1.0, "title": "Sample Reduction", "label": "Redux"}'></knob>
+          <knob up-data='{ "modifier": "-float-range", "initialValue": 0.25, "title": "Float Range", "label": "FR"}'></knob>
+
+          <div class="filter -lowpass">
+            <div class="filter--icon"></div>
+            <div class="filter--label -label">Lowpass</div>
+          </div>
+
+          <knob up-data='{ "modifier": "-filter-cutoff", "initialValue": 1.0, "title": "Filter Cutoff", "label": "Cutoff"}'></knob>
+          <knob up-data='{ "modifier": "-filter-resonance", "initialValue": 0.0, "title": "Filter Resonance", "label": "Q"}'></knob>
+        </div>
+
+        <div class="bit-controls">
+          <template id="bit-control">
+            <div class="bit-control">
+              <div class="bit-control--buttons">
+                <input type="button" class="bit-control--button -reset -active" value="reset">
+                <input type="button" class="bit-control--button -invert" value="invert">
+                <input type="button" class="bit-control--button -mute" value="mute">
+              </div>
+              <div class="bit-control--labels -label">
+                <label class="bit-control--index"></label>
+              </div>
+            </div>
+          </template>
+
+          <div class="bit-control--captions">
+            <div class="bit-control--caption">reset</div>
+            <div class="bit-control--caption">invert</div>
+            <div class="bit-control--caption">mute</div>
+            <div class="bit-control--caption">bit #</div>
+          </div>
+
+          <bit-control up-data='{ "bitIndex": 1 }'></bit-control>
+          <bit-control up-data='{ "bitIndex": 2 }'></bit-control>
+          <bit-control up-data='{ "bitIndex": 3 }'></bit-control>
+          <bit-control up-data='{ "bitIndex": 4 }'></bit-control>
+          <bit-control up-data='{ "bitIndex": 5 }'></bit-control>
+          <bit-control up-data='{ "bitIndex": 6 }'></bit-control>
+          <bit-control up-data='{ "bitIndex": 7 }'></bit-control>
+          <bit-control up-data='{ "bitIndex": 8 }'></bit-control>
+        </div>
+
+        <div class="manual">
+          <!-- todo: use actual guide -->
+          <img alt="bitflipper manual" src="https://user-images.githubusercontent.com/36916479/97628640-434e7d80-1a2d-11eb-947c-796acb1966e8.png" loading="lazy">
+        </div>
       </div>
+    </div>
+
+    <div class="footer">
+      <a class="footer--link -manual">Show manual</a>
     </div>
   </div>
 
