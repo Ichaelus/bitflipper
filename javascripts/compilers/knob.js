@@ -10,6 +10,7 @@ up.compiler('knob', (element, data) => {
   element.MEDIAN = element.MAXIMUM / 2;
   element.OFFSET = -element.MEDIAN;
   element.rotation = element.MAXIMUM;
+  const knob = element.querySelector('.knob')
   let elementDialGrip = element.querySelector('.knob--dial-grip');
   let elementSVG = element.querySelector('.knob--dial-svg');
   let elementLabel = element.querySelector('.knob--label');
@@ -32,11 +33,18 @@ up.compiler('knob', (element, data) => {
     element.setValue(data.initialValue);
     moveKnobPosition();
     addEventListeners();
+    MidiMap.registerControl(knob, data.identifier, midiMoved)
   }
 
   function moveKnobPosition(){
     elementDialGrip.style.transform = `translate(-50%,-50%) rotate(${element.rotation + element.OFFSET}deg)`;
     elementSVG.style.strokeDashOffset = 184 - 184 * ((element.rotation + element.OFFSET + element.MEDIAN) / element.MAXIMUM);
+  }
+
+  function midiMoved(midiValue) {
+    element.rotation = midiValue * element.MAXIMUM
+    moveKnobPosition()
+    up.emit(element, 'button-value-changed')
   }
 
   function knobMoved(evt) {

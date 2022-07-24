@@ -5,6 +5,8 @@ up.compiler('.filter', function(element){
   let currentFilterIndex = 0;
   let audioContext, filter;
 
+  MidiMap.registerControl(element, 'filter-button', rotateFilterType)
+
   function setFilterType(type){
     filter.type = type;
     label.innerText = type;

@@ -79,6 +79,9 @@
   }
 
   function drawLines() {
+    if (!oscilloscope){
+      return; // The machine has not been initialized yet
+    }
     drawLine();
     interval = setInterval(drawLine, 1000 / hertz);
   }

@@ -19,7 +19,7 @@
 
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Inconsolata:700&display=swap" rel="stylesheet">
 
-  <!-- Update service_worker.js whenever adding new assets. -->
+  <!-- Update service-worker.js whenever adding new assets. -->
 
   <link rel="stylesheet" href="stylesheets/unpoly-0.61.min.css">
   <link rel="stylesheet" href="stylesheets/reset.css">
@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="stylesheets/blocks/footer.css">
   <link rel="stylesheet" href="stylesheets/blocks/input-selection.css">
   <link rel="stylesheet" href="stylesheets/blocks/input-visualizer.css">
+  <link rel="stylesheet" href="stylesheets/blocks/midi.css">
   <link rel="stylesheet" href="stylesheets/blocks/oscilloscope.css">
   <link rel="stylesheet" href="stylesheets/blocks/output-cable.css">
   <link rel="stylesheet" href="stylesheets/blocks/power-switch.css">
@@ -41,6 +42,7 @@
 
   <script src="javascripts/unpoly-0.61.min.js"></script>
   <script src="javascripts/window/input-controller.js"></script>
+  <script src="javascripts/window/midi-map.js"></script>
   <script src="javascripts/compilers/cable-connector.js"></script>
   <script src="javascripts/compilers/bit-control.js"></script>
   <script src="javascripts/compilers/display.js"></script>
@@ -50,10 +52,11 @@
   <script src="javascripts/compilers/input-selection.js"></script>
   <script src="javascripts/compilers/knob.js"></script>
   <script src="javascripts/compilers/manual.js"></script>
+  <script src="javascripts/compilers/midi.js"></script>
   <script src="javascripts/compilers/microphone.js"></script>
   <script src="javascripts/compilers/oscilloscope.js"></script>
   <script src="javascripts/compilers/output-cable.js"></script>
-  <script src="javascripts/compilers/power_switch.js"></script>
+  <script src="javascripts/compilers/power-switch.js"></script>
   <script src="javascripts/compilers/volume.js"></script>
   <title>Bitflipper - 8 BIT reducer & mangler</title>
 </head>
@@ -113,17 +116,17 @@
             </div>
           </template>
 
-          <knob up-data='{ "modifier": "volume", "initialValue": 1, "title": "Volume (Gain)", "label": "Vol"}'></knob>
-          <knob up-data='{ "modifier": "-sample-reduction", "initialValue": 1.0, "title": "Sample Reduction", "label": "Redux"}'></knob>
-          <knob up-data='{ "modifier": "-float-range", "initialValue": 0.25, "title": "Float Range", "label": "FR"}'></knob>
+          <knob up-data='{ "modifier": "volume", "initialValue": 1, "title": "Volume (Gain)", "label": "Vol", "identifier": "volume-knob"}'></knob>
+          <knob up-data='{ "modifier": "-sample-reduction", "initialValue": 1.0, "title": "Sample Reduction", "label": "Redux", "identifier": "redux-knob"}'></knob>
+          <knob up-data='{ "modifier": "-float-range", "initialValue": 0.25, "title": "Float Range", "label": "FR", "identifier": "float-range-knob"}'></knob>
 
           <div class="filter -lowpass">
             <div class="filter--icon"></div>
             <div class="filter--label -label">Lowpass</div>
           </div>
 
-          <knob up-data='{ "modifier": "-filter-cutoff", "initialValue": 1.0, "title": "Filter Cutoff", "label": "Cutoff"}'></knob>
-          <knob up-data='{ "modifier": "-filter-resonance", "initialValue": 0.0, "title": "Filter Resonance", "label": "Q"}'></knob>
+          <knob up-data='{ "modifier": "-filter-cutoff", "initialValue": 1.0, "title": "Filter Cutoff", "label": "Cutoff", "identifier": "cutoff-knob"}'></knob>
+          <knob up-data='{ "modifier": "-filter-resonance", "initialValue": 0.0, "title": "Filter Resonance", "label": "Q", "identifier": "resonance-knob"}'></knob>
         </div>
 
         <div class="bit-controls">
@@ -166,6 +169,10 @@
 
     <div class="footer">
       <a class="footer--link -manual">Show manual</a>
+      <a class="footer--link -midi">Setup midi</a>
+    </div>
+
+    <div class="midi">
     </div>
   </div>
 

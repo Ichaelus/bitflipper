@@ -13,3 +13,9 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+
+.footer--link + .footer--link:before {
+  display: inline;
+  content: '|';
+  margin: 0 10px;
+}

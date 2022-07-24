@@ -1,6 +1,11 @@
 
 const processAudio = async () => {
   const audioContext = new AudioContext();
+  if (audioContext.state === 'suspended') {
+    up.emit('status-text-changed', {text: 'Click to allow audio output'});
+    return;
+  }
+
   // Initialize the audio context and its processor
   await audioContext.audioWorklet.addModule('javascripts/bit-crusher-processor.js');
   const inputGain = audioContext.createGain();
@@ -94,7 +99,7 @@ function setupVolumeLimiter(audioContext){
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/service_worker.js').then(function(registration) {
+    navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
     }, function(err) {

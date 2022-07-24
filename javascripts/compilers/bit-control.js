@@ -15,6 +15,11 @@ up.compiler('bit-control', (bitControl, data) => {
   let enabled = false;
   bitControl.querySelector('.bit-control--index').innerText = bitControlNumber;
 
+  MidiMap.registerControl(resetButton, `bit-control-${bitControlNumber}-reset`, resetBit)
+  MidiMap.registerControl(invertButton, `bit-control-${bitControlNumber}-invert`, invertBit)
+  MidiMap.registerControl(muteButton, `bit-control-${bitControlNumber}-mute`, muteBit)
+  MidiMap.registerControl(bitLabel, `bit-control-${bitControlNumber}-bits`, setBits)
+
   function reset(){
     if(!bitCrusher){
       return false; // The machine has not been initialized yet
@@ -24,19 +29,19 @@ up.compiler('bit-control', (bitControl, data) => {
   }
 
   function resetBit(evt){
-    if(enabled){
+    if(enabled && !MidiMap.recording){
       toggleBit(resetButton, 1, 'enabled');
     }
   }
 
   function muteBit(evt){
-    if(enabled){
+    if(enabled && !MidiMap.recording){
       toggleBit(muteButton, 0, 'disabled');
     }
   }
 
   function invertBit(evt){
-    if(enabled){
+    if(enabled && !MidiMap.recording){
       toggleBit(invertButton, -1, 'inverted');
     }
   }
@@ -62,7 +67,9 @@ up.compiler('bit-control', (bitControl, data) => {
   }
 
   function setBits(){
-    up.emit('bits-changed', { bits: data.bitIndex, instant: true })
+    if(!MidiMap.recording) {
+      up.emit('bits-changed', {bits: data.bitIndex, instant: true})
+    }
   }
 
   function setActiveBit(evt){
