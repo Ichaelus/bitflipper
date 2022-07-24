@@ -42,11 +42,8 @@ const processAudio = async () => {
   }
 
   function onFloatRangeChanged(evt){
-    const maxFloatRange = 2**paramBits.value;
-    // prevent zero division and no sound
-    const adjustedFloatRange = Math.max(parseInt(evt.target.getValue() * maxFloatRange), 1);
-    bitCrusher.port.postMessage(['float-range', adjustedFloatRange]);
-    up.emit('status-text-changed', {text: `Float Range: ${ adjustedFloatRange }`, instant: true});
+    bitCrusher.port.postMessage(['float-range', evt.target.getValue()]);
+    up.emit('status-text-changed', {text: `Float Range: ${ evt.target.getValue() }`, instant: true});
   }
 
   function onBitsChanged(evt){

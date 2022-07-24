@@ -35,7 +35,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
     this.bits = newBits
     this.maxFloatRange = 2**this.bits;
     if (newBits !== previousBits) {
-      this.floatRange = this.maxFloatRange;
+      this.floatRange = 1;
       this.bitModifiers = Array(this.bits).fill(1); // N bits, each controllable
     }
   }
@@ -51,7 +51,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         throw(`cannot set modifier on bit ${bit}`)
       }
     } else if(eventType === 'float-range'){
-      this.floatRange = event.data[1];
+      this.floatRange = Math.max(event.data[1], 0.005);
     }
   };
 
@@ -90,9 +90,6 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
   applyBitFilters(sampleValue){
     const sign = Math.sign(sampleValue);
     let modifiedIntValue = Math.abs(this.convertToNBitInt(sampleValue));
-    // const bit = (modifiedIntValue >>> 0).toString(2)
-    // if (bit === '111111')
-    //   debugger
     this.bitModifiers.forEach(function(modifier, index){
       let bitmask = 1 << index;
       if(modifier === -1){
@@ -101,7 +98,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         modifiedIntValue &= ~bitmask; // set the bit to zero
       } // Else: Don't alter the bit
     });
-    return (modifiedIntValue * 1.0 / this.floatRange) * sign;
+    return (modifiedIntValue * 1.0 * this.floatRange ) * sign;
   }
 
   convertToNBitInt(float32){
