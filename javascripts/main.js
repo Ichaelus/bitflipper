@@ -43,7 +43,7 @@ const processAudio = async () => {
 
   function onFloatRangeChanged(evt){
     bitCrusher.port.postMessage(['float-range', evt.target.getValue()]);
-    up.emit('status-text-changed', {text: `Float Range: ${ evt.target.getValue() }`, instant: true});
+    up.emit('status-text-changed', {text: `Float Range: ${ parseInt(evt.target.getValue() * 100) }%`, instant: true});
   }
 
   function onBitsChanged(evt){

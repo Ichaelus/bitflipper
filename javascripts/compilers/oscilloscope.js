@@ -2,7 +2,6 @@
 
   up.compiler('.oscilloscope', function (element) {
   let interval, oscilloscopeLine, oscilloscope, freqData;
-  const noDataPoints = 10;
   const lineColor = 'aliceblue';
   const lineThickness = 1;
   const intervalMilliseconds = 100;
@@ -59,10 +58,9 @@
 
   function drawLine(type) {
     const graphPoints = [];
-    let graphStr = '';
 
     if(type === 'zero'){
-      freqData = new Uint8Array(1024);
+      freqData = new Uint8Array(element.clientWidth);
       freqData.fill(128);
     }else{
       oscilloscope.getByteTimeDomainData(freqData);
@@ -70,18 +68,14 @@
 
     graphPoints.push('M0, ' + (element.offsetHeight / 2));
 
-    for (let i = 0; i < freqData.length; i++) {
-      if (i % noDataPoints) {
-        let point = (freqData[i] / 128) * (element.offsetHeight / 2);
-        graphPoints.push('L' + i + ', ' + point);
-      }
+    const visualizedDataPoints = Math.floor(freqData.length / element.clientWidth)
+
+    for (let i = 0; i < freqData.length; i+= visualizedDataPoints) {
+      let point = (freqData[i] / 128) * (element.offsetHeight / 2);
+      graphPoints.push('L' + i / visualizedDataPoints + ', ' + point);
     }
 
-    for (i = 0; i < graphPoints.length; i++) {
-      graphStr += graphPoints[i];
-    }
-
-    oscilloscopeLine.setAttribute("d", graphStr);
+    oscilloscopeLine.setAttribute("d", graphPoints.reduce((point, previous) => point + previous));
   }
 
   function drawLines() {
