@@ -1,5 +1,4 @@
-up.compiler('.manual', (element) => {
-
+up.compiler('.manual', element => {
   const helpLink = document.querySelector('.footer--link.-manual')
 
   let manualVisible = false
@@ -17,8 +16,5 @@ up.compiler('.manual', (element) => {
     manualVisible = !manualVisible
   }
 
-  return [
-    up.on(helpLink, 'click', toggleManual)
-  ]
-
+  return [up.on(helpLink, 'click', toggleManual)]
 })

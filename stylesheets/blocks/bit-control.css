@@ -8,7 +8,7 @@
   margin: 0 auto;
 }
 
-.bit-control--captions{
+.bit-control--captions {
   text-transform: uppercase;
   font-family: 'Inconsolata', monospace;
   letter-spacing: 0.1em;
@@ -17,13 +17,13 @@
   text-decoration: none;
 }
 
-.bit-control--caption{
+.bit-control--caption {
   padding-right: 10px;
   height: 42px;
   line-height: 42px;
 }
 
-.bit-control--caption:last-child{
+.bit-control--caption:last-child {
   border-bottom: 10px double transparent;
   height: 28px;
   line-height: 28px;
@@ -38,7 +38,7 @@
   flex-direction: column;
 }
 
-@media(min-width: 741px){
+@media (min-width: 741px) {
   .bit-control--buttons {
     align-items: center;
   }
@@ -50,7 +50,11 @@
   margin: 4px 0;
   cursor: pointer;
   color: transparent;
-  background: radial-gradient(closest-side, var(--inner-button-color), var(--outer-button-color) 70%);
+  background: radial-gradient(
+    closest-side,
+    var(--inner-button-color),
+    var(--outer-button-color) 70%
+  );
   border-radius: 4px;
   border-color: var(--outer-button-color);
   border-width: 1px;
@@ -102,20 +106,20 @@
   text-shadow: 0 0 3px aliceblue;
 }
 
-@media(max-width: 880px){
+@media (max-width: 880px) {
   .bit-controls {
     grid-column-gap: 5px;
   }
 }
 
-@media(max-width: 740px){
+@media (max-width: 740px) {
   .bit-controls {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto;
     grid-column-gap: 15px;
   }
 
-  .bit-control--captions{
+  .bit-control--captions {
     display: none;
   }
 
@@ -132,12 +136,12 @@
   }
 }
 
-@media(max-width: 440px){
+@media (max-width: 440px) {
   .bit-controls {
     grid-column-gap: 5px;
   }
 
-  .bit-control--button{
+  .bit-control--button {
     padding: 5px 0px;
   }
 }

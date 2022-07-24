@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 
-@media(max-width: 810px) {
+@media (max-width: 810px) {
   .filter {
     display: flex;
     align-items: center;

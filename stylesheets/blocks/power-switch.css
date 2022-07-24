@@ -1,4 +1,4 @@
-.power-switch{
+.power-switch {
   flex: 0 1 auto;
   height: 35px;
   width: 26px;
@@ -13,7 +13,7 @@
   background-color: black;
 }
 
-.machine-back.-active .power-switch{
+.machine-back.-active .power-switch {
   background-color: white;
   color: black;
 }

@@ -4,7 +4,7 @@
 * cable-connectors!
 * See: output-cable.css, cable-connector-stub.css
 **/
-.cable-connector{
+.cable-connector {
   position: absolute;
   left: 100px;
   top: -15px;
@@ -14,36 +14,43 @@
   cursor: pointer;
 }
 
-.-microphone .cable-connector{
+.-microphone .cable-connector {
   margin-left: calc(1 * var(--connector-width) + 1 * 25px);
 }
 
-.cable-connector--part{
-  background: linear-gradient(90deg, #705c53, #fff8ed, #7d746b, #a28e75, #766450);
+.cable-connector--part {
+  background: linear-gradient(
+    90deg,
+    #705c53,
+    #fff8ed,
+    #7d746b,
+    #a28e75,
+    #766450
+  );
   border-radius: 25% 25% 0 0;
   margin: 0 auto;
   border-bottom: 1px solid #705c5382;
   box-shadow: 0px 1px 0px 0px #705c5382;
 }
 
-.cable-connector--part.-top{
+.cable-connector--part.-top {
   width: 31px;
   height: 3px;
 }
 
-.cable-connector--part.-center{
+.cable-connector--part.-center {
   width: 33px;
   height: 3px;
 }
 
-.cable-connector--part.-bottom{
+.cable-connector--part.-bottom {
   width: 35px;
   height: 2px;
   border-bottom: none;
   box-shadow: none;
 }
 
-.cable-connector--label{
+.cable-connector--label {
   margin-top: 18px;
   position: absolute;
   width: 100%;
@@ -51,11 +58,11 @@
 }
 
 .machine-back.-active .cable-connector:hover .cable-connector--label,
-cable-connector.-active .cable-connector--label{
+cable-connector.-active .cable-connector--label {
   color: var(--color-text-active);
 }
 
-.cable-connector--jack{
+.cable-connector--jack {
   background-image: url(../../assets/jack-connector-cable.svg);
   position: absolute;
   bottom: 0px;
@@ -67,8 +74,8 @@ cable-connector.-active .cable-connector--label{
   background-position-y: -50px;
   -webkit-mask-image: linear-gradient(to top, black 30%, transparent 80%);
   mask-image: linear-gradient(to top, black 30%, transparent 80%);
-  transition: opacity 0.21s ease-in-out .25s,
-              background-position-y 0.5s ease-in-out 0.46s;
+  transition: opacity 0.21s ease-in-out 0.25s,
+    background-position-y 0.5s ease-in-out 0.46s;
   z-index: -1;
   opacity: 0; /* only the active one is shown */
 }
@@ -77,12 +84,12 @@ output-cable.-phono-red .cable-connector--jack {
   background-image: url(../../assets/jack-connector-cable-red.svg);
 }
 
-cable-connector.-active .cable-connector--jack{
+cable-connector.-active .cable-connector--jack {
   background-position-y: 50px;
   opacity: 1;
 }
 
-cable-connector.-plugging-out .cable-connector--jack{
+cable-connector.-plugging-out .cable-connector--jack {
   transition: opacity 0.21s ease-in-out 1s,
-              background-position-y 0.5s ease-in-out 0.5s;
+    background-position-y 0.5s ease-in-out 0.5s;
 }

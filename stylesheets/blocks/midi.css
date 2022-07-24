@@ -1,0 +1,31 @@
+.knob.-can-midi-learn .knob--label,
+.knob.-can-midi-learn .knob--dial-svg,
+.power-switch.-can-midi-learn,
+.bit-control--labels.-can-midi-learn,
+.filter.-can-midi-learn .filter--label {
+  color: #696938;
+  stroke: #696938;
+}
+
+.bit-control--button.-can-midi-learn {
+  box-shadow: none;
+  color: white;
+  background: #696938;
+  filter: none;
+  text-shadow: none;
+}
+
+.knob.-current-midi-learn .knob--label,
+.knob.-current-midi-learn .knob--dial-svg,
+.power-switch.-current-midi-learn,
+.bit-control--labels.-current-midi-learn,
+.filter.-current-midi-learn .filter--label {
+  color: yellow;
+  stroke: yellow;
+}
+
+.bit-control--button.-current-midi-learn {
+  color: black;
+  background: yellow;
+  box-shadow: none;
+}

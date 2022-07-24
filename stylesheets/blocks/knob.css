@@ -14,7 +14,7 @@
   align-items: center;
 }
 
-.knob+.knob {
+.knob + .knob {
   margin-left: 40px;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .machine-back.-active knob.-active .knob--active-light {
-  background-color: #21CD92;
+  background-color: #21cd92;
 }
 
 .knob--dial {
@@ -46,7 +46,7 @@
 }
 
 .machine-back.-active knob.-active .knob--dial {
-  color: #21CD92;
+  color: #21cd92;
 }
 
 .knob--dial-grip {
@@ -58,11 +58,11 @@
   transition: 0s;
   height: 72px;
   width: 72px;
-  border: 6px solid #181B1C;
+  border: 6px solid #181b1c;
 }
 
 .knob--dial-grip::after {
-  content: "";
+  content: '';
   width: 2px;
   transform: translateX(-50%);
   position: absolute;

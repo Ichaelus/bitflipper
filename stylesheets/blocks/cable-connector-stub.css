@@ -2,7 +2,7 @@
 * Cable connectors without an actual (audio) function
 * such as the install action.
 **/
-.cable-connector-stub{
+.cable-connector-stub {
   position: absolute;
   left: 100px;
   top: -15px;
@@ -12,20 +12,20 @@
   cursor: pointer;
 }
 
-.cable-connector-stub{
+.cable-connector-stub {
   display: none;
 }
-.cable-connector-stub.-available{
+.cable-connector-stub.-available {
   display: block;
 }
 
-.cable-connector-stub.install{
+.cable-connector-stub.install {
   margin-left: calc(1 * var(--connector-width) + 3.5 * 25px);
 }
-.cable-connector-stub.install .cable-connector--label{
+.cable-connector-stub.install .cable-connector--label {
   padding-top: 10px;
 }
 
-.machine-back.-active .cable-connector-stub:hover .cable-connector--label{
+.machine-back.-active .cable-connector-stub:hover .cable-connector--label {
   color: var(--color-text-active);
 }

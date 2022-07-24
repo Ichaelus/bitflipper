@@ -4,8 +4,7 @@
 .machine.-flipped .upper-controls,
 .machine.-flipped .display,
 .machine.-flipped .knobs,
-.machine.-flipped .bit-controls
-{
+.machine.-flipped .bit-controls {
   display: none;
 }
 

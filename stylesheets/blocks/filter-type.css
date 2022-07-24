@@ -1,14 +1,14 @@
-.filter-type{
-    display: inline-flex;
-    margin: 0 40px;
+.filter-type {
+  display: inline-flex;
+  margin: 0 40px;
 }
 
-.filter-type--icon{
-    height: 72px;
-    width: 72px;
-    background-size: 100%;
+.filter-type--icon {
+  height: 72px;
+  width: 72px;
+  background-size: 100%;
 }
 
-.filter-type.-lowpass .filter-type--icon{
-    background-image: url(../../assets/filter_lowpass.png);
+.filter-type.-lowpass .filter-type--icon {
+  background-image: url(../../assets/filter_lowpass.png);
 }

@@ -1,4 +1,4 @@
-.upper-controls{
+.upper-controls {
   display: flex;
   flex-direction: row;
   padding: 20px 14px;
@@ -7,13 +7,13 @@
   justify-content: space-around;
 }
 
-@media(max-width: 525px){
-  .upper-controls{
+@media (max-width: 525px) {
+  .upper-controls {
     flex-direction: column;
   }
 }
 
-.upper-controls--logo{
+.upper-controls--logo {
   height: 40px;
   width: 180px;
   flex: 0 1 auto;
