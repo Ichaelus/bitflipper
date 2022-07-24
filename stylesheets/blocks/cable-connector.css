@@ -73,6 +73,10 @@ cable-connector.-active .cable-connector--label{
   opacity: 0; /* only the active one is shown */
 }
 
+output-cable.-phono-red .cable-connector--jack {
+  background-image: url(../../assets/jack-connector-cable-red.svg);
+}
+
 cable-connector.-active .cable-connector--jack{
   background-position-y: 50px;
   opacity: 1;

@@ -7,7 +7,8 @@ up.compiler('output-cable', function(element, data){
     // Load template
     const template = document.getElementById('cable-connector');
     const templateContent = template.content;
-    element.appendChild(templateContent.cloneNode(true));
+    const cable = templateContent.cloneNode(true);
+    element.appendChild(cable);
     element.querySelector('.cable-connector--label').innerText = data.label;
   }
 
