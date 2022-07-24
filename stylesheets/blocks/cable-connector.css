@@ -58,7 +58,7 @@
 }
 
 .machine-back.-active .cable-connector:hover .cable-connector--label,
-cable-connector.-active .cable-connector--label {
+.cable-connector.-active .cable-connector--label {
   color: var(--color-text-active);
 }
 
@@ -80,16 +80,16 @@ cable-connector.-active .cable-connector--label {
   opacity: 0; /* only the active one is shown */
 }
 
-output-cable.-phono-red .cable-connector--jack {
+.output-cable.-phono-red .cable-connector--jack {
   background-image: url(../../assets/jack-connector-cable-red.svg);
 }
 
-cable-connector.-active .cable-connector--jack {
+.cable-connector.-active .cable-connector--jack {
   background-position-y: 50px;
   opacity: 1;
 }
 
-cable-connector.-plugging-out .cable-connector--jack {
+.cable-connector.-plugging-out .cable-connector--jack {
   transition: opacity 0.21s ease-in-out 1s,
     background-position-y 0.5s ease-in-out 0.5s;
 }

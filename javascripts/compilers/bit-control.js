@@ -1,46 +1,48 @@
+/***
+ * Each bit of the audio stream signal can be influenced in the UI with dedicated
+ * control buttons. This compiler gives life to those buttons.
+***/
 up.compiler('bit-control', (bitControl, data) => {
-  // Load template
-  const template = document.getElementById('bit-control')
-  const templateContent = template.content
-  bitControl.appendChild(templateContent.cloneNode(true))
-
-  // Initialize
+  const element = Template.clone('bit-control', bitControl)
   let bitCrusher
-  const bitControlNumber = data.bitIndex
-  const resetButton = bitControl.querySelector('.bit-control--button.-reset')
-  const invertButton = bitControl.querySelector('.bit-control--button.-invert')
-  const muteButton = bitControl.querySelector('.bit-control--button.-mute')
-  const bitLabel = bitControl.querySelector('.bit-control--labels.-label')
-  const buttons = [resetButton, invertButton, muteButton]
   let enabled = false
-  bitControl.querySelector('.bit-control--index').innerText = bitControlNumber
+  const bitControlNumber = data.bitIndex
 
-  MidiMap.registerControl(
-    resetButton,
-    `bit-control-${bitControlNumber}-reset`,
-    resetBit,
-  )
-  MidiMap.registerControl(
-    invertButton,
-    `bit-control-${bitControlNumber}-invert`,
-    invertBit,
-  )
-  MidiMap.registerControl(
-    muteButton,
-    `bit-control-${bitControlNumber}-mute`,
-    muteBit,
-  )
-  MidiMap.registerControl(
-    bitLabel,
-    `bit-control-${bitControlNumber}-bits`,
-    setBits,
-  )
+  const resetButton = element.querySelector('.bit-control--button.-reset')
+  const invertButton = element.querySelector('.bit-control--button.-invert')
+  const muteButton = element.querySelector('.bit-control--button.-mute')
+  const bitLabel = element.querySelector('.bit-control--labels.-label')
+  const buttons = [resetButton, invertButton, muteButton]
+
+  function init() {
+    element.querySelector('.bit-control--index').innerText = bitControlNumber
+    MidiMap.registerControl(
+      resetButton,
+      `bit-control-${bitControlNumber}-reset`,
+      resetBit,
+    )
+    MidiMap.registerControl(
+      invertButton,
+      `bit-control-${bitControlNumber}-invert`,
+      invertBit,
+    )
+    MidiMap.registerControl(
+      muteButton,
+      `bit-control-${bitControlNumber}-mute`,
+      muteBit,
+    )
+    MidiMap.registerControl(
+      bitLabel,
+      `bit-control-${bitControlNumber}-bits`,
+      setBits,
+    )
+  }
 
   function reset() {
     if (!bitCrusher) {
       return false // The machine has not been initialized yet
     }
-    buttons.forEach(btn => btn.classList.remove('-active'))
+    buttons.forEach(button => button.classList.remove('-active'))
     return true
   }
 
@@ -73,10 +75,6 @@ up.compiler('bit-control', (bitControl, data) => {
     }
   }
 
-  function connectBitCrusher(evt) {
-    bitCrusher = evt.bitCrusher
-  }
-
   function disableBitControl() {
     enabled = false
   }
@@ -98,15 +96,15 @@ up.compiler('bit-control', (bitControl, data) => {
       bitCrusher.port.postMessage(['bit-state', bitControlNumber - 1, 1])
     }
     if (evt.bits >= data.bitIndex) {
-      bitControl.classList.add('-active')
+      element.classList.add('-active')
       enableBitControl()
     } else {
-      bitControl.classList.remove('-active')
+      element.classList.remove('-active')
       disableBitControl()
     }
   }
 
-  up.on('bitcrusher:connected', connectBitCrusher)
+  up.on('bitcrusher:connected', evt => bitCrusher = evt.bitCrusher)
   up.on('bits-changed', setActiveBit)
   up.on(resetButton, 'click', resetBit)
   up.on(muteButton, 'click', muteBit)
@@ -114,4 +112,6 @@ up.compiler('bit-control', (bitControl, data) => {
   up.on(bitLabel, 'click', setBits)
   up.on('reset:off', disableBitControl)
   up.on('reset:on', enableBitControl)
+
+  init()
 })

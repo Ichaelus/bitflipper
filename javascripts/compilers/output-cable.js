@@ -1,14 +1,11 @@
-////
-// An output cable is currently only a visual stub.
-// It is plugged in when the machine boots, and plugged out when powering off.
-//
-up.compiler('output-cable', function (element, data) {
+/***
+ * An output cable is currently only a visual stub.
+ * It is plugged in when the machine boots, and plugged out when powering off.
+***/
+up.compiler('output-cable', function (outputCable, data) {
+  const element = Template.clone('cable-connector', outputCable)
+
   function init() {
-    // Load template
-    const template = document.getElementById('cable-connector')
-    const templateContent = template.content
-    const cable = templateContent.cloneNode(true)
-    element.appendChild(cable)
     element.querySelector('.cable-connector--label').innerText = data.label
   }
 

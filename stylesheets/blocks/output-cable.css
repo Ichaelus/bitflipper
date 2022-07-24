@@ -1,29 +1,29 @@
 @media (max-width: 600px) {
-  output-cable {
+  .output-cable {
     display: none;
   }
 }
 
-output-cable .cable-connector {
+.output-cable .cable-connector {
   left: unset;
   right: 100px;
   cursor: default;
 }
 
-output-cable:not(:last-child) .cable-connector {
+.output-cable:not(:last-child) .cable-connector {
   margin-right: calc(1 * var(--connector-width) + 1 * 25px);
 }
 
-output-cable.-active .cable-connector--label {
+.output-cable.-active .cable-connector--label {
   color: var(--color-text-active);
 }
 
-output-cable.-active .cable-connector--jack {
+.output-cable.-active .cable-connector--jack {
   background-position-y: 50px;
   opacity: 1;
 }
 
-output-cable.-plugging-out .cable-connector--jack {
+.output-cable.-plugging-out .cable-connector--jack {
   transition: opacity 0.21s ease-in-out 1s,
     background-position-y 0.5s ease-in-out 0.5s;
 }

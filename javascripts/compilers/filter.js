@@ -67,6 +67,6 @@ up.compiler('.filter', function (element) {
   up.on('audioContext:connected', evt => (audioContext = evt.audioContext))
   up.on('filter:connected', connectFilter)
   up.on(icon, 'click', rotateFilterType)
-  up.on('button-value-changed', 'knob.-filter-cutoff', onCutOffChanged)
-  up.on('button-value-changed', 'knob.-filter-resonance', onResonanceChanged)
+  up.on('button-value-changed', '.knob.-filter-cutoff', onCutOffChanged)
+  up.on('button-value-changed', '.knob.-filter-resonance', onResonanceChanged)
 })

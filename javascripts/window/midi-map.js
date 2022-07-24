@@ -5,7 +5,7 @@
  * Each midi signal contains of three parts: status, data1 and data2
  *   status and data1 are combined into a unique key code.
  *   data2 is passed as a float value to the Bitflipper function (midi note / 127)
-*  See https://computermusicresource.com/MIDI.Commands.html for more info
+ *  See https://computermusicresource.com/MIDI.Commands.html for more info
  *
  * User settings are stored in localStorage and loaded on every page refresh
  *

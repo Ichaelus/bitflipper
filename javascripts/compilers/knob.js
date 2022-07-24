@@ -1,8 +1,11 @@
-up.compiler('knob', (element, data) => {
-  // Load template
-  const template = document.getElementById('knob')
-  const templateContent = template.content
-  element.appendChild(templateContent.cloneNode(true))
+/***
+ * A tunable button that interpolates the mouse position in relation
+ * to the knob's center.
+ *
+ * Knobs are also controllable with MIDI control signals.
+***/
+up.compiler('knob', (knob, data) => {
+  const element = Template.clone('knob', knob)
 
   // Initialize
   element.MINIMUM = 0
@@ -10,7 +13,6 @@ up.compiler('knob', (element, data) => {
   element.MEDIAN = element.MAXIMUM / 2
   element.OFFSET = -element.MEDIAN
   element.rotation = element.MAXIMUM
-  const knob = element.querySelector('.knob')
   let elementDialGrip = element.querySelector('.knob--dial-grip')
   let elementSVG = element.querySelector('.knob--dial-svg')
   let elementLabel = element.querySelector('.knob--label')
@@ -33,7 +35,7 @@ up.compiler('knob', (element, data) => {
     element.setValue(data.initialValue)
     moveKnobPosition()
     addEventListeners()
-    MidiMap.registerControl(knob, data.identifier, midiMoved)
+    MidiMap.registerControl(element, data.identifier, midiMoved)
   }
 
   function moveKnobPosition() {
@@ -100,8 +102,7 @@ up.compiler('knob', (element, data) => {
       .addEventListener('click', function () {
         element.classList.toggle('-active')
       })
-    elementDialGrip.addEventListener('mousedown', knobPressed)
-    elementDialGrip.addEventListener('touchstart', knobPressed)
+    up.on(elementDialGrip, 'mousedown touchstart', knobPressed)
     up.on('mousemove touchmove', knobMoved)
     up.on('mouseup touchend touchcancel', knobReleased)
     up.on('reset:off', disableKnob)

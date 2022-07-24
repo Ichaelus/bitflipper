@@ -42,6 +42,7 @@
 
   <script src="javascripts/unpoly-2.6.1.min.js"></script>
   <script src="javascripts/window/source-controller.js"></script>
+  <script src="javascripts/window/template.js"></script>
   <script src="javascripts/window/midi-map.js"></script>
   <script src="javascripts/compilers/cable-connector.js"></script>
   <script src="javascripts/compilers/bit-control.js"></script>
@@ -66,7 +67,7 @@
     <div class="machine">
       <div class="machine-back">
         <template id="cable-connector">
-          <div class="cable-connector">
+          <div class="cable-connector template-root">
             <div class="cable-connector--jack"></div>
             <div class="cable-connector--part -top"></div>
             <div class="cable-connector--part -center"></div>
@@ -103,7 +104,7 @@
 
         <div class='knobs'>
           <template id="knob">
-            <div class='knob'>
+            <div class='knob template-root'>
               <div class="knob--active-light"></div>
               <div class="knob--dial">
                 <div class="knob--dial-grip"></div>
@@ -131,7 +132,7 @@
 
         <div class="bit-controls">
           <template id="bit-control">
-            <div class="bit-control">
+            <div class="bit-control template-root">
               <div class="bit-control--buttons">
                 <input type="button" class="bit-control--button -reset -active" value="reset">
                 <input type="button" class="bit-control--button -invert" value="invert">

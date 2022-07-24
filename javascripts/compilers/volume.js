@@ -32,7 +32,7 @@ up.compiler('.volume', function (volumeKnob) {
 
   up.on('audioContext:connected', evt => (audioContext = evt.audioContext))
   up.on('inputgain:connected', evt => (inputGain = evt.inputGain))
-  up.on('button-value-changed', 'knob.volume', onVolumeChange)
+  up.on('button-value-changed', '.knob.volume', onVolumeChange)
   up.on('reset:off', mute)
   up.on('reset:on', unmute)
 })

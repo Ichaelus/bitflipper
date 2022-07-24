@@ -10,7 +10,7 @@ up.compiler('.power-switch', element => {
     }
 
     MidiMap.registerControl(element, 'power-switch', togglePowerSwitch)
-    element.addEventListener('click', togglePowerSwitch)
+    up.on(element, 'click', togglePowerSwitch)
   }
 
   function togglePowerSwitch() {

@@ -1,5 +1,10 @@
+/***
+ * The main display
+ * It keeps track of texts that should be displayed and shows them
+ * one by one.
+***/
 up.compiler('.display', element => {
-  textElement = element.querySelector('.display--text')
+  const textElement = element.querySelector('.display--text')
   const defaultText = textElement.dataset.defaultText
   const RESET_TIMEOUT = 1500 // Milliseconds
   const ANIMATION_TIME = 400 // Milliseconds, max 999
@@ -80,7 +85,7 @@ up.compiler('.display', element => {
       lastUpdate = Date.now()
     } else {
       textQueue.push(evt.text)
-      drainQueue()
+      await drainQueue()
     }
     clearInterval(resetTextIfIdle)
     resetInterval = setInterval(resetTextIfIdle, 100)

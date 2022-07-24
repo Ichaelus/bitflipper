@@ -1,14 +1,12 @@
-////
-// A clickable audio input cable
-//
-up.compiler('cable-connector', function (element, data) {
+/***
+ * A clickable audio in/out cable
+***/
+
+up.compiler('cable-connector', function (cableConnector, data) {
+  const element = Template.clone('cable-connector', cableConnector)
   let enabled = false
 
   function init() {
-    // Load template
-    const template = document.getElementById('cable-connector')
-    const templateContent = template.content
-    element.appendChild(templateContent.cloneNode(true))
     element.classList.add(data.modifier)
     element.querySelector('.cable-connector--label').innerText = data.label
   }
