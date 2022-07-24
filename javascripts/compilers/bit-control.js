@@ -65,7 +65,18 @@ up.compiler('bit-control', (bitControl, data) => {
     up.emit('bits-changed', { bits: data.bitIndex, instant: true })
   }
 
+  function setActiveBit(evt){
+    if (evt.bits >= data.bitIndex) {
+      bitControl.classList.add('-active')
+      enableBitControl()
+    } else {
+      bitControl.classList.remove('-active')
+      disableBitControl()
+    }
+  }
+
   up.on('bitcrusher:connected', connectBitCrusher);
+  up.on('bits-changed', setActiveBit);
   up.on(resetButton, 'click', resetBit);
   up.on(muteButton, 'click', muteBit);
   up.on(invertButton, 'click', invertBit);

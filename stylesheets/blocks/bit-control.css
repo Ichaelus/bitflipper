@@ -58,9 +58,9 @@
   filter: brightness(0.59) saturate(0.75);
 }
 
-.machine-back.-active .bit-control--button.-active,
-.machine-back.-active .bit-control--button:active,
-.machine-back.-active .bit-control--button:hover {
+.machine-back.-active bit-control.-active .bit-control--button.-active,
+.machine-back.-active bit-control.-active .bit-control--button:active,
+.machine-back.-active bit-control.-active .bit-control--button:hover {
   filter: brightness(1.2) saturate(1);
 }
 
@@ -89,8 +89,17 @@
   text-align: center;
 }
 
-.machine-back.-active .bit-control--labels {
+.machine-back.-active bit-control.-active .bit-control--labels {
   color: var(--color-text-active);
+}
+
+.machine-back.-active .bit-control--index {
+  color: var(--color-text-muted);
+  text-shadow: none;
+}
+.machine-back.-active bit-control.-active .bit-control--index {
+  color: aliceblue;
+  text-shadow: 0 0 3px aliceblue;
 }
 
 @media(max-width: 880px){
