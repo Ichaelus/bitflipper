@@ -18,5 +18,11 @@ Currently, [only a few Browsers](https://caniuse.com/#search=AudioWorklet) suppo
   ```ruby
   ruby -r webrick/https -e 'WEBrick::HTTPServer.new(Port: 8000, DocumentRoot: ".", SSLEnable: true, SSLCertName: [%w[CN localhost]]).start'
   ```
+  * Or with Node/Ngrok exposure:
+  * ```
+    npx http-server # terminal 1
+    ngrok http 8080 # terminal 2
+    ```
+
 * Open https://localhost:8000/ or https://bitflipper.lvh.me:8000/
 * Your code will be synced to production once merged into `master`.

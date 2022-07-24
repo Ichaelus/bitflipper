@@ -1,4 +1,3 @@
-
 const processAudio = async () => {
   const audioContext = new AudioContext();
   if (audioContext.state === 'suspended') {
