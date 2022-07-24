@@ -5,7 +5,7 @@ const processAudio = async () => {
   await audioContext.audioWorklet.addModule('javascripts/bit-crusher-processor.js');
   const inputGain = audioContext.createGain();
   const bitCrusher = new AudioWorkletNode(audioContext, 'bit-crusher-processor');
-  const paramBitDepth = bitCrusher.parameters.get('bitDepth');
+  const paramBits = bitCrusher.parameters.get('bits');
   const paramReduction = bitCrusher.parameters.get('frequencyReduction');
 
   const filter = audioContext.createBiquadFilter();
@@ -39,14 +39,19 @@ const processAudio = async () => {
     const adjustedFrequencyReduction = Math.max(evt.target.getValue(), 0.005);
     paramReduction.setValueAtTime(adjustedFrequencyReduction, audioContext.currentTime);
     up.emit('status-text-changed', {text: `Frequency Reduction: ${ parseInt(adjustedFrequencyReduction * 100) }%`, instant: true});
-  };
+  }
 
   function onFloatRangeChanged(evt){
-    const maxFloatRange = 1024;
+    const maxFloatRange = 2**paramBits.value;
     // prevent zero division and no sound
-    const adjustedFloatRange = Math.max(parseInt(evt.target.getValue() * maxFloatRange), 2);
+    const adjustedFloatRange = Math.max(parseInt(evt.target.getValue() * maxFloatRange), 1);
     bitCrusher.port.postMessage(['float-range', adjustedFloatRange]);
     up.emit('status-text-changed', {text: `Float Range: ${ adjustedFloatRange }`, instant: true});
+  }
+
+  function onBitsChanged(evt){
+    paramBits.value = evt.bits;
+    up.emit('status-text-changed', {text: `Bits set to: ${ evt.bits }`, instant: true});
   }
 
   up.on('reset:off', () => audioContext.suspend() );
@@ -54,6 +59,7 @@ const processAudio = async () => {
 
   up.on('button-value-changed', 'knob.-sample-reduction', onFrequencyReductionChange);
   up.on('button-value-changed', 'knob.-float-range', onFloatRangeChanged);
+  up.on('bits-changed', onBitsChanged);
   up.emit('reset:on');
 };
 

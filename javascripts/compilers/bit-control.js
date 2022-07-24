@@ -10,6 +10,7 @@ up.compiler('bit-control', (bitControl, data) => {
   const resetButton = bitControl.querySelector('.bit-control--button.-reset');
   const invertButton = bitControl.querySelector('.bit-control--button.-invert');
   const muteButton = bitControl.querySelector('.bit-control--button.-mute');
+  const bitLabel = bitControl.querySelector('.bit-control--labels.-label');
   const buttons = [resetButton, invertButton, muteButton];
   let enabled = false;
   bitControl.querySelector('.bit-control--index').innerText = bitControlNumber;
@@ -60,10 +61,15 @@ up.compiler('bit-control', (bitControl, data) => {
     enabled = true;
   }
 
+  function setBits(){
+    up.emit('bits-changed', { bits: data.bitIndex, instant: true })
+  }
+
   up.on('bitcrusher:connected', connectBitCrusher);
   up.on(resetButton, 'click', resetBit);
   up.on(muteButton, 'click', muteBit);
   up.on(invertButton, 'click', invertBit);
+  up.on(bitLabel, 'click', setBits);
   up.on('reset:off', disableBitControl);
   up.on('reset:on', enableBitControl);
 });

@@ -9,10 +9,10 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
   static get parameterDescriptors() {
     return [
       {
-        name: 'bitDepth',
+        name: 'bits',
         defaultValue: 8,
         minValue: 1,
-        maxValue: 16,
+        maxValue: 8,
       }, {
         name: 'frequencyReduction',
         defaultValue: 1,
@@ -26,18 +26,31 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
     super();
     this.phase_ = 0;
     this.lastSampleValue_ = 0;
-    this.floatRange = 256;
-    this.bitModifiers = Array(8).fill(1); // 8 bits, each controllable
+    this.setBits(8)
     this.port.onmessage = this.onMessageFromAudioWorklet.bind(this);
+  }
+
+  setBits(newBits) {
+    const previousBits = this.bits
+    this.bits = newBits
+    this.maxFloatRange = 2**this.bits;
+    if (newBits !== previousBits) {
+      this.floatRange = this.maxFloatRange;
+      this.bitModifiers = Array(this.bits).fill(1); // N bits, each controllable
+    }
   }
 
   onMessageFromAudioWorklet(event){
     const eventType = event.data[0];
-    if(eventType === 'bit-state'){
+    if (eventType === 'bit-state'){
       const bit = event.data[1];
       const modifier = event.data[2];
-      this.bitModifiers[bit] = modifier;
-    }else if(eventType === 'float-range'){
+      if (bit < this.bits) {
+        this.bitModifiers[bit] = modifier;
+      } else {
+        throw(`cannot set modifier on bit ${bit}`)
+      }
+    } else if(eventType === 'float-range'){
       this.floatRange = event.data[1];
     }
   };
@@ -46,23 +59,13 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
     const input = inputs[0];
     const output = outputs[0];
 
-    // AudioParam array can be either length of 1 or 128. Generally, the code
-    // should prepare for both cases. In this particular example, |bitDepth|
-    // AudioParam is constant but |frequencyReduction| is being automated.
-    const bitDepth = parameters.bitDepth;
+    this.setBits(parameters.bits);
     const frequencyReduction = parameters.frequencyReduction;
-    const isBitDepthConstant = bitDepth.length === 1;
 
     for (let channel = 0; channel < input.length; ++channel) {
       const inputChannel = input[channel];
       const outputChannel = output[channel];
-      let step = Math.pow(0.5, bitDepth[0]); // square root
       for (let i = 0; i < inputChannel.length; ++i) {
-        // We only take care |bitDepth| because |frequencuReduction| will always
-        // have 128 values.
-        if (!isBitDepthConstant) {
-          step = Math.pow(0.5, bitDepth[i]); // square root - simulate 8 bit channels
-        }
         if(frequencyReduction.length === 1){
           // using the initial value
           this.phase_ += frequencyReduction[0];
@@ -72,8 +75,6 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         }
         if (this.phase_ >= 1.0) {
           this.phase_ -= 1.0;
-          //TODO: bitDepth reduction did not seem to have any effect. trying to improve this - then remove bitdepth code
-          // this.lastSampleValue_ = step * Math.floor(inputChannel[i] / step + 0.5);
 
           this.lastSampleValue_ = this.applyBitFilters(inputChannel[i]);
         }
@@ -89,6 +90,9 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
   applyBitFilters(sampleValue){
     const sign = Math.sign(sampleValue);
     let modifiedIntValue = Math.abs(this.convertToNBitInt(sampleValue));
+    // const bit = (modifiedIntValue >>> 0).toString(2)
+    // if (bit === '111111')
+    //   debugger
     this.bitModifiers.forEach(function(modifier, index){
       let bitmask = 1 << index;
       if(modifier === -1){
@@ -101,7 +105,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
   }
 
   convertToNBitInt(float32){
-    return Math.round(float32 * this.floatRange);
+    return Math.round(float32 * this.maxFloatRange);
   }
 }
 
