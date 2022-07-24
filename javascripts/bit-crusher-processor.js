@@ -48,7 +48,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
       if (bit < this.bits) {
         this.bitModifiers[bit] = modifier;
       } else {
-        throw(`cannot set modifier on bit ${bit}`)
+        console.warn(`cannot set modifier on bit ${bit}`)
       }
     } else if(eventType === 'float-range'){
       this.floatRange = Math.max(event.data[1], 0.005);
@@ -59,7 +59,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
     const input = inputs[0];
     const output = outputs[0];
 
-    this.setBits(parameters.bits);
+    this.setBits(parameters.bits[0]);
     const frequencyReduction = parameters.frequencyReduction;
 
     for (let channel = 0; channel < input.length; ++channel) {
@@ -98,7 +98,8 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         modifiedIntValue &= ~bitmask; // set the bit to zero
       } // Else: Don't alter the bit
     });
-    return (modifiedIntValue * 1.0 * this.floatRange) / this.maxFloatRange * sign;
+    const modifiedFloat = (modifiedIntValue * 1.0 * this.floatRange) / this.maxFloatRange * sign
+    return modifiedFloat;
   }
 
   convertToNBitInt(float32){

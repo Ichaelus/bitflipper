@@ -4,9 +4,10 @@
   flex: 0 1 auto;
   position: relative;
   background: linear-gradient(0deg, #0c1c26f0, #294b60b8, #0c1c26f0);
-  border-radius: 16% 12% 12% 16%;
+  border-radius: 12%;
   border: 3px solid #0c1c26f0;
   outline: 1px solid #294b6045;
+  overflow: hidden;
 }
 
 .oscilloscope--grid {

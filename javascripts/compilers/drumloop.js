@@ -2,7 +2,7 @@
 up.compiler('.-drumloop', function(drumLoop){
   let audioContext, inputGain, drumLoopStream;
   const playbackRate = 1.0;
-  const musicFileUrl = 'assets/drumloop.wav';
+  const musicFileUrl = 'assets/sine.wav';
 
   function init(){
     InputController.registerInput(drumLoop);
@@ -22,7 +22,7 @@ up.compiler('.-drumloop', function(drumLoop){
     if(!drumLoopStream){
       drumLoopStream = audioContext.createBufferSource();
       let request = new XMLHttpRequest();
-      
+
       request.open('GET', musicFileUrl, true);
       request.responseType = 'arraybuffer';
       request.onload = () => {

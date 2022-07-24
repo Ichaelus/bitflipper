@@ -4,7 +4,7 @@
   let interval, oscilloscopeLine, oscilloscope, freqData;
   const lineColor = 'aliceblue';
   const lineThickness = 1;
-  const intervalMilliseconds = 100;
+  const hertz = 10;
 
   function init() {
     setUpSVG();
@@ -80,7 +80,7 @@
 
   function drawLines() {
     drawLine();
-    interval = setInterval(drawLine, intervalMilliseconds);
+    interval = setInterval(drawLine, 1000 / hertz);
   }
 
   function stopDrawingLines() {

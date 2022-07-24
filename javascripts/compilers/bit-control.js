@@ -66,6 +66,11 @@ up.compiler('bit-control', (bitControl, data) => {
   }
 
   function setActiveBit(evt){
+    if(reset()) {
+      // changing the bit count resets *all* bits
+      resetButton.classList.add('-active');
+      bitCrusher.port.postMessage(['bit-state', bitControlNumber - 1, 1]);
+    }
     if (evt.bits >= data.bitIndex) {
       bitControl.classList.add('-active')
       enableBitControl()
