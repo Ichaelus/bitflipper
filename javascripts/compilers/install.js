@@ -15,10 +15,10 @@ up.compiler('.install', function (element) {
     // Wait for the user to respond to the prompt
     element.deferredPrompt.userChoice.then(choiceResult => {
       if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt')
+        console.info('User accepted the A2HS prompt')
         element.deferredPrompt = null
       } else {
-        console.log('User dismissed the A2HS prompt')
+        console.info('User dismissed the A2HS prompt')
       }
       element.classList.remove('-available')
     })
