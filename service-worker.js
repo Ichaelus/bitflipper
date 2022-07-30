@@ -1,8 +1,10 @@
+// todo: update list
 const CACHE_NAME = '1.6'; // Change to invalidate the cache
 const FILES_TO_CACHE = [
   '/',
   '/index.html',
   '/assets/bitflipperlogo.svg',
+  '/assets/sine.wav',
   '/assets/drumloop.wav',
   '/assets/filter_bandpass.svg',
   '/assets/filter_highpass.svg',
@@ -21,7 +23,7 @@ const FILES_TO_CACHE = [
   '/javascripts/compilers/cable-connector-stub.js',
   '/javascripts/compilers/bit-control.js',
   '/javascripts/compilers/display.js',
-  '/javascripts/compilers/drumloop.js',
+  '/javascripts/compilers/oscillator.js',
   '/javascripts/compilers/filter.js',
   '/javascripts/compilers/input-selection.js',
   '/javascripts/compilers/install.js',

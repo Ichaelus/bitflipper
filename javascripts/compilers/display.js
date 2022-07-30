@@ -6,8 +6,10 @@
 up.compiler('.display', element => {
   const textElement = element.querySelector('.display--text')
   const defaultText = textElement.dataset.defaultText
-  const RESET_TIMEOUT = 1500 // Milliseconds
-  const ANIMATION_TIME = 400 // Milliseconds, max 999
+  const RESET_TIMEOUT_MS = 1500
+  const ANIMATION_TIME_MS = 400 // max 999
+  const IDLE_TIMEOUT_MS = 100
+  const TRANSITION_MS = 10
   const DISPLAY_WIDTH = element.getBoundingClientRect().width
 
   let textQueue = [] // First in, first out
@@ -35,11 +37,11 @@ up.compiler('.display', element => {
   }
 
   async function moveExistingTextOutside() {
-    textElement.style.transition = `right linear 0.${ANIMATION_TIME}s`
+    textElement.style.transition = `right linear 0.${ANIMATION_TIME_MS}s`
     textElement.style.right = `${DISPLAY_WIDTH}px`
     forceRepaint(textElement)
 
-    await sleep(ANIMATION_TIME + 10)
+    await sleep(ANIMATION_TIME_MS + TRANSITION_MS)
     textElement.style.transition = 'none'
     lastUpdate = Date.now()
   }
@@ -48,29 +50,29 @@ up.compiler('.display', element => {
     textElement.style.right = `-${DISPLAY_WIDTH}px`
     forceRepaint(textElement)
 
-    textElement.style.transition = `right linear 0.${ANIMATION_TIME}s`
+    textElement.style.transition = `right linear 0.${ANIMATION_TIME_MS}s`
     textElement.innerText = text
     textElement.style.right = 0
     forceRepaint(textElement)
 
-    await sleep(ANIMATION_TIME + 10)
+    await sleep(ANIMATION_TIME_MS + TRANSITION_MS)
     textElement.style.transition = 'none'
     lastUpdate = Date.now()
   }
 
   function forceRepaint(el) {
-    // Force a repaint! Sadly, this is *very* much necessary.
+    // Sadly, this is *very* much necessary.
     // https://gist.github.com/paulirish/5d52fb081b3570c81e3a
     el.getBoundingClientRect()
   }
 
   function readyForNextText() {
-    return lastUpdate + RESET_TIMEOUT <= Date.now()
+    return lastUpdate + RESET_TIMEOUT_MS <= Date.now()
   }
 
   async function drainQueue() {
     if (element.active || !readyForNextText()) {
-      setTimeout(drainQueue, 20)
+      setTimeout(drainQueue, TRANSITION_MS)
     } else {
       element.active = true
       await moveExistingTextOutside()
@@ -88,7 +90,7 @@ up.compiler('.display', element => {
       await drainQueue()
     }
     clearInterval(resetTextIfIdle)
-    resetInterval = setInterval(resetTextIfIdle, 100)
+    resetInterval = setInterval(resetTextIfIdle, IDLE_TIMEOUT_MS)
   })
 
   init()

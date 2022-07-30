@@ -4,13 +4,13 @@
   }
 }
 
-.output-cable .cable-connector {
+.output-cable.cable-connector {
   left: unset;
   right: 100px;
   cursor: default;
 }
 
-.output-cable:not(:last-child) .cable-connector {
+.output-cable.-phono-red {
   margin-right: calc(1 * var(--connector-width) + 1 * 25px);
 }
 

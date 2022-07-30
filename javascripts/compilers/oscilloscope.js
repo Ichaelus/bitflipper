@@ -1,18 +1,33 @@
-// Inspired by Wavy Jones
+/***
+ * Visualization for the current oscilloscope value
+ * on a rastered grid with a glowing line
+ *
+ * Inspired by Wavy Jones and https://stackoverflow.com/a/14209704
+***/
 
 up.compiler('.oscilloscope', function (element) {
-  let interval, oscilloscopeLine, oscilloscope, freqData
-  const lineColor = 'aliceblue'
-  const lineThickness = 1
-  const hertz = 10
+  let drawLineInterval, oscilloscopeLine, oscilloscope, freqData
+  const LINE_COLOR = 'aliceblue'
+  const LINE_THICKNESS = 1
+  const HERZ = 10
+  // todo define 128 and use freq bin count - which would be 1024
 
   function init() {
     setUpSVG()
-    drawLine('zero')
+    drawEmptyLine()
   }
 
   function setUpSVG() {
     const svgNamespace = 'http://www.w3.org/2000/svg'
+    const paper = setupPaper(svgNamespace)
+    const oscilloscopeLine = setupLine(svgNamespace)
+    const grid = setupGrid(svgNamespace)
+    paper.appendChild(oscilloscopeLine)
+    oscilloscopeLine.insertAdjacentHTML('beforebegin', svgDefinitions())
+    paper.appendChild(grid)
+  }
+
+  function setupPaper(svgNamespace) {
     const paper = document.createElementNS(svgNamespace, 'svg')
     paper.setAttribute('width', element.clientWidth)
     paper.setAttribute('height', element.clientHeight)
@@ -22,21 +37,24 @@ up.compiler('.oscilloscope', function (element) {
       'http://www.w3.org/1999/xlink',
     )
     element.appendChild(paper)
+    return paper
+  }
 
+  function setupLine(svgNamespace) {
     oscilloscopeLine = document.createElementNS(svgNamespace, 'path')
-    oscilloscopeLine.setAttribute('stroke', lineColor)
-    oscilloscopeLine.setAttribute('stroke-width', lineThickness)
+    oscilloscopeLine.setAttribute('stroke', LINE_COLOR)
+    oscilloscopeLine.setAttribute('stroke-width', LINE_THICKNESS)
     oscilloscopeLine.setAttribute('fill', 'none')
     oscilloscopeLine.setAttribute(
       'style',
       'fill-opacity: 0; filter: url(#glow);',
     )
     oscilloscopeLine.setAttribute('fill-opacity', '0')
+    return oscilloscopeLine
+  }
 
-    paper.appendChild(oscilloscopeLine)
-    oscilloscopeLine.insertAdjacentHTML(
-      'beforebegin',
-      `
+  function svgDefinitions() {
+    return `
       <defs>
         <filter id="glow">
           <fegaussianblur className="blur" result="coloredBlur" stddeviation="4"></fegaussianblur>
@@ -48,32 +66,35 @@ up.compiler('.oscilloscope', function (element) {
           </femerge>
         </filter>
 
-        <!-- source: https://stackoverflow.com/a/14209704 -->
         <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
           <path d="M 8 0 L 0 0 0 8" fill="none" stroke="gray" stroke-width="0.5"/>
         </pattern>
       </defs>
-    `,
-    )
+    `
+  }
 
+  function setupGrid(svgNamespace){
     const grid = document.createElementNS(svgNamespace, 'rect')
     grid.setAttribute('width', '100%')
     grid.setAttribute('height', '100%')
     grid.setAttribute('fill', 'url(#smallGrid)')
     grid.classList.add('oscilloscope--grid')
-    paper.appendChild(grid)
+    return grid
   }
 
-  function drawLine(type) {
+  function drawEmptyLine(){
+    freqData = new Uint8Array(element.clientWidth)
+    freqData.fill(128)
+    drawLine()
+  }
+
+  function drawOscillatingLine(){
+    oscilloscope.getByteTimeDomainData(freqData)
+    drawLine()
+  }
+
+  function drawLine() {
     const graphPoints = []
-
-    if (type === 'zero') {
-      freqData = new Uint8Array(element.clientWidth)
-      freqData.fill(128)
-    } else {
-      oscilloscope.getByteTimeDomainData(freqData)
-    }
-
     graphPoints.push('M0, ' + element.offsetHeight / 2)
 
     const visualizedDataPoints = Math.floor(
@@ -91,17 +112,17 @@ up.compiler('.oscilloscope', function (element) {
     )
   }
 
-  function drawLines() {
+  function startDrawingLines() {
     if (!oscilloscope) {
       return // The machine has not been initialized yet
     }
-    drawLine()
-    interval = setInterval(drawLine, 1000 / hertz)
+    drawOscillatingLine()
+    drawLineInterval = setInterval(drawOscillatingLine, 1000 / HERZ)
   }
 
   function stopDrawingLines() {
-    clearInterval(interval)
-    drawLine('zero')
+    clearInterval(drawLineInterval)
+    drawEmptyLine()
   }
 
   function connectOscilloscope(evt) {
@@ -109,8 +130,8 @@ up.compiler('.oscilloscope', function (element) {
     freqData = new Uint8Array(oscilloscope.frequencyBinCount)
   }
 
-  up.on('reset:on', drawLines)
-  up.on('reset:off', stopDrawingLines)
   up.on('oscilloscope:connected', connectOscilloscope)
+  up.on('reset:on', startDrawingLines)
+  up.on('reset:off', stopDrawingLines)
   init()
 })

@@ -6,6 +6,10 @@ up.compiler('output-cable', function (outputCable, data) {
   const element = Template.clone('cable-connector', outputCable)
 
   function init() {
+    element.classList.add('output-cable')
+    if (data.modifier) {
+      element.classList.add(data.modifier)
+    }
     element.querySelector('.cable-connector--label').innerText = data.label
   }
 

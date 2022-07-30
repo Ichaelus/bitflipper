@@ -1,8 +1,13 @@
+/***
+ * Access control for the midi input signal and setup wizard
+***/
 up.compiler('.midi', async element => {
-  const midiLink = document.querySelector('.footer--link.-midi')
+  const midiSetupLink = document.querySelector('.footer--link.-midi')
+  const SETUP_LABEL = 'Setup midi'
+  const EXIT_LABEL = 'Exit midi learn'
 
   let midiAccess = null
-  let midiLearn = false
+  let isMidiLearning = false
 
   async function init() {
     if (localStorage.getItem(MidiMap.STORAGE_AUTOLOAD_KEY) === 'yes') {
@@ -20,19 +25,19 @@ up.compiler('.midi', async element => {
   }
 
   async function setupMidi() {
-    if (midiLearn) {
+    if (isMidiLearning) {
       MidiMap.stopWizard()
       MidiMap.processLiveSignals(midiAccess)
-      midiLink.textContent = 'Setup midi'
+      midiSetupLink.textContent = SETUP_LABEL
     } else {
       await requestAccess()
-      midiLink.textContent = 'Exit midi learn'
+      midiSetupLink.textContent = EXIT_LABEL
       await MidiMap.setupWizard(midiAccess)
     }
-    midiLearn = !midiLearn
+    isMidiLearning = !isMidiLearning
   }
 
   await init()
 
-  return [up.on(midiLink, 'click', setupMidi)]
+  return [up.on(midiSetupLink, 'click', setupMidi)]
 })

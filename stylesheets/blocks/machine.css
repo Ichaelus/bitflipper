@@ -8,6 +8,7 @@
   display: none;
 }
 
+/*todos below*/
 .machine.-flipped .machine-back {
   transform: scaleX(-1);
   height: 649px; /* todo set via JS when flipping */

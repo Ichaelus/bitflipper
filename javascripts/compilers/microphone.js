@@ -1,5 +1,8 @@
-// The microphone is also a .cable-connector!
-up.compiler('.-microphone', function (microphone) {
+/***
+ * A camouflaged .cable-connector that pipes a microphone signal
+ * to the bitflipper
+***/
+up.compiler('.microphone', function (microphone) {
   let audioContext, inputGain, microphoneInAudioContext
 
   function init() {
@@ -8,7 +11,7 @@ up.compiler('.-microphone', function (microphone) {
 
   async function setupMicrophoneStream() {
     if (!microphoneInAudioContext) {
-      let microphoneAudioInput = await getMicrophoneAudioInput()
+      const microphoneAudioInput = await getMicrophoneAudioInput()
       microphoneInAudioContext =
         audioContext.createMediaStreamSource(microphoneAudioInput)
     }
@@ -31,9 +34,7 @@ up.compiler('.-microphone', function (microphone) {
   }
 
   function disconnectMicrophone() {
-    if (microphoneInAudioContext) {
-      microphoneInAudioContext.disconnect()
-    }
+    microphoneInAudioContext?.disconnect()
   }
 
   up.on('audioContext:connected', evt => (audioContext = evt.audioContext))

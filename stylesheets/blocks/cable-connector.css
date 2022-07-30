@@ -14,7 +14,7 @@
   cursor: pointer;
 }
 
-.-microphone .cable-connector {
+.cable-connector.microphone {
   margin-left: calc(1 * var(--connector-width) + 1 * 25px);
 }
 

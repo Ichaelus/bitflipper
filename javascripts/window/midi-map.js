@@ -121,6 +121,8 @@ window.MidiMap = new (class {
       // ON and OFF note signals are likewise to us
       statusCode -= this.MIDI_CHANNELS
     }
+    // MIDI debugging:
+    // console.table([statusCode, data1, data2])
     return [statusCode, data1, data2]
   }
 

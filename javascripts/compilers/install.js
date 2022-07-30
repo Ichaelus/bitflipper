@@ -1,3 +1,6 @@
+/***
+ * Install Bitflipper as a PWA
+***/
 up.compiler('.install', function (element) {
   element.deferredPrompt = null
 
@@ -10,7 +13,7 @@ up.compiler('.install', function (element) {
     }
   })
 
-  function install(evt) {
+  function install(_evt) {
     element.deferredPrompt.prompt()
     // Wait for the user to respond to the prompt
     element.deferredPrompt.userChoice.then(choiceResult => {

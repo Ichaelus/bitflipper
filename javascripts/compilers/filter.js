@@ -1,5 +1,13 @@
+/***
+ * Filters only let through part of the sound spectrum.
+ * The user can rotate through three filter types as of today
+***/
 up.compiler('.filter', function (element) {
   const FILTER_TYPES = ['lowpass', 'highpass', 'bandpass']
+  const INITIAL_FREQUENCY_CUTOFF = 10000
+  const MAX_CUTOFF_HZ = 16000
+  const INITIAL_RESONANCE_Q = 0
+  const MAX_RESONANCE_Q = 30
   const icon = element.querySelector('.filter--icon')
   const label = element.querySelector('.filter--label')
   let currentFilterIndex = 0
@@ -7,13 +15,19 @@ up.compiler('.filter', function (element) {
 
   MidiMap.registerControl(element, 'filter-button', rotateFilterType)
 
+  function connectFilter(evt) {
+    filter = evt.filter
+    filter.type = FILTER_TYPES[0]
+    filter.frequency.value = INITIAL_FREQUENCY_CUTOFF
+    filter.Q.value = INITIAL_RESONANCE_Q
+  }
+
   function setFilterType(type) {
-    filter.type = type
-    label.innerText = type
-    FILTER_TYPES.forEach(function (filterType) {
-      element.classList.remove(`-${filterType}`)
+    filter.type = label.innerText = type
+    FILTER_TYPES.forEach((filterType) => {
+      element.classList.remove(filterBEMClass(filterType))
     })
-    element.classList.add(`-${type}`)
+    element.classList.add(filterBEMClass(type))
     up.emit('status-text-changed', {
       text: `Filter type: ${type}`,
       instant: true,
@@ -21,8 +35,8 @@ up.compiler('.filter', function (element) {
   }
 
   function rotateFilterType() {
-    if (!filter) {
-      return // The machine has not been initialized yet
+    if (!machineInitialized()) {
+      return
     }
     currentFilterIndex++
     if (currentFilterIndex >= FILTER_TYPES.length) {
@@ -32,11 +46,10 @@ up.compiler('.filter', function (element) {
   }
 
   function onCutOffChanged(evt) {
-    if (!filter) {
-      return // The machine has not been initialized yet
+    if (!machineInitialized()) {
+      return
     }
-    const maxCutoff = 16000
-    const newCutOff = evt.target.getValue() * maxCutoff
+    const newCutOff = evt.target.getValue() * MAX_CUTOFF_HZ
     filter.frequency.setValueAtTime(newCutOff, audioContext.currentTime)
     up.emit('status-text-changed', {
       text: `Cutoff: ${parseInt(newCutOff)} Hz`,
@@ -45,11 +58,10 @@ up.compiler('.filter', function (element) {
   }
 
   function onResonanceChanged(evt) {
-    if (!filter) {
-      return // The machine has not been initialized yet
+    if (!machineInitialized()) {
+      return
     }
-    const maxResonance = 30
-    const newResonance = evt.target.getValue() * maxResonance
+    const newResonance = evt.target.getValue() * MAX_RESONANCE_Q
     filter.Q.setValueAtTime(newResonance, audioContext.currentTime)
     up.emit('status-text-changed', {
       text: `Resonance: ${parseInt(newResonance)}`,
@@ -57,11 +69,12 @@ up.compiler('.filter', function (element) {
     })
   }
 
-  function connectFilter(evt) {
-    filter = evt.filter
-    filter.type = 'lowpass'
-    filter.frequency.value = 10000
-    filter.Q.value = 0
+  function filterBEMClass(filterType) {
+    return `-${filterType}`
+  }
+
+  function machineInitialized(){
+    return filter instanceof AudioNode
   }
 
   up.on('audioContext:connected', evt => (audioContext = evt.audioContext))
