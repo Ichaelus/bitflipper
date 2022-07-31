@@ -10,7 +10,7 @@ up.compiler('.oscilloscope', function (element) {
   const LINE_COLOR = 'aliceblue'
   const LINE_THICKNESS = 1
   const HERZ = 10
-  // todo define 128 and use freq bin count - which would be 1024
+  const MEDIAN_FREQUENCY = 128
 
   function init() {
     setUpSVG()
@@ -84,7 +84,7 @@ up.compiler('.oscilloscope', function (element) {
 
   function drawEmptyLine(){
     freqData = new Uint8Array(element.clientWidth)
-    freqData.fill(128)
+    freqData.fill(MEDIAN_FREQUENCY)
     drawLine()
   }
 
