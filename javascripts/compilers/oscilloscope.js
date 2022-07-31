@@ -98,24 +98,25 @@ up.compiler('.oscilloscope', function (element) {
     graphPoints.push('M0, ' + element.offsetHeight / 2)
 
     const visualizedDataPoints = Math.floor(
+      // The line is onle <clientWidth> wide, so we can only render every n-th dot
       freqData.length / element.clientWidth,
     )
 
     for (let i = 0; i < freqData.length; i += visualizedDataPoints) {
-      let point = (freqData[i] / 128) * (element.offsetHeight / 2)
-      graphPoints.push('L' + i / visualizedDataPoints + ', ' + point)
+      const pointFrequency = freqData[i] / MEDIAN_FREQUENCY
+      const centeredPointPosition = pointFrequency * element.offsetHeight / 2
+      graphPoints.push(`L${i / visualizedDataPoints}, ${centeredPointPosition}`)
     }
 
-    oscilloscopeLine.setAttribute(
-      'd',
-      graphPoints.reduce((point, previous) => point + previous),
-    )
+    const graphPointsString = graphPoints.reduce((point, previous) => point + previous)
+    oscilloscopeLine.setAttribute('d', graphPointsString)
   }
 
   function startDrawingLines() {
     if (!oscilloscope) {
       return // The machine has not been initialized yet
     }
+    freqData = new Uint8Array(oscilloscope.frequencyBinCount)
     drawOscillatingLine()
     drawLineInterval = setInterval(drawOscillatingLine, 1000 / HERZ)
   }
@@ -127,7 +128,6 @@ up.compiler('.oscilloscope', function (element) {
 
   function connectOscilloscope(evt) {
     oscilloscope = evt.oscilloscope
-    freqData = new Uint8Array(oscilloscope.frequencyBinCount)
   }
 
   up.on('oscilloscope:connected', connectOscilloscope)

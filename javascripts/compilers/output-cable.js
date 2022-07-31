@@ -4,6 +4,7 @@
 ***/
 up.compiler('output-cable', function (outputCable, data) {
   const element = Template.clone('cable-connector', outputCable)
+  const PLUG_OUT_ANIMATION_MS = 2000
 
   function init() {
     element.classList.add('output-cable')
@@ -24,7 +25,7 @@ up.compiler('output-cable', function (outputCable, data) {
       element.classList.remove('-active')
       setTimeout(function () {
         element.classList.remove('-plugging-out')
-      }, 2000)
+      }, PLUG_OUT_ANIMATION_MS)
     }
   }
 
