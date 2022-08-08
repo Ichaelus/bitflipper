@@ -16,6 +16,7 @@ up.compiler('.oscillator', function (oscillator) {
     inputGain = evt.inputGain
     // The oscillator should be connected on startup. "power:on" would be too soon.
     SourceController.setActive(oscillator)
+    Logger.majorUserEvent(evt, `Switching to input source oscillator`)
   }
 
   function activateOscillator() {

@@ -13,11 +13,12 @@ up.compiler('cable-connector', function (cableConnector, data) {
     element.querySelector('.cable-connector--label').innerText = data.label
   }
 
-  function switchToCable(_evt) {
+  function switchToCable(evt) {
     if (!Machine.powered) {
       return
     }
     SourceController.setActive(element)
+    Logger.majorUserEvent(evt, `Switching to input source ${data.label}`)
   }
 
   function plugInCable() {

@@ -116,13 +116,45 @@ window.MidiMap = new (class {
   }
 
   mapData(midiData) {
-    let [statusCode, data1, data2] = midiData
-    if (statusCode >= 144 && statusCode <= 159) {
+    const [originalStatusCode, data1, data2] = midiData
+    let statusCode = originalStatusCode
+    let signalType = data1Name = data2Name = 'unknown'
+
+    if (originalStatusCode >= 128 && originalStatusCode < 144) {
+      signalType = 'Note Off'
+      data1Name = 'key'
+      data2Name = 'velocity'
+    } else if (originalStatusCode >= 144 && originalStatusCode < 160) {
+      signalType = 'Note On'
+      data1Name = 'key'
+      data2Name = 'velocity'
       // ON and OFF note signals are likewise to us
       statusCode -= this.MIDI_CHANNELS
+    } else if (originalStatusCode >= 160 && originalStatusCode < 176) {
+      signalType = 'Poly Key Pressure'
+      data1Name = 'key'
+      data2Name = 'pressure'
+    } else if (originalStatusCode >= 176 && originalStatusCode < 192) {
+      signalType = 'Control Change'
+      data1Name = 'control'
+      data2Name = 'value'
+    } else if (originalStatusCode >= 192 && originalStatusCode < 208) {
+      signalType = 'Program Change'
+      data1Name = 'program'
+    } else if (originalStatusCode >= 208 && originalStatusCode < 224) {
+      signalType = 'Mono Key Pressure'
+      data1Name = 'pressure'
+    } else if (originalStatusCode >= 224 && originalStatusCode < 240) {
+      signalType = 'Pitch Bend'
+      data1Name = 'Range LSB'
+      data2Name = 'Range MSB'
+    } else if (originalStatusCode >= 240 && originalStatusCode < 256) {
+      signalType = 'System'
+      data1Name = 'Manufacturer ID'
+      data2Name = 'Model ID'
     }
-    // MIDI debugging:
-    // console.table([statusCode, data1, data2])
+    Logger.majorUserEvent({type: `[MIDI ${signalType} received]`}, `status: ${statusCode} (original: ${originalStatusCode}), ${data1Name}: ${data1}, ${data2Name}: ${data2}`)
+
     return [statusCode, data1, data2]
   }
 
