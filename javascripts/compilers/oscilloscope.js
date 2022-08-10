@@ -6,10 +6,10 @@
 ***/
 
 up.compiler('.oscilloscope', function (element) {
-  let drawLineInterval, oscilloscopeLine, oscilloscope, freqData
+  let drawLineInterval, oscilloscopeLine, oscilloscope, frequencyData
   const LINE_COLOR = 'aliceblue'
   const LINE_THICKNESS = 1
-  const HERZ = 10
+  const HERTZ = 10
   const MEDIAN_FREQUENCY = 128
 
   function init() {
@@ -83,13 +83,13 @@ up.compiler('.oscilloscope', function (element) {
   }
 
   function drawEmptyLine(){
-    freqData = new Uint8Array(element.clientWidth)
-    freqData.fill(MEDIAN_FREQUENCY)
+    frequencyData = new Uint8Array(element.clientWidth)
+    frequencyData.fill(MEDIAN_FREQUENCY)
     drawLine()
   }
 
   function drawOscillatingLine(){
-    oscilloscope.getByteTimeDomainData(freqData)
+    oscilloscope.getByteTimeDomainData(frequencyData)
     drawLine()
   }
 
@@ -98,12 +98,12 @@ up.compiler('.oscilloscope', function (element) {
     graphPoints.push('M0, ' + element.offsetHeight / 2)
 
     const visualizedDataPoints = Math.floor(
-      // The line is onle <clientWidth> wide, so we can only render every n-th dot
-      freqData.length / element.clientWidth,
+      // The line is only <clientWidth> wide, so we can only render every n-th dot
+      frequencyData.length / element.clientWidth,
     )
 
-    for (let i = 0; i < freqData.length; i += visualizedDataPoints) {
-      const pointFrequency = freqData[i] / MEDIAN_FREQUENCY
+    for (let i = 0; i < frequencyData.length; i += visualizedDataPoints) {
+      const pointFrequency = frequencyData[i] / MEDIAN_FREQUENCY
       const centeredPointPosition = pointFrequency * element.offsetHeight / 2
       graphPoints.push(`L${i / visualizedDataPoints}, ${centeredPointPosition}`)
     }
@@ -116,9 +116,9 @@ up.compiler('.oscilloscope', function (element) {
     if (!oscilloscope) {
       return // The machine has not been initialized yet
     }
-    freqData = new Uint8Array(oscilloscope.frequencyBinCount)
+    frequencyData = new Uint8Array(oscilloscope.frequencyBinCount)
     drawOscillatingLine()
-    drawLineInterval = setInterval(drawOscillatingLine, 1000 / HERZ)
+    drawLineInterval = setInterval(drawOscillatingLine, 1000 / HERTZ)
   }
 
   function stopDrawingLines() {

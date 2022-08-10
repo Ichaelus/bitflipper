@@ -1,4 +1,4 @@
-const CACHE_NAME = '1.8' // Change to invalidate the cache
+const CACHE_NAME = '1.9' // Change to invalidate the cache
 const FILES_TO_CACHE = [
   '/',
   '/index.html',
@@ -39,6 +39,10 @@ const FILES_TO_CACHE = [
   '/javascripts/compilers/power-switch.js',
   '/javascripts/compilers/volume.js',
 
+  '/javascripts/services/analyser.js',
+  '/javascripts/services/volume-limiter.js',
+  '/javascripts/services/service-worker-helper.js',
+  
   '/javascripts/window/logger.js',
   '/javascripts/window/machine.js',
   '/javascripts/window/midi-map.js',
