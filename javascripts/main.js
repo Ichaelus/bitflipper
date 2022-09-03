@@ -20,10 +20,9 @@ const processAudio = async () => {
   const filter = audioContext.createBiquadFilter()
   const volumeLimiter = setupVolumeLimiter(audioContext)
   const analyser = setupAnalyser(audioContext)
+  const oscilloscope = audioContext.createAnalyser()
 
   volumeLimiter.connect(analyser)
-
-  const oscilloscope = audioContext.createAnalyser()
 
   inputGain
     .connect(bitCrusher)

@@ -26,7 +26,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
   constructor() {
     super()
     this.phase_ = 0
-    this.lastSampleValue_ = 0
+    this.lastSampleValue = 0
     this.setBits(8)
     this.port.onmessage = this.onMessageFromAudioWorklet.bind(this)
   }
@@ -77,12 +77,12 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         if (this.phase_ >= 1.0) {
           this.phase_ -= 1.0
 
-          this.lastSampleValue_ = this.applyFloatRange(
+          this.lastSampleValue = this.applyFloatRange(
             this.applyBitFilters(inputChannel[i]),
           )
         }
 
-        outputChannel[i] = this.lastSampleValue_
+        outputChannel[i] = this.lastSampleValue
       }
     }
 
