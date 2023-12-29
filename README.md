@@ -13,9 +13,11 @@ Currently, [only a few Browsers](https://caniuse.com/#search=AudioWorklet) suppo
 
 ### Development
 
+TL;DR: `bin/dev`
 * Start a local https server
   * E.g. with ruby:
   ```ruby
+  gem install webrick
   ruby -r webrick/https -e 'WEBrick::HTTPServer.new(Port: 8000, DocumentRoot: ".", SSLEnable: true, SSLCertName: [%w[CN localhost]]).start'
   ```
   * Or with Node/Ngrok exposure:

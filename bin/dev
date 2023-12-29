@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+xdg-open 'https://bitflipper.lvh.me:8000/'
+ruby -r webrick/https -e 'WEBrick::HTTPServer.new(Port: 8000, DocumentRoot: ".", SSLEnable: true, SSLCertName: [%w[CN localhost]]).start'
