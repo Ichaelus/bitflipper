@@ -10,6 +10,9 @@ up.compiler('cable-connector', function (cableConnector, data) {
     if (data.modifier) {
       element.classList.add(data.modifier)
     }
+    if (data.title) {
+      element.title = data.title
+    }
     element.querySelector('.cable-connector--label').innerText = data.label
   }
 

@@ -10,6 +10,7 @@ up.compiler('knob', (knob, data) => {
   let elementDialGrip = element.querySelector('.knob--dial-grip')
   let elementSVG = element.querySelector('.knob--dial-svg')
   let elementLabel = element.querySelector('.knob--label')
+  knob.title = `Drag vertically to change the ${data.title.toLowerCase()} value`
   elementLabel.title = data.title
   elementLabel.innerText = data.label
 

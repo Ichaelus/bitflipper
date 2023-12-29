@@ -21,21 +21,28 @@ up.compiler('bit-control', (bitControl, data) => {
       `bit-control-${bitControlNumber}-reset`,
       resetBit,
     )
+    resetButton.title = `Reset bit ${bitControlNumber}`
+
     MidiMap.registerControl(
       invertButton,
       `bit-control-${bitControlNumber}-invert`,
       invertBit,
     )
+    invertButton.title = `Invert bit ${bitControlNumber}`
+
     MidiMap.registerControl(
       muteButton,
       `bit-control-${bitControlNumber}-mute`,
       muteBit,
     )
+    muteButton.title = `Mute bit ${bitControlNumber}`
+
     MidiMap.registerControl(
       bitLabel,
       `bit-control-${bitControlNumber}-bits`,
       setBits,
     )
+    bitLabel.title = `Change total bit count to ${bitControlNumber}`
   }
 
   function reset() {

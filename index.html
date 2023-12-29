@@ -82,12 +82,12 @@
         </template>
 
         <div class='input-selection'>
-          <cable-connector up-data='{ "modifier": "oscillator", "label": "Osc"}'></cable-connector>
-          <cable-connector up-data='{ "modifier": "microphone", "label": "Mic"}'></cable-connector>
+          <cable-connector up-data='{ "modifier": "oscillator", "label": "Osc", "title": "Input: oscillator"}'></cable-connector>
+          <cable-connector up-data='{ "modifier": "microphone", "label": "Mic", "title": "Input: microphone"}'></cable-connector>
           <div class="cable-connector-stub install">
-            <div class="cable-connector--label -label">Install</div>
+            <div class="cable-monnector--label -label">Install</div>
           </div>
-          <div class='input-selection--switch'>
+          <div class='input-selection--switch' title="Toggle input source">
             <div class='input-selection--switch-knob'></div>
           </div>
           <output-cable up-data='{ "modifier": "-phono-red", "label": "Stereo"}'></output-cable>
@@ -96,14 +96,14 @@
 
         <div class='upper-controls'>
           <input type="button" class="power-switch" value="⏻" title="Start/Stop">
-          <div class="oscilloscope"></div>
-          <img class="upper-controls--logo" src="assets/bitflipperlogo.svg" >
+          <div class="oscilloscope" aria-label="Oscilloscope"></div>
+          <img class="upper-controls--logo" src="assets/bitflipperlogo.svg" alt="Bitflipper logo">
           <div class="input-visualizer" title='Current noise level'>
             <div class="input-visualizer--glow" title='Current noise level'> </div>
            </div>
         </div>
 
-        <div class="display">
+        <div class="display" aria-label="A status display for the emulated machine">
           <span class="display--text" data-default-text="Bitflipper"></span>
         </div>
 
@@ -126,7 +126,7 @@
           <knob up-data='{ "modifier": "-sample-reduction", "initialValue": 1.0, "title": "Sample Reduction", "label": "Redux", "identifier": "redux-knob"}'></knob>
           <knob up-data='{ "modifier": "-float-range", "initialValue": 0.25, "title": "Float Range", "label": "FR", "identifier": "float-range-knob"}'></knob>
 
-          <div class="filter -lowpass">
+          <div class="filter -lowpass" title="Frequency filter">
             <div class="filter--icon"></div>
             <div class="filter--label -label">Lowpass</div>
           </div>
@@ -175,7 +175,7 @@
 
     <div class="footer">
       <!--<a class="footer--link -manual">Show manual</a>-->
-      <a class="footer--link -midi">Setup midi</a>
+      <a class="footer--link -midi" title="Map MIDI buttons and sliders to the bitflipper UI">Setup midi</a>
     </div>
 
     <div class="midi">
