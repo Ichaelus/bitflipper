@@ -21,7 +21,7 @@ const FILES_TO_CACHE = [
 
   '/javascripts/bit-crusher-processor.js',
   '/javascripts/main.js',
-  '/javascripts/unpoly-2.6.1.min.js',
+  '/javascripts/unpoly-3.6.1.min.js',
 
   '/javascripts/compilers/bit-control.js',
   '/javascripts/compilers/cable-connector.js',
@@ -50,7 +50,7 @@ const FILES_TO_CACHE = [
   '/javascripts/window/template.js',
 
   '/stylesheets/reset.css',
-  '/stylesheets/unpoly-2.6.1.min.css',
+  '/stylesheets/unpoly-3.6.1.min.css',
 
   '/stylesheets/blocks/bit-control.css',
   '/stylesheets/blocks/cable-connector-stub.css',
