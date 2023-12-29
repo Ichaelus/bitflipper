@@ -2,8 +2,10 @@ import { setupAnalyser } from './services/analyser.js'
 import { setupVolumeLimiter } from './services/volume-limiter.js'
 import { loadServiceWorker } from './services/service-worker-helper.js'
 
+const audioContext = new AudioContext()
+
 const processAudio = async () => {
-  const audioContext = new AudioContext()
+  await audioContext.resume()
   if (audioContext.state === 'suspended') {
     up.emit('status-text-changed', { text: 'Click to allow audio output' })
     return
