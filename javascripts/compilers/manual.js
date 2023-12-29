@@ -16,5 +16,7 @@ up.compiler('.manual', element => {
     manualVisible = !manualVisible
   }
 
-  return [up.on(helpLink, 'click', toggleManual)]
+  if (helpLink) {
+    return [up.on(helpLink, 'click', toggleManual)]
+  }
 })
