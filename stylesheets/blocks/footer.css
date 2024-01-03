@@ -9,7 +9,6 @@
 
 .footer--link {
   cursor: pointer;
-  font-family: 'Inconsolata', monospace;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }

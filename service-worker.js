@@ -51,6 +51,7 @@ const FILES_TO_CACHE = [
 
   '/stylesheets/reset.css',
   '/stylesheets/unpoly-3.6.1.min.css',
+  '/stylesheets/variables.css',
 
   '/stylesheets/blocks/bit-control.css',
   '/stylesheets/blocks/cable-connector-stub.css',
@@ -68,6 +69,7 @@ const FILES_TO_CACHE = [
   '/stylesheets/blocks/output-cable.css',
   '/stylesheets/blocks/power-switch.css',
   '/stylesheets/blocks/upper-controls.css',
+  '/stylesheets/blocks/unpoly-customization.css',
 
   'https://fonts.googleapis.com/css?family=Press+Start+2P|Inconsolata:700&display=swap',
   'https://fonts.gstatic.com/s/inconsolata/v18/QldXNThLqRwH-OJ1UHjlKGHiw71m5_zIDQ.woff2',

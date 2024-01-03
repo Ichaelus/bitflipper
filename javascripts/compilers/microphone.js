@@ -10,17 +10,42 @@ up.compiler('.microphone', function (microphone) {
   }
 
   async function setupMicrophoneStream() {
-    if (!microphoneInAudioContext) {
-      const microphoneAudioInput = await getMicrophoneAudioInput()
-      microphoneInAudioContext =
-        audioContext.createMediaStreamSource(microphoneAudioInput)
-    }
+    disconnectMicrophone()
+    const microphoneAudioInput = await chooseAudioInput()
+    microphoneInAudioContext =
+      audioContext.createMediaStreamSource(microphoneAudioInput)
     microphoneInAudioContext.connect(inputGain)
   }
 
-  // Ask for user permission to the microphone audio stream
-  async function getMicrophoneAudioInput() {
-    return await navigator.mediaDevices.getUserMedia({ audio: true })
+  // Ask for user permission and selection of an input audio stream like a mic or similar
+  async function chooseAudioInput() {
+    await navigator.mediaDevices.getUserMedia({audio: true}) // Ask for permission, otherweise enumerateDevices is empty
+    const deviceList = await navigator.mediaDevices.enumerateDevices()
+    const audioInputDevices = deviceList.filter(device => device.kind == 'audioinput')
+    if (audioInputDevices.length > 0) {
+      const selectedDeviceId = await showInputSelectionModal(audioInputDevices)
+      return await navigator.mediaDevices.getUserMedia({audio: { deviceId: { exact: selectedDeviceId } } })
+    }
+  }
+
+  async function showInputSelectionModal(audioInputDevices) {
+    let previouslySelectedDeviceId = localStorage.getItem('latest-selected-input-device-id')
+    let modalHtml = '<h2>Choose Audio Input Device</h2>'
+    modalHtml += '<select name="audio-input-devices" up-watch="up.layer.accept(this.value)">'
+    audioInputDevices.forEach(audioInputDevice => {
+      const option = document.createElement('option')
+      option.value = audioInputDevice.deviceId
+      option.text = audioInputDevice.label || `microphone ${audioInputDevice.deviceId}`
+      if (audioInputDevice.deviceId === previouslySelectedDeviceId)
+        option.setAttribute('selected', true)
+      modalHtml += option.outerHTML
+    })
+    modalHtml += '</select>'
+    modalHtml += `<button onclick="up.layer.accept(document.querySelector('select[name=audio-input-devices]').value)">Confirm Selection</button>`
+
+    const newSelectedDeviceId = await up.layer.ask({ content: modalHtml, mode: 'drawer', position: 'right' })
+    localStorage.setItem('latest-selected-input-device-id', newSelectedDeviceId)
+    return newSelectedDeviceId
   }
 
   async function activateMicrophone(evt) {
@@ -34,7 +59,8 @@ up.compiler('.microphone', function (microphone) {
   }
 
   function disconnectMicrophone() {
-    microphoneInAudioContext?.disconnect()
+    microphoneInAudioContext?.disconnect(inputGain)
+    microphoneInAudioContext = null
   }
 
   up.on('audioContext:connected', evt => (audioContext = evt.audioContext))

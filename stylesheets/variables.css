@@ -1,0 +1,9 @@
+:root {
+  --color-text-active: #e4e8ea;
+  --color-text-muted: #888;
+  --content-width: 700px;
+  --machine-background: repeating-linear-gradient(0deg, #2b2b2b, #202020 2px);
+  --machine-width: 950px;
+  --spacer-s: 10px;
+  --input-height: 30px;
+}

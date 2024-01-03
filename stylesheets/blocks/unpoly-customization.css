@@ -1,0 +1,12 @@
+up-drawer-box {
+  background: var(--machine-background);
+  color: white;
+}
+
+up-drawer-box select {
+  width: 100%;
+}
+
+up-drawer-box button {
+  width: 100%;
+}

@@ -5,7 +5,7 @@ window.SourceController = new (class {
   constructor() {
     this.registeredSources = []
     this.currentIndex = 0
-    up.on('plug-in-failed', this.switchToNextSource)
+    up.on('plug-in-failed', this.switchToNextSource.bind(this))
   }
 
   registerSource(node) {
