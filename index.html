@@ -84,16 +84,16 @@
         </template>
 
         <div class='input-selection'>
-          <cable-connector up-data='{ "modifier": "oscillator", "label": "Osc", "title": "Input: oscillator"}'></cable-connector>
-          <cable-connector up-data='{ "modifier": "microphone", "label": "Mic", "title": "Input: microphone"}'></cable-connector>
+          <cable-connector up-data='{ "modifier": "oscillator", "label": "Osc", "title": "Use oscillator as the audio input"}'></cable-connector>
+          <cable-connector up-data='{ "modifier": "microphone", "label": "Mic", "title": "Choose other audio input"}'></cable-connector>
           <div class="cable-connector-stub install">
             <div class="cable-monnector--label -label">Install</div>
           </div>
           <div class='input-selection--switch' title="Toggle input source">
             <div class='input-selection--switch-knob'></div>
           </div>
-          <output-cable up-data='{ "modifier": "-phono-red", "label": "Stereo"}'></output-cable>
-          <output-cable up-data='{ "modifier": "-phono-white", "label": "Out"}'></output-cable>
+          <output-cable up-data='{ "modifier": "-phono-red", "label": "Stereo", "title": "Choose audio output"}'></output-cable>
+          <output-cable up-data='{ "modifier": "-phono-white", "label": "Out", "title": "Choose audio output"}'></output-cable>
         </div>
 
         <div class='upper-controls'>

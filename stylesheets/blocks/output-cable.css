@@ -7,7 +7,6 @@
 .output-cable.cable-connector {
   left: unset;
   right: 100px;
-  cursor: default;
 }
 
 .output-cable.-phono-red {
