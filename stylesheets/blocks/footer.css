@@ -2,7 +2,7 @@
   display: flex;
   max-width: var(--machine-width);
   position: relative;
-  margin: 40px auto 0;
+  margin: 40px auto 20px;
   align-content: center;
   justify-content: center;
 }
