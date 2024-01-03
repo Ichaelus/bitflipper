@@ -5,7 +5,7 @@
 .cable-connector-stub {
   position: absolute;
   left: 100px;
-  top: -15px;
+  top: 13px;
   --connector-width: 45px;
   width: var(--connector-width);
   z-index: 0;
