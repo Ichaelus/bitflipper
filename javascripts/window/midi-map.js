@@ -118,7 +118,9 @@ window.MidiMap = new (class {
   mapData(midiData) {
     const [originalStatusCode, data1, data2] = midiData
     let statusCode = originalStatusCode
-    let signalType = data1Name = data2Name = 'unknown'
+    let signalType = 'unknown'
+    let data1Name = 'unknown'
+    let data2Name = 'unknown'
 
     if (originalStatusCode >= 128 && originalStatusCode < 144) {
       signalType = 'Note Off'
