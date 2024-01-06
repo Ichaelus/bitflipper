@@ -18,6 +18,10 @@ window.SourceController = new (class {
     ]
   }
 
+  isActive(node) {
+    return this.currentIndex == this.registeredSources.findIndex(otherNode => node === otherNode)
+  }
+
   setActive(node) {
     this.currentIndex = this.registeredSources.findIndex(otherNode => node === otherNode)
     // will trigger a "plug-in-success" event if successful; else wise "plug-in-failed"

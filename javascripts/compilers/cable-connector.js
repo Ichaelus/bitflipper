@@ -17,7 +17,7 @@ up.compiler('cable-connector', function (cableConnector, data) {
   }
 
   function switchToCable(evt) {
-    if (!Machine.powered) {
+    if (!Machine.powered || SourceController.isActive(element)) {
       return
     }
     SourceController.setActive(element)

@@ -5,8 +5,9 @@
 up.compiler('.oscillator', function (oscillator) {
   let audioContext, inputGain, oscillatorStream
   const PLAYBACK_RATE = 1.0
-  const AUDIO_FILES = ['assets/sine.wav', 'assets/oscillator.wav']
-  const AUDIO_URL = AUDIO_FILES[0] // currently static
+  const AUDIO_SAMPLES = ['assets/sine.wav', 'assets/drumloop.wav']
+  let currentSampleIndex = parseInt(localStorage.getItem('oscillator:audio-sample-index')) || 0
+  let currentSampleUrl = AUDIO_SAMPLES[currentSampleIndex]
 
   function init() {
     SourceController.registerSource(oscillator)
@@ -28,7 +29,7 @@ up.compiler('.oscillator', function (oscillator) {
       oscillatorStream = audioContext.createBufferSource()
       const request = new XMLHttpRequest()
 
-      request.open('GET', AUDIO_URL, true)
+      request.open('GET', currentSampleUrl, true)
       request.responseType = 'arraybuffer'
       request.onload = () => {
         const audioData = request.response
@@ -45,16 +46,30 @@ up.compiler('.oscillator', function (oscillator) {
     up.emit('plug-in-success')
   }
 
-  function disconnectoscillator() {
+  function changeStream(){
+    if (oscillatorStream) {
+      disconnectOscillator()
+      currentSampleIndex++
+      if(currentSampleIndex == AUDIO_SAMPLES.length)
+        currentSampleIndex = 0
+      localStorage.setItem('oscillator:audio-sample-index', currentSampleIndex)
+      currentSampleUrl = AUDIO_SAMPLES[currentSampleIndex]
+      activateOscillator()
+    }
+  }
+
+  function disconnectOscillator() {
     if (oscillatorStream) {
       oscillatorStream.disconnect()
+      oscillatorStream = null
     }
   }
 
   up.on('audioContext:connected', evt => (audioContext = evt.audioContext))
   up.on('inputgain:connected', connectInputGain)
   up.on(oscillator, 'plug-in', activateOscillator)
-  up.on(oscillator, 'plug-out', disconnectoscillator)
+  up.on(oscillator, 'plug-out', disconnectOscillator)
+  up.on(oscillator, 'click', changeStream)
 
   init()
 })

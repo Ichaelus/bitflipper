@@ -58,6 +58,12 @@ up.compiler('.microphone', function (microphone) {
     }
   }
 
+  async function changeMicrophone(){
+    if (microphoneInAudioContext) {
+      await setupMicrophoneStream()
+    }
+  }
+
   function disconnectMicrophone() {
     microphoneInAudioContext?.disconnect(inputGain)
     microphoneInAudioContext = null
@@ -67,6 +73,7 @@ up.compiler('.microphone', function (microphone) {
   up.on('inputgain:connected', evt => (inputGain = evt.inputGain))
   up.on(microphone, 'plug-in', activateMicrophone)
   up.on(microphone, 'plug-out', disconnectMicrophone)
+  up.on(microphone, 'click', changeMicrophone)
 
   init()
 })
