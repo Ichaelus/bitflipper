@@ -74,7 +74,7 @@ up.compiler('.oscillator', function (oscillator) {
     const rawBuffer = await file.arrayBuffer()
     const newInputStream = audioContext.createBufferSource()
     audioContext.decodeAudioData(rawBuffer, (buffer) => {
-      up.emit('status-text-changed', { text: `Fully loaded - switching source` })
+      up.emit('status-text-changed', { text: `Switching input source` })
       up.emit('status-text-changed', { text: file.name })
       newInputStream.buffer = buffer
       newInputStream.playbackRate.value = PLAYBACK_RATE
