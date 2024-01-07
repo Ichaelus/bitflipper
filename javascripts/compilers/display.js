@@ -82,6 +82,10 @@ up.compiler('.display', element => {
   }
 
   up.on('status-text-changed', async function (evt) {
+    if (evt.flushPreviousMessages) {
+      textQueue = []
+    }
+
     if (evt.instant) {
       textElement.innerText = evt.text
       lastUpdate = Date.now()

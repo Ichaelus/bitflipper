@@ -30,6 +30,7 @@ const FILES_TO_CACHE = [
   '/javascripts/compilers/input-selection.js',
   '/javascripts/compilers/install.js',
   '/javascripts/compilers/knob.js',
+  '/javascripts/compilers/local-audio-source.js',
   '/javascripts/compilers/manual.js',
   '/javascripts/compilers/microphone.js',
   '/javascripts/compilers/midi.js',

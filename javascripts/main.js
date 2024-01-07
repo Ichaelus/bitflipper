@@ -81,8 +81,8 @@ const processAudio = async () => {
     onFrequencyReductionChange,
   )
   up.on('button-value-changed', '.knob.-float-range', onFloatRangeChanged)
-  up.on('bits-changed', onBitsChanged)
   up.emit('bits-changed', { bits: paramBits.value, instant: true })
+  up.on('bits-changed', onBitsChanged)
   up.emit('reset:on')
 }
 

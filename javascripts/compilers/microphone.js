@@ -24,6 +24,8 @@ up.compiler('.microphone', function (microphone) {
     const audioInputDevices = deviceList.filter(device => device.kind == 'audioinput')
     if (audioInputDevices.length > 0) {
       const selectedDeviceId = await showInputSelectionModal(audioInputDevices)
+      const selectedDeviceName = audioInputDevices.find(device => device.deviceId === selectedDeviceId).label
+      up.emit('status-text-changed', { text: `Using ${selectedDeviceName}` })
       return await navigator.mediaDevices.getUserMedia({audio: { deviceId: { exact: selectedDeviceId } } })
     }
   }

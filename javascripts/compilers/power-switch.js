@@ -25,12 +25,12 @@ up.compiler('.power-switch', element => {
       } else {
         up.emit('reset:on')
         machine.classList.add('-active')
-        up.emit('status-text-changed', { text: 'STARTING UP.' })
+        up.emit('status-text-changed', { text: 'STARTING UP.', instant: true, flushPreviousMessages: true })
       }
     } else {
       up.emit('reset:off')
       machine.classList.remove('-active')
-      up.emit('status-text-changed', { text: 'POWERING OFF.' })
+      up.emit('status-text-changed', { text: 'POWERING OFF.', instant: true, flushPreviousMessages: true })
       up.emit('status-text-changed', { text: 'GOOD BYE.' })
     }
   }
@@ -47,7 +47,7 @@ up.compiler('.power-switch', element => {
   up.on('audioContext:connected', evt => {
     audioContext = evt.audioContext
     machine.classList.add('-active')
-    up.emit('status-text-changed', { text: 'STARTING UP.' })
+    up.emit('status-text-changed', { text: 'STARTING UP.', instant: true, flushPreviousMessages: true })
   })
 
   init()
