@@ -6,10 +6,11 @@
 ***/
 up.compiler('knob', (knob, data) => {
   const element = Template.clone('knob', knob)
+  const elementDialGrip = element.querySelector('.knob--dial-grip')
+  const elementSVG = element.querySelector('.knob--dial-svg')
+  const elementLabel = element.querySelector('.knob--label')
+  const ACTIVE_CLASS = '-active'
 
-  let elementDialGrip = element.querySelector('.knob--dial-grip')
-  let elementSVG = element.querySelector('.knob--dial-svg')
-  let elementLabel = element.querySelector('.knob--label')
   knob.title = `Drag vertically to change the ${data.title.toLowerCase()} value`
   elementLabel.title = data.title
   elementLabel.innerText = data.label
@@ -54,7 +55,7 @@ up.compiler('knob', (knob, data) => {
   }
 
   function mouseKnobMoved(evt) {
-    if (!Machine.powered || !element.classList.contains('-active')) {
+    if (!Machine.powered || !element.classList.contains(ACTIVE_CLASS)) {
       return
     }
 
@@ -80,19 +81,19 @@ up.compiler('knob', (knob, data) => {
   }
 
   function mouseKnobPressed(evt) {
-    element.classList.add('-active')
+    element.classList.add(ACTIVE_CLASS)
     currentY = evt.pageY || evt.changedTouches[0].pageY
     evt.preventDefault()
   }
 
   function mouseKnobReleased(evt) {
-    element.classList.remove('-active')
+    element.classList.remove(ACTIVE_CLASS)
   }
 
   function addEventListeners() {
     element
       .querySelector('.knob--active-light')
-      .addEventListener('click', () => element.classList.toggle('-active'))
+      .addEventListener('click', () => element.classList.toggle(ACTIVE_CLASS))
     up.on(elementDialGrip, 'mousedown touchstart', mouseKnobPressed)
     up.on('mousemove touchmove', mouseKnobMoved)
     up.on('mouseup touchend touchcancel', mouseKnobReleased)

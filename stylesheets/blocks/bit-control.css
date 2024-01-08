@@ -66,6 +66,9 @@
 .machine-back.-active .bit-control.-active .bit-control--button:hover {
   filter: brightness(1.2) saturate(1);
 }
+.machine-back.-active .bit-control.-active .bit-control--button.-midi-active {
+  filter: brightness(1.5) saturate(1);
+}
 
 .bit-control--button.-reset {
   --inner-button-color: #cecece;
@@ -92,14 +95,18 @@
   text-align: center;
   cursor: pointer;
 }
-.bit-control--index {
-  cursor: pointer;
+
+.bit-control--labels.-midi-active {
+  filter: invert(0.25);
 }
 
 .machine-back.-active .bit-control.-active .bit-control--labels {
   color: var(--color-text-active);
 }
 
+.bit-control--index {
+  cursor: pointer;
+}
 .machine-back.-active .bit-control--index {
   color: var(--color-text-muted);
   text-shadow: none;

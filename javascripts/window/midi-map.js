@@ -20,6 +20,7 @@ window.MidiMap = new (class {
     this.controls = []
     this.currentWizardControl = null
     this.recording = false
+    this.clearMidiActiveTimeouts = new Map()
 
     this.MIDI_DATA_MAX = 127
     this.MIDI_CHANNELS = 16
@@ -28,6 +29,8 @@ window.MidiMap = new (class {
     this.STORAGE_STATUS_KEY = 'midi-status-code'
     this.STORAGE_CATEGORY_KEY = 'midi-category-code'
     this.STORAGE_AUTOLOAD_KEY = 'autoload-midi'
+    this.MIDI_ACTIVE_CLASS = '-midi-active'
+    this.MIDI_ACTIVE_FADE_OUT_MS = 210
 
     this.onMidiLearn = this.midiLearnSignalReceived.bind(this)
     this.onMidiLive = this.midiLiveSignalReceived.bind(this)
@@ -111,8 +114,20 @@ window.MidiMap = new (class {
           control.statusCode === statusCode && control.categoryCode === data1,
       )
       .forEach(control => {
+        const element = control.domNode
+        this.setMidiActive(element)
+        clearTimeout(this.clearMidiActiveTimeouts.get(element))
+        this.clearMidiActiveTimeouts.set(element, setTimeout(() => this.clearMidiActive(element), this.MIDI_ACTIVE_FADE_OUT_MS))
         control.callback.call(null, data2 / this.MIDI_DATA_MAX)
       })
+  }
+
+  setMidiActive(element) {
+    element.classList.add(this.MIDI_ACTIVE_CLASS)
+  }
+
+  clearMidiActive(element) {
+    element.classList.remove(this.MIDI_ACTIVE_CLASS)
   }
 
   mapData(midiData) {

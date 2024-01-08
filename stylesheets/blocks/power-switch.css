@@ -13,6 +13,7 @@
   background-color: black;
 }
 
+.power-switch.-midi-active,
 .machine-back.-active .power-switch {
   background-color: white;
   color: black;

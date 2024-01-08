@@ -31,7 +31,7 @@
   background-color: var(--color-text-muted);
 }
 
-.machine-back.-active .knob.-active .knob--active-light {
+.machine-back.-active .knob:is(.-active, .-midi-active) .knob--active-light {
   background-color: #21cd92;
 }
 
@@ -45,7 +45,7 @@
   color: var(--color-text-muted);
 }
 
-.machine-back.-active .knob.-active .knob--dial {
+.machine-back.-active .knob:is(.-active, .-midi-active) .knob--dial {
   color: #21cd92;
 }
 
@@ -85,7 +85,7 @@
   transition: 0.3s cubic-bezier(0, 0, 0.24, 1);
 }
 
-.machine-back.-active .knob.-active .knob--dial-svg {
+.machine-back.-active .knob:is(.-active, .-midi-active) .knob--dial-svg {
   stroke: var(--color-text-active);
 }
 
@@ -94,6 +94,6 @@
   position: relative;
 }
 
-.machine-back.-active .knob.-active .knob--label {
+.machine-back.-active .knob:is(.-active, .-midi-active) .knob--label {
   color: var(--color-text-active);
 }
