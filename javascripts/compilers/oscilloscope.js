@@ -15,6 +15,14 @@ up.compiler('.oscilloscope', function (element) {
   function init() {
     setUpSVG()
     drawEmptyLine()
+
+    /* TODO: Find a more intuitive place for the pass through button */
+    MidiMap.registerToggle(element, 'pass-through-button', togglePassThrough)
+    up.on(element, 'click', togglePassThrough)
+  }
+
+  function togglePassThrough(){
+    up.emit('pass-through-toggled')
   }
 
   function setUpSVG() {

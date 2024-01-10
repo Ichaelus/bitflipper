@@ -25,6 +25,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
 
   constructor() {
     super()
+    this.MINIMUM_FLOAT_RANGE = 0.005
     this.phase = 0
     this.lastSampleValue = 0
     this.setBits(8)
@@ -52,7 +53,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
         console.warn(`cannot set modifier on bit ${bit}`)
       }
     } else if (eventType === 'float-range') {
-      this.floatRange = Math.max(event.data[1], 0.005)
+      this.floatRange = Math.max(event.data[1], this.MINIMUM_FLOAT_RANGE)
     }
   }
 
@@ -67,6 +68,8 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
       const inputChannel = input[channel]
       const outputChannel = output[channel]
       for (let i = 0; i < inputChannel.length; ++i) {
+        const currentValue = inputChannel[i]
+
         if (frequencyReduction.length === 1) {
           // using the initial value
           this.phase += frequencyReduction[0]
@@ -78,7 +81,7 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
           this.phase -= 1.0
 
           this.lastSampleValue = this.applyFloatRange(
-            this.applyBitFilters(inputChannel[i]),
+            this.applyBitFilters(currentValue),
           )
         }
 

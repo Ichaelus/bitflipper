@@ -17,6 +17,7 @@ const processAudio = async () => {
   const bitCrusher = new AudioWorkletNode(audioContext, 'bit-crusher-processor')
   const paramBits = bitCrusher.parameters.get('bits')
   const paramReduction = bitCrusher.parameters.get('frequencyReduction')
+  let passThrough = false // keep this in sync with the BitCrusherProcessor's constructor
 
   const inputGain = audioContext.createGain()
   const filter = audioContext.createBiquadFilter()
@@ -72,6 +73,32 @@ const processAudio = async () => {
     })
   }
 
+  function onPassThroughToggled(_evt) {
+    passThrough = !passThrough
+
+    // bitCrusher.port.postMessage(['toggle-pass-through'])
+    let statusText
+    if (passThrough) {
+      inputGain.disconnect(bitCrusher)
+      bitCrusher.disconnect(filter)
+      filter.disconnect(volumeLimiter)
+      inputGain.connect(oscilloscope)
+      statusText = 'Enabled pass-through mode'
+    } else {
+      inputGain.disconnect(oscilloscope)
+      inputGain
+        .connect(bitCrusher)
+        .connect(filter)
+        .connect(volumeLimiter)
+        .connect(oscilloscope)
+      statusText = 'Disabled pass-through mode'
+    }
+    up.emit('status-text-changed', {
+      text: statusText,
+      instant: true,
+    })
+  }
+
   up.on('reset:off', () => audioContext.suspend())
   up.on('reset:on', () => audioContext.resume())
 
@@ -83,6 +110,7 @@ const processAudio = async () => {
   up.on('button-value-changed', '.knob.-float-range', onFloatRangeChanged)
   up.emit('bits-changed', { bits: paramBits.value, instant: true })
   up.on('bits-changed', onBitsChanged)
+  up.on('pass-through-toggled', onPassThroughToggled)
   up.emit('reset:on')
 }
 
