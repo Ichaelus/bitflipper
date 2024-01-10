@@ -21,7 +21,7 @@ up.compiler('knob', (knob, data) => {
     enhanceElement()
     moveKnobPosition()
     addEventListeners()
-    MidiMap.registerControl(element, data.identifier, midiKnobMoved)
+    MidiMap.registerNumeric(element, data.identifier, midiKnobMoved)
   }
 
   function enhanceElement() {

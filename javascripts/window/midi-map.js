@@ -17,7 +17,8 @@
 ***/
 window.MidiMap = new (class {
   constructor() {
-    this.controls = []
+    this.numericControls = []
+    this.toggleControls = []
     this.currentWizardControl = null
     this.recording = false
     this.clearMidiActiveTimeouts = new Map()
@@ -37,8 +38,22 @@ window.MidiMap = new (class {
     this.onControlClick = this.setCurrentControl.bind(this)
   }
 
-  registerControl(domNode, identifier, callback) {
-    this.controls.push({
+  get allControls() {
+    return [...this.numericControls, ...this.toggleControls]
+  }
+
+  /* Register a callback that can be called with a value from 0.0 - 1 */
+  registerNumeric(domNode, identifier, callback) {
+    this.numericControls.push({...this._controlParams(domNode, identifier, callback), numeric: true })
+  }
+  
+  /* Register a callback that does not care about it's arguments */
+  registerToggle(domNode, identifier, callback) {
+    this.toggleControls.push({...this._controlParams(domNode, identifier, callback), toggle: true })
+  }
+
+  _controlParams(domNode, identifier, callback) {
+    return {
       domNode,
       identifier,
       callback,
@@ -48,7 +63,7 @@ window.MidiMap = new (class {
       categoryCode: parseInt(
         localStorage.getItem(`${this.STORAGE_CATEGORY_KEY}:${identifier}`),
       ),
-    })
+    }
   }
 
   async setupWizard(midiAccess) {
@@ -63,7 +78,7 @@ window.MidiMap = new (class {
 
   stopWizard() {
     this.recording = false
-    this.controls.forEach(control => {
+    this.allControls.forEach(control => {
       control.domNode.classList.remove(this.CURRENT_LEARN_CLASS)
       control.domNode.classList.remove(this.CAN_LEARN_CLASS)
       up.off(control.domNode, 'click', this.onControlClick)
@@ -71,7 +86,7 @@ window.MidiMap = new (class {
   }
 
   setDomListeners() {
-    this.controls.forEach(control => {
+    this.allControls.forEach(control => {
       control.domNode.classList.add(this.CAN_LEARN_CLASS)
       up.on(control.domNode, 'click', this.onControlClick)
     })
@@ -79,7 +94,7 @@ window.MidiMap = new (class {
 
   setCurrentControl(evt) {
     this.currentWizardControl?.domNode.classList.remove(this.CURRENT_LEARN_CLASS)
-    this.currentWizardControl = this.controls.find(
+    this.currentWizardControl = this.allControls.find(
       control => control.domNode === evt.currentTarget,
     )
     this.currentWizardControl.domNode.classList.add(this.CURRENT_LEARN_CLASS)
@@ -108,17 +123,25 @@ window.MidiMap = new (class {
 
   midiLiveSignalReceived(message) {
     const [statusCode, data1, data2] = this.mapData(message.data)
-    this.controls
+    this.allControls
       .filter(
         control =>
           control.statusCode === statusCode && control.categoryCode === data1,
       )
       .forEach(control => {
         const element = control.domNode
+        if (control.toggle && data2 === 0) {
+          console.info('Ignoring 0 velocity for toggle buttons - most MIDI buttons would otherwise only be usable while pressing the button down')
+          return
+        }
         this.setMidiActive(element)
         clearTimeout(this.clearMidiActiveTimeouts.get(element))
         this.clearMidiActiveTimeouts.set(element, setTimeout(() => this.clearMidiActive(element), this.MIDI_ACTIVE_FADE_OUT_MS))
-        control.callback.call(null, data2 / this.MIDI_DATA_MAX)
+        let normalizedCallbackValue = data2
+        if (control.numeric) {
+          normalizedCallbackValue /= this.MIDI_DATA_MAX // scale to 0.0 - 1.0
+        }
+        control.callback.call(null, normalizedCallbackValue)
       })
   }
 

@@ -16,28 +16,28 @@ up.compiler('bit-control', (bitControl, data) => {
 
   function init() {
     element.querySelector('.bit-control--index').innerText = bitControlNumber
-    MidiMap.registerControl(
+    MidiMap.registerToggle(
       resetButton,
       `bit-control-${bitControlNumber}-reset`,
       resetBit,
     )
     resetButton.title = `Reset bit ${bitControlNumber}`
 
-    MidiMap.registerControl(
+    MidiMap.registerToggle(
       invertButton,
       `bit-control-${bitControlNumber}-invert`,
       invertBit,
     )
     invertButton.title = `Invert bit ${bitControlNumber}`
 
-    MidiMap.registerControl(
+    MidiMap.registerToggle(
       muteButton,
       `bit-control-${bitControlNumber}-mute`,
       muteBit,
     )
     muteButton.title = `Mute bit ${bitControlNumber}`
 
-    MidiMap.registerControl(
+    MidiMap.registerToggle(
       bitLabel,
       `bit-control-${bitControlNumber}-bits`,
       setBits,

@@ -9,7 +9,7 @@ up.compiler('.power-switch', element => {
       up.emit('status-text-changed', { text: 'Try Chrome 66 or newer.' })
     }
 
-    MidiMap.registerControl(element, 'power-switch', togglePowerSwitch)
+    MidiMap.registerToggle(element, 'power-switch', togglePowerSwitch)
     up.on(element, 'click', togglePowerSwitch)
   }
 
