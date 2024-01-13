@@ -96,8 +96,8 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
   applyBitFilters(sampleValue) {
     const sign = Math.sign(sampleValue)
     let modifiedIntValue = Math.abs(this.convertToInt(sampleValue))
-    this.bitModifiers.forEach(function (modifier, index) {
-      let bitmask = 1 << index
+    this.bitModifiers.forEach(function (modifier, bitToFlip) {
+      let bitmask = 1 << (this.bits - bitToFlip)
       if (modifier === -1) {
         modifiedIntValue ^= bitmask // invert the bit
       } else if (modifier === 0) {
@@ -109,14 +109,14 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
   }
 
   convertToInt(float32) {
-    return Math.round(float32 * 2 ** this.bits)
+    return Math.floor(float32 * 2 ** this.bits)
   }
   convertBackToFloat(int32) {
     return int32 / 2 ** this.bits
   }
   applyFloatRange(sampleValue) {
     const currentFloatRange = this.floatRange * this.maxFloatRange
-    let modifiedIntValue = Math.round(sampleValue * currentFloatRange) // Rounding => distorted sound effect
+    let modifiedIntValue = Math.floor(sampleValue * currentFloatRange) // Rounding => distorted sound effect
     const modifiedFloat = modifiedIntValue / currentFloatRange
     return modifiedFloat
   }
