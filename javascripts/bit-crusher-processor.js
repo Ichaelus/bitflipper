@@ -58,6 +58,16 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
   }
 
   process(inputs, outputs, parameters) {
+    // inputs: An array of inputs connected to the node, each item of which is,
+    // in turn, an array of channels. Each channel is a Float32Array containing 128 samples.
+    // For example, inputs[0][m][i] will access the 1st input, m-th channel of that input, and i-th sample of that channel.
+    // Each sample value is in range of [-1 .. 1].
+    //
+    // Example `inputs` values for the drumloop:
+    // Array[
+    //  Float32Array(128) [0.20704758167266846, 0.20521485805511475, 0.20274198055267334, ...]
+    //  Float32Array(128) [0.20704758167266846, 0.20521485805511475, 0.20274198055267334, ...]
+    // ]
     const input = inputs[0]
     const output = outputs[0]
 
@@ -95,9 +105,10 @@ class BitCrusherProcessor extends AudioWorkletProcessor {
 
   applyBitFilters(sampleValue) {
     const sign = Math.sign(sampleValue)
+    const totalBitCount = this.bits
     let modifiedIntValue = Math.abs(this.convertToInt(sampleValue))
-    this.bitModifiers.forEach(function (modifier, bitToFlip) {
-      let bitmask = 1 << (this.bits - bitToFlip)
+    this.bitModifiers.forEach((modifier, bitToFlip) => {
+      let bitmask = 1 << (totalBitCount - bitToFlip)
       if (modifier === -1) {
         modifiedIntValue ^= bitmask // invert the bit
       } else if (modifier === 0) {
